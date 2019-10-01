@@ -1,0 +1,6199 @@
+openapi: 3.0.0
+info:
+  description: |
+    # Authentication
+    We use bearerAuth with JSON Web Tokens for Authentication. You must send this token in the Authorization header when making requests to protected resources:
+    ```
+    Authorization: Bearer <JWTtoken>
+    ```
+
+    You can find more information [here](https://swagger.io/docs/specification/authentication/bearer-authentication/)
+
+
+    # Pagination
+    We use [github style pagination](https://developer.github.com/v3/#pagination) with [WebLinking](https://tools.ietf.org/html/rfc5988). Maximum 100 results per page.
+
+    # Rate limits
+    2000 requests per account per hour.
+    You can see your limits in the following response headers
+    * `X-RateLimit-Limit`  for a total limit
+    * `X-RateLimit-Remaining` for remaining limit
+    * `X-RateLimit-Reset` for timestamp when the oldest request will expire
+  title: Servers.com OpenAPI Specification
+  version: 1.0.0
+servers:
+- url: /
+security:
+- bearerAuth: []
+paths:
+  /v1/hosts/dedicated_servers:
+    post:
+      operationId: CreateANewDedicatedServer
+      requestBody:
+        $ref: '#/components/requestBodies/inline_object'
+        content:
+          application/json:
+            example:
+              server_model_id: 5
+              location_id: 112
+              ram_size: 2
+              uplink_models:
+                public:
+                  id: 9
+                  bandwidth_model_id: 5
+                private:
+                  id: 10
+              drives:
+                slots:
+                - position: 1
+                  drive_model_id: 5
+                - position: 2
+                  drive_model_id: 5
+                layout:
+                - slot_positions:
+                  - 1
+                  - 2
+                  raid: 1
+                  partitions:
+                  - target: /
+                    size: 10240
+                    fill: false
+                    fs: ext4
+                  - target: /home
+                    size: 1
+                    fill: true
+                    fs: ext4
+                  - target: swap
+                    size: 4096
+                    fill: false
+              ipv6: true
+              hosts:
+              - hostname: example.aa
+              - hostname: example.bb
+              operation_system_id: 5
+            schema:
+              properties:
+                location_id:
+                  description: ' location'
+                  minimum: 1
+                  nullable: false
+                  type: integer
+                server_model_id:
+                  description: ' server model'
+                  minimum: 1
+                  nullable: false
+                  type: integer
+                uplink_models:
+                  $ref: '#/components/schemas/_v1_hosts_dedicated_servers_uplink_models'
+                ram_size:
+                  description: ' ram size'
+                  minimum: 1
+                  nullable: false
+                  type: integer
+                drives:
+                  $ref: '#/components/schemas/_v1_hosts_dedicated_servers_drives'
+                features:
+                  description: ' features'
+                  items:
+                    maxLength: 255
+                    minLength: 1
+                    type: string
+                  type: array
+                ipv6:
+                  description: ' ipv6'
+                  nullable: false
+                  type: boolean
+                hosts:
+                  description: ' hosts'
+                  items: {}
+                  minLength: 1
+                  nullable: false
+                  type: array
+                operation_system_id:
+                  description: ' operation system'
+                  minimum: 1
+                  nullable: false
+                  type: integer
+                ssh_key_fingerprints:
+                  description: ' ssh key fingerprints'
+                  items: {}
+                  maxLength: 1
+                  nullable: true
+                  type: array
+              required:
+              - drives
+              - hosts
+              - location_id
+              - ram_size
+              - server_model_id
+              - uplink_models
+              type: object
+      responses:
+        402:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Payment failure
+                    code: PAYMENT_REQUIED
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Return payment required error
+        422:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Validation failed
+                    code: UNPROCESSABLE_ENTITY
+                    errors:
+                      server_model_id: server model doesn't exists
+                      uplink_models.public.id: uplink model doesn't exists
+                      uplink_models.private.id: uplink model doesn't exists
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns validation error
+        201:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                  - id: 8mep2bMy
+                    title: example.aa
+                    location_id: 112
+                    status: init
+                    configuration: Dell chassis-9019 / 2 GB RAM / 2 x hdd-model-414
+                    private_ipv4_address: null
+                    public_ipv4_address: null
+                    lease_start_at: null
+                    scheduled_release_at: null
+                    type: dedicated_server
+                    updated_at: 2019-09-30T21:25:22Z
+                  - id: 4zbq2dpr
+                    title: example.bb
+                    location_id: 112
+                    status: init
+                    configuration: Dell chassis-9019 / 2 GB RAM / 2 x hdd-model-414
+                    private_ipv4_address: null
+                    public_ipv4_address: null
+                    lease_start_at: null
+                    scheduled_release_at: null
+                    type: dedicated_server
+                    updated_at: 2019-09-30T21:25:22Z
+              schema:
+                items:
+                  $ref: '#/components/schemas/v1-hosts-dedicated_servers-_entity'
+                title: The List of created Dedidacted Servers Schema
+                type: array
+          description: Returns a new dedicted server
+          headers:
+            X-RateLimit-Limit:
+              description: X-RateLimit-Limit
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Remaining:
+              description: X-RateLimit-Remaining
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Reset:
+              description: X-RateLimit-Reset
+              explode: false
+              schema:
+                type: string
+              style: simple
+      summary: Create a new dedicated server
+      tags:
+      - Dedicated Server
+      x-code-samples:
+      - lang: curl
+        label: cURL
+        source: "curl \"https://api.servers.com/v1/hosts/dedicated_servers\" -d '{\n\
+          \  \"server_model_id\": 5,\n  \"location_id\": 112,\n  \"ram_size\": 2,\n\
+          \  \"uplink_models\": {\n    \"public\": {\n      \"id\": 9,\n      \"bandwidth_model_id\"\
+          : 5\n    },\n    \"private\": {\n      \"id\": 10\n    }\n  },\n  \"drives\"\
+          : {\n    \"slots\": [\n      {\n        \"position\": 1,\n        \"drive_model_id\"\
+          : 5\n      },\n      {\n        \"position\": 2,\n        \"drive_model_id\"\
+          : 5\n      }\n    ],\n    \"layout\": [\n      {\n        \"slot_positions\"\
+          : [\n          1,\n          2\n        ],\n        \"raid\": 1,\n     \
+          \   \"partitions\": [\n          {\n            \"target\": \"/\",\n   \
+          \         \"size\": 10240,\n            \"fill\": false,\n            \"\
+          fs\": \"ext4\"\n          },\n          {\n            \"target\": \"/home\"\
+          ,\n            \"size\": 1,\n            \"fill\": true,\n            \"\
+          fs\": \"ext4\"\n          },\n          {\n            \"target\": \"swap\"\
+          ,\n            \"size\": 4096,\n            \"fill\": false\n          }\n\
+          \        ]\n      }\n    ]\n  },\n  \"ipv6\": true,\n  \"hosts\": [\n  \
+          \  {\n      \"hostname\": \"example.aa\"\n    },\n    {\n      \"hostname\"\
+          : \"example.bb\"\n    }\n  ],\n  \"operation_system_id\": 5\n}' -X POST "
+  /v1/hosts/dedicated_servers/{server_id}:
+    get:
+      operationId: RetrieveAnExistingDedicatedServer
+      parameters:
+      - example: pnel5aKB
+        explode: false
+        in: path
+        name: server_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        200:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    id: pnel5aKB
+                    title: title27
+                    location_id: 106
+                    status: active
+                    configuration: REMM R123
+                    private_ipv4_address: 10.0.0.3
+                    public_ipv4_address: 169.254.0.3
+                    lease_start_at: 2019-09-30
+                    scheduled_release_at: null
+                    type: dedicated_server
+                    updated_at: 2019-09-30T21:25:18Z
+              schema:
+                $ref: '#/components/schemas/v1-hosts-dedicated_servers-_entity'
+          description: Returns dedicated server
+          headers:
+            X-RateLimit-Limit:
+              description: X-RateLimit-Limit
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Remaining:
+              description: X-RateLimit-Remaining
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Reset:
+              description: X-RateLimit-Reset
+              explode: false
+              schema:
+                type: string
+              style: simple
+        404:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Not found
+                    code: NOT_FOUND
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns not found error
+      summary: Retrieve an existing dedicated server
+      tags:
+      - Dedicated Server
+      x-code-samples:
+      - lang: curl
+        label: cURL
+        source: 'curl -g "https://api.servers.com/v1/hosts/dedicated_servers/pnel5aKB"
+          -X GET '
+  /v1/hosts/dedicated_servers/{server_id}/networks:
+    get:
+      description: |
+        To list all of the networks for specific dedicated server please send `GET /v1/hosts/dedicated_servers/{server_id}/networks`
+
+        The response contains list of networks which classified by `interface_type`, `distribution_method`
+
+        - `interface_type` points on which interface this network configured.
+        - `distribution_method` describes how network will be distributed.
+          In case of the `gateway`, will be reserved first 4 IP addresses for *enterprise location*,
+          and 1 IP address for *standard location* from the network.
+          In the case of the `route`, the network will be available fully for customer use.
+      operationId: ListAllNetworksForAnExistingDedicatedServer
+      parameters:
+      - description: ' search pattern'
+        explode: true
+        in: query
+        name: search_pattern
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: ' family'
+        explode: true
+        in: query
+        name: family
+        required: false
+        schema:
+          enum:
+          - ipv4
+          - ipv6
+          type: string
+        style: form
+      - description: ' interface type'
+        explode: true
+        in: query
+        name: interface_type
+        required: false
+        schema:
+          enum:
+          - public
+          - private
+          - oob
+          type: string
+        style: form
+      - description: ' distribution method'
+        explode: true
+        in: query
+        name: distribution_method
+        required: false
+        schema:
+          enum:
+          - route
+          - gateway
+          type: string
+        style: form
+      - description: ' additional'
+        explode: true
+        in: query
+        name: additional
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: ' per page'
+        explode: true
+        in: query
+        name: per_page
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          minimum: 1
+          type: integer
+        style: form
+      - description: ' page'
+        explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          minimum: 1
+          type: integer
+        style: form
+      - description: ' sorting'
+        explode: true
+        in: query
+        name: sorting
+        required: false
+        schema:
+          default: id
+          enum:
+          - id
+          - updated_at
+          - created_at
+          type: string
+        style: form
+      - description: ' direction'
+        explode: true
+        in: query
+        name: direction
+        required: false
+        schema:
+          default: ASC
+          enum:
+          - ASC
+          - DESC
+          type: string
+        style: form
+      - example: l9avgmbG
+        explode: false
+        in: path
+        name: server_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        200:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                  - id: KQe163aJ
+                    title: Public
+                    status: active
+                    cidr: 100.0.0.24/29
+                    family: ipv4
+                    interface_type: public
+                    distribution_method: gateway
+                    additional: false
+                    updated_at: 2019-09-30T21:25:51Z
+                    created_at: 2019-09-30T21:25:51Z
+                  - id: GRb462eB
+                    title: Private
+                    status: active
+                    cidr: 10.0.1.0/29
+                    family: ipv4
+                    interface_type: private
+                    distribution_method: gateway
+                    additional: false
+                    updated_at: 2019-09-30T21:25:51Z
+                    created_at: 2019-09-30T21:25:51Z
+                  - id: M7e57xb2
+                    title: Public
+                    status: active
+                    cidr: 100.0.0.32/29
+                    family: ipv4
+                    interface_type: public
+                    distribution_method: gateway
+                    additional: true
+                    updated_at: 2019-09-30T21:25:51Z
+                    created_at: 2019-09-30T21:25:51Z
+                  - id: K9b6W7dE
+                    title: Private
+                    status: active
+                    cidr: 10.0.1.8/29
+                    family: ipv4
+                    interface_type: private
+                    distribution_method: gateway
+                    additional: true
+                    updated_at: 2019-09-30T21:25:51Z
+                    created_at: 2019-09-30T21:25:51Z
+                  - id: Vyb83lav
+                    title: Alias
+                    status: active
+                    cidr: 127.0.26.0/24
+                    family: ipv4
+                    interface_type: public
+                    distribution_method: route
+                    additional: true
+                    updated_at: 2019-09-30T21:25:51Z
+                    created_at: 2019-09-30T21:25:51Z
+                  - id: nXe087ex
+                    title: OOB
+                    status: active
+                    cidr: 100.35.0.2/31
+                    family: ipv4
+                    interface_type: oob
+                    distribution_method: gateway
+                    additional: true
+                    updated_at: 2019-09-30T21:25:51Z
+                    created_at: 2019-09-30T21:25:51Z
+                  - id: olejYWdj
+                    title: Default drac network
+                    status: active
+                    cidr: 10.172.8.2/31
+                    family: ipv4
+                    interface_type: oob
+                    distribution_method: gateway
+                    additional: true
+                    updated_at: 2019-09-30T21:25:51Z
+                    created_at: 2019-09-30T21:25:51Z
+                  - id: MvbmqpbY
+                    title: Public IPv6
+                    status: active
+                    cidr: 2a05:93c0:25:10::/64
+                    family: ipv6
+                    interface_type: public
+                    distribution_method: route
+                    additional: true
+                    updated_at: 2019-09-30T21:25:51Z
+                    created_at: 2019-09-30T21:25:51Z
+              schema:
+                items:
+                  $ref: '#/components/schemas/network'
+                title: List of networks
+                type: array
+          description: Returns networks list
+          headers:
+            X-Total:
+              description: X-Total
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Limit:
+              description: X-RateLimit-Limit
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Remaining:
+              description: X-RateLimit-Remaining
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Reset:
+              description: X-RateLimit-Reset
+              explode: false
+              schema:
+                type: string
+              style: simple
+        412:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: host_is_not_ready
+                    code: PRECONDITION_FAILED
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns precondition failed error
+        404:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Not found
+                    code: NOT_FOUND
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns not found error
+        400:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Bad request
+                    code: BAD_REQUEST
+                    params:
+                    - per_page
+              schema:
+                $ref: '#/components/schemas/The Root Schema'
+          description: Returns bad request error
+      summary: List all networks for an existing dedicated server
+      tags:
+      - Dedicated Server
+      x-code-samples:
+      - lang: curl
+        label: cURL
+        source: 'curl -g "https://api.servers.com/v1/hosts/dedicated_servers/l9avgmbG/networks"
+          -X GET '
+  /v1/hosts/dedicated_servers/{server_id}/power_feeds:
+    get:
+      operationId: ListAllPowerFeedsForAnExistingDedicatedServer
+      parameters:
+      - example: xkazYeJ0
+        explode: false
+        in: path
+        name: server_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        200:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                  - name: Power 2
+                    status: on
+                  - name: Power 1
+                    status: on
+              schema:
+                items:
+                  $ref: '#/components/schemas/Power feed'
+                title: List of power feeds
+                type: array
+          description: Returns list of feeds
+          headers:
+            X-RateLimit-Limit:
+              description: X-RateLimit-Limit
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Remaining:
+              description: X-RateLimit-Remaining
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Reset:
+              description: X-RateLimit-Reset
+              explode: false
+              schema:
+                type: string
+              style: simple
+        404:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Not found
+                    code: NOT_FOUND
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns not found error
+        412:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: host_is_not_ready
+                    code: PRECONDITION_FAILED
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns precondition failed error
+      summary: List all power feeds for an existing dedicated server
+      tags:
+      - Dedicated Server
+      x-code-samples:
+      - lang: curl
+        label: cURL
+        source: 'curl -g "https://api.servers.com/v1/hosts/dedicated_servers/xkazYeJ0/power_feeds"
+          -X GET '
+  /v1/hosts/dedicated_servers/{server_id}/ptr_records:
+    get:
+      operationId: ListAllPtrRecordsForServerNetworks
+      parameters:
+      - description: ' per page'
+        explode: true
+        in: query
+        name: per_page
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          minimum: 1
+          type: integer
+        style: form
+      - description: ' page'
+        explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          minimum: 1
+          type: integer
+        style: form
+      - description: ' sorting'
+        explode: true
+        in: query
+        name: sorting
+        required: false
+        schema:
+          default: id
+          enum:
+          - id
+          - domain
+          type: string
+        style: form
+      - description: ' direction'
+        explode: true
+        in: query
+        name: direction
+        required: false
+        schema:
+          default: ASC
+          enum:
+          - ASC
+          - DESC
+          type: string
+        style: form
+      - example: YqaQlenj
+        explode: false
+        in: path
+        name: server_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        412:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: host_is_not_ready
+                    code: PRECONDITION_FAILED
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns precondition failed error
+        404:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Not found
+                    code: NOT_FOUND
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns not found error
+        200:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                  - id: l9avQVeG
+                    ip: 23.108.216.52
+                    domain: test.privateservergrid.com
+                    priority: 0
+                    ttl: 3600
+              schema:
+                items:
+                  $ref: '#/components/schemas/inline_response_200'
+                type: array
+          description: Returns list of ptr records
+          headers:
+            X-Total:
+              description: X-Total
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Limit:
+              description: X-RateLimit-Limit
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Remaining:
+              description: X-RateLimit-Remaining
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Reset:
+              description: X-RateLimit-Reset
+              explode: false
+              schema:
+                type: string
+              style: simple
+      summary: List all PTR records for server networks
+      tags:
+      - Dedicated Server
+      x-code-samples:
+      - lang: curl
+        label: cURL
+        source: 'curl -g "https://api.servers.com/v1/hosts/dedicated_servers/YqaQlenj/ptr_records"
+          -X GET '
+    post:
+      operationId: CreatePtrRecordForServerNetworks
+      parameters:
+      - example: QBeXWdyK
+        explode: false
+        in: path
+        name: server_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/inline_object_1'
+        content:
+          application/json:
+            example:
+              ip: 100.0.0.4
+              domain: ai.privateservergrid.com
+              ttl: 300
+              priority: 3
+            schema:
+              properties:
+                ip:
+                  description: ' ip'
+                  nullable: false
+                domain:
+                  description: ' domain'
+                  nullable: false
+                  type: string
+                ttl:
+                  description: ' ttl'
+                  minimum: 0
+                  nullable: false
+                  type: integer
+                priority:
+                  description: ' priority'
+                  minimum: 0
+                  nullable: false
+                  type: integer
+              required:
+              - domain
+              - ip
+              type: object
+      responses:
+        201:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    id: oQeZzvep
+                    ip: 100.0.0.4
+                    domain: ai.privateservergrid.com
+                    priority: 3
+                    ttl: 3600
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+          description: Creates new PTR record
+          headers:
+            X-RateLimit-Limit:
+              description: X-RateLimit-Limit
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Remaining:
+              description: X-RateLimit-Remaining
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Reset:
+              description: X-RateLimit-Reset
+              explode: false
+              schema:
+                type: string
+              style: simple
+        422:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Validation failed
+                    code: UNPROCESSABLE_ENTITY
+                    errors:
+                      ip: address does not belongs to host
+              schema:
+                $ref: '#/components/schemas/The Root Schema_1'
+          description: Returns Validation failed error
+        412:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: host_is_not_ready
+                    code: PRECONDITION_FAILED
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns precondition failed error
+      summary: Create PTR record for server networks
+      tags:
+      - Dedicated Server
+      x-code-samples:
+      - lang: curl
+        label: cURL
+        source: "curl \"https://api.servers.com/v1/hosts/dedicated_servers/QBeXWdyK/ptr_records\"\
+          \ -d '{\n  \"ip\": \"100.0.0.4\",\n  \"domain\": \"ai.privateservergrid.com\"\
+          ,\n  \"ttl\": 300,\n  \"priority\": 3\n}' -X POST "
+  /v1/hosts/dedicated_servers/{server_id}/abort_release:
+    post:
+      operationId: AbortReleaseForAnExistingDedicatedServer
+      parameters:
+      - example: BDbDxbl2
+        explode: false
+        in: path
+        name: server_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        201:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    id: BDbDxbl2
+                    title: title32
+                    location_id: 144
+                    status: active
+                    configuration: REMM R123
+                    private_ipv4_address: 10.0.0.7
+                    public_ipv4_address: 169.254.0.7
+                    lease_start_at: 2019-09-30
+                    scheduled_release_at: null
+                    type: dedicated_server
+                    updated_at: 2019-09-30T21:25:28Z
+              schema:
+                $ref: '#/components/schemas/v1-hosts-dedicated_servers-_entity'
+          description: Returns updated hosts
+          headers:
+            X-RateLimit-Limit:
+              description: X-RateLimit-Limit
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Remaining:
+              description: X-RateLimit-Remaining
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Reset:
+              description: X-RateLimit-Reset
+              explode: false
+              schema:
+                type: string
+              style: simple
+        409:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Host release not scheduled
+                    code: HOST_RELEASE_NOT_SCHEDULED
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns conflict error
+        404:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Not found
+                    code: NOT_FOUND
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns not found error
+        412:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: host_is_not_ready
+                    code: PRECONDITION_FAILED
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns precondition failed error
+      summary: Abort release for an existing dedicated server
+      tags:
+      - Dedicated Server
+      x-code-samples:
+      - lang: curl
+        label: cURL
+        source: 'curl "https://api.servers.com/v1/hosts/dedicated_servers/BDbDxbl2/abort_release"  -X
+          POST '
+  /v1/hosts/dedicated_servers/{server_id}/schedule_release:
+    post:
+      operationId: ScheduleReleaseForAnExistingDedicatedServer
+      parameters:
+      - example: y1aKReQG
+        explode: false
+        in: path
+        name: server_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        201:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    id: y1aKReQG
+                    title: title36
+                    location_id: 152
+                    status: active
+                    configuration: REMM R123
+                    private_ipv4_address: 10.0.0.8
+                    public_ipv4_address: 169.254.0.8
+                    lease_start_at: 2019-09-30
+                    scheduled_release_at: 2019-10-30T21:25:30Z
+                    type: dedicated_server
+                    updated_at: 2019-09-30T21:25:30Z
+              schema:
+                $ref: '#/components/schemas/v1-hosts-dedicated_servers-_entity'
+          description: Returns updated host
+          headers:
+            X-RateLimit-Limit:
+              description: X-RateLimit-Limit
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Remaining:
+              description: X-RateLimit-Remaining
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Reset:
+              description: X-RateLimit-Reset
+              explode: false
+              schema:
+                type: string
+              style: simple
+        404:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Not found
+                    code: NOT_FOUND
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns not found error
+        409:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Host release already scheduled
+                    code: HOST_RELEASE_ALREADY_SCHEDULED
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns conflict error
+        412:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: host_is_not_ready
+                    code: PRECONDITION_FAILED
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns precondition failed error
+      summary: Schedule release for an existing dedicated server
+      tags:
+      - Dedicated Server
+      x-code-samples:
+      - lang: curl
+        label: cURL
+        source: 'curl "https://api.servers.com/v1/hosts/dedicated_servers/y1aKReQG/schedule_release"  -X
+          POST '
+  /v1/hosts/dedicated_servers/{server_id}/ptr_records/{record_id}:
+    delete:
+      operationId: DeleteAnExistingPtrRecord
+      parameters:
+      - example: lNbWJayg
+        explode: false
+        in: path
+        name: server_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - example: oQeZzvep
+        explode: false
+        in: path
+        name: record_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        404:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Not found
+                    code: NOT_FOUND
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns not found error
+        204:
+          description: Deletes ptr record
+          headers:
+            X-RateLimit-Limit:
+              description: X-RateLimit-Limit
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Remaining:
+              description: X-RateLimit-Remaining
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Reset:
+              description: X-RateLimit-Reset
+              explode: false
+              schema:
+                type: string
+              style: simple
+      summary: Delete an existing PTR record
+      tags:
+      - Dedicated Server
+      x-code-samples:
+      - lang: curl
+        label: cURL
+        source: 'curl "https://api.servers.com/v1/hosts/dedicated_servers/lNbWJayg/ptr_records/oQeZzvep"  -X
+          DELETE '
+  /v1/hosts:
+    get:
+      operationId: ListAllHosts
+      parameters:
+      - description: ' search pattern'
+        explode: true
+        in: query
+        name: search_pattern
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: ' location'
+        explode: true
+        in: query
+        name: location_id
+        required: false
+        schema:
+          type: integer
+        style: form
+      - description: ' type'
+        explode: true
+        in: query
+        name: type
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: ' per page'
+        explode: true
+        in: query
+        name: per_page
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          minimum: 1
+          type: integer
+        style: form
+      - description: ' page'
+        explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          minimum: 1
+          type: integer
+        style: form
+      - description: ' sorting'
+        explode: true
+        in: query
+        name: sorting
+        required: false
+        schema:
+          default: id
+          enum:
+          - id
+          type: string
+        style: form
+      - description: ' direction'
+        explode: true
+        in: query
+        name: direction
+        required: false
+        schema:
+          default: ASC
+          enum:
+          - ASC
+          - DESC
+          type: string
+        style: form
+      responses:
+        200:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                  - id: Jrb2KdWL
+                    title: title64
+                    location_id: 204
+                    status: active
+                    configuration: REMM R123
+                    private_ipv4_address: 10.0.0.9
+                    public_ipv4_address: 169.254.0.9
+                    lease_start_at: 2019-09-30
+                    scheduled_release_at: null
+                    type: dedicated_server
+                    updated_at: 2019-09-30T21:25:42Z
+                  - id: ELe3Mb69
+                    title: title65
+                    location_id: 204
+                    status: active
+                    configuration: REMM R123
+                    private_ipv4_address: 10.0.0.10
+                    public_ipv4_address: 169.254.0.10
+                    lease_start_at: 2019-09-30
+                    scheduled_release_at: null
+                    type: dedicated_server
+                    updated_at: 2019-09-30T21:25:42Z
+                  - id: GRb41dBL
+                    title: title66
+                    location_id: 204
+                    status: active
+                    configuration: REMM R123
+                    private_ipv4_address: 10.0.0.11
+                    public_ipv4_address: 169.254.0.11
+                    lease_start_at: 2019-09-30
+                    scheduled_release_at: null
+                    type: dedicated_server
+                    updated_at: 2019-09-30T21:25:42Z
+                  - id: M7e5Ba2v
+                    title: x-0-uc00-uc9090
+                    location_id: 204
+                    status: init
+                    configuration: Dell 1850/Dual Xeon 2.8/2GB/2x73GB SCSI
+                    private_ipv4_address: null
+                    public_ipv4_address: null
+                    lease_start_at: null
+                    scheduled_release_at: null
+                    type: dedicated_server
+                    updated_at: 2019-09-30T21:25:42Z
+                  - id: K9b6nbEv
+                    title: x-0-uc00-uc9091
+                    location_id: 204
+                    status: init
+                    configuration: Dell 1850/Dual Xeon 2.8/2GB/2x73GB SCSI
+                    private_ipv4_address: null
+                    public_ipv4_address: null
+                    lease_start_at: null
+                    scheduled_release_at: null
+                    type: dedicated_server
+                    updated_at: 2019-09-30T21:25:42Z
+                  - id: 5xe7jd7r
+                    title: x-0-uc00-uc9092
+                    location_id: 204
+                    status: init
+                    configuration: Dell 1850/Dual Xeon 2.8/2GB/2x73GB SCSI
+                    private_ipv4_address: null
+                    public_ipv4_address: null
+                    lease_start_at: null
+                    scheduled_release_at: null
+                    type: dedicated_server
+                    updated_at: 2019-09-30T21:25:42Z
+              schema:
+                items:
+                  $ref: '#/components/schemas/The Dedicated Server Entity Schema'
+                title: The List of hosts Schema
+                type: array
+          description: Returns list of hosts
+          headers:
+            X-Total:
+              description: X-Total
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Limit:
+              description: X-RateLimit-Limit
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Remaining:
+              description: X-RateLimit-Remaining
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Reset:
+              description: X-RateLimit-Reset
+              explode: false
+              schema:
+                type: string
+              style: simple
+        400:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Bad request
+                    code: BAD_REQUEST
+                    params:
+                    - page
+              schema:
+                $ref: '#/components/schemas/The Root Schema'
+          description: Returns bad request
+      summary: List all hosts
+      tags:
+      - Hosts
+      x-code-samples:
+      - lang: curl
+        label: cURL
+        source: 'curl -g "https://api.servers.com/v1/hosts" -X GET '
+  /v1/hosts/kubernetes_baremetal_nodes/{node_id}:
+    get:
+      operationId: RetrieveAnExistingKubernetesBaremetalNode
+      parameters:
+      - example: pmbk5ezJ
+        explode: false
+        in: path
+        name: node_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        404:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Not found
+                    code: NOT_FOUND
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns not found error
+        200:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    id: pmbk5ezJ
+                    kubernetes_cluster_id: y5eVMdEP
+                    kubernetes_cluster_node_id: pmbk5ezJ
+                    kubernetes_cluster_node_number: 2
+                    title: null
+                    location_id: 105
+                    status: active
+                    configuration: REMM R123
+                    private_ipv4_address: 10.0.0.2
+                    public_ipv4_address: 169.254.0.2
+                    lease_start_at: 2019-09-30
+                    scheduled_release_at: null
+                    type: kubernetes_baremetal_node
+                    updated_at: 2019-09-30T21:25:18Z
+              schema:
+                $ref: '#/components/schemas/The Kubernetes Baremetal Node Entity Schema'
+          description: Returns kubernetes cluster node
+          headers:
+            X-RateLimit-Limit:
+              description: X-RateLimit-Limit
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Remaining:
+              description: X-RateLimit-Remaining
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Reset:
+              description: X-RateLimit-Reset
+              explode: false
+              schema:
+                type: string
+              style: simple
+      summary: Retrieve an existing kubernetes baremetal node
+      tags:
+      - Kubernetes Baremetal Node
+      x-code-samples:
+      - lang: curl
+        label: cURL
+        source: 'curl -g "https://api.servers.com/v1/hosts/kubernetes_baremetal_nodes/pmbk5ezJ"
+          -X GET '
+  /v1/hosts/kubernetes_baremetal_nodes/{server_id}/networks:
+    get:
+      description: |
+        To list all of the networks for specific kubernetes baremetal node please send `GET /v1/hosts/kubernetes_baremetal_nodes/{server_id}/networks`
+
+        The response contains list of networks which classified by `interface_type`, `distribution_method`
+
+        - `interface_type` points on which interface this network configured.
+        - `distribution_method` describes how network will be distributed.
+          In case of the `gateway`, will be reserved first 4 IP addresses for *enterprise location*,
+          and 1 IP address for *standard location* from the network.
+          In the case of the `route`, the network will be available fully for customer use.
+      operationId: ListAllNetworksForAnExistingKubernetesBaremetalNode
+      parameters:
+      - description: ' search pattern'
+        explode: true
+        in: query
+        name: search_pattern
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: ' family'
+        explode: true
+        in: query
+        name: family
+        required: false
+        schema:
+          enum:
+          - ipv4
+          - ipv6
+          type: string
+        style: form
+      - description: ' interface type'
+        explode: true
+        in: query
+        name: interface_type
+        required: false
+        schema:
+          enum:
+          - public
+          - private
+          - oob
+          type: string
+        style: form
+      - description: ' distribution method'
+        explode: true
+        in: query
+        name: distribution_method
+        required: false
+        schema:
+          enum:
+          - route
+          - gateway
+          type: string
+        style: form
+      - description: ' additional'
+        explode: true
+        in: query
+        name: additional
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: ' per page'
+        explode: true
+        in: query
+        name: per_page
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          minimum: 1
+          type: integer
+        style: form
+      - description: ' page'
+        explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          minimum: 1
+          type: integer
+        style: form
+      - description: ' sorting'
+        explode: true
+        in: query
+        name: sorting
+        required: false
+        schema:
+          default: id
+          enum:
+          - id
+          - updated_at
+          - created_at
+          type: string
+        style: form
+      - description: ' direction'
+        explode: true
+        in: query
+        name: direction
+        required: false
+        schema:
+          default: ASC
+          enum:
+          - ASC
+          - DESC
+          type: string
+        style: form
+      - example: zPdy8WbQ
+        explode: false
+        in: path
+        name: server_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        200:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                  - id: lNbWW4by
+                    title: Public
+                    status: active
+                    cidr: 100.0.1.8/29
+                    family: ipv4
+                    interface_type: public
+                    distribution_method: gateway
+                    additional: false
+                    updated_at: 2019-09-30T21:26:02Z
+                    created_at: 2019-09-30T21:26:02Z
+                  - id: oQeZZ2ep
+                    title: Private
+                    status: active
+                    cidr: 10.0.1.240/29
+                    family: ipv4
+                    interface_type: private
+                    distribution_method: gateway
+                    additional: false
+                    updated_at: 2019-09-30T21:26:02Z
+                    created_at: 2019-09-30T21:26:02Z
+                  - id: KQe1V0aJ
+                    title: Public
+                    status: active
+                    cidr: 100.0.1.16/29
+                    family: ipv4
+                    interface_type: public
+                    distribution_method: gateway
+                    additional: true
+                    updated_at: 2019-09-30T21:26:02Z
+                    created_at: 2019-09-30T21:26:02Z
+                  - id: Jrb2GjdW
+                    title: Private
+                    status: active
+                    cidr: 10.0.1.248/29
+                    family: ipv4
+                    interface_type: private
+                    distribution_method: gateway
+                    additional: true
+                    updated_at: 2019-09-30T21:26:02Z
+                    created_at: 2019-09-30T21:26:02Z
+                  - id: GRb4WgaB
+                    title: Alias
+                    status: active
+                    cidr: 127.0.41.0/24
+                    family: ipv4
+                    interface_type: public
+                    distribution_method: route
+                    additional: true
+                    updated_at: 2019-09-30T21:26:02Z
+                    created_at: 2019-09-30T21:26:02Z
+                  - id: K9b6YLaE
+                    title: OOB
+                    status: active
+                    cidr: 100.35.0.32/31
+                    family: ipv4
+                    interface_type: oob
+                    distribution_method: gateway
+                    additional: true
+                    updated_at: 2019-09-30T21:26:02Z
+                    created_at: 2019-09-30T21:26:02Z
+                  - id: Vyb8B2ev
+                    title: Default drac network
+                    status: active
+                    cidr: 10.172.8.32/31
+                    family: ipv4
+                    interface_type: oob
+                    distribution_method: gateway
+                    additional: true
+                    updated_at: 2019-09-30T21:26:02Z
+                    created_at: 2019-09-30T21:26:02Z
+                  - id: jnegQZbw
+                    title: Public IPv6
+                    status: active
+                    cidr: 2a05:93c0:25:10::/64
+                    family: ipv6
+                    interface_type: public
+                    distribution_method: route
+                    additional: true
+                    updated_at: 2019-09-30T21:26:02Z
+                    created_at: 2019-09-30T21:26:02Z
+              schema:
+                items:
+                  $ref: '#/components/schemas/network'
+                title: List of networks
+                type: array
+          description: Returns networks list
+          headers:
+            X-Total:
+              description: X-Total
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Limit:
+              description: X-RateLimit-Limit
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Remaining:
+              description: X-RateLimit-Remaining
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Reset:
+              description: X-RateLimit-Reset
+              explode: false
+              schema:
+                type: string
+              style: simple
+        404:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Not found
+                    code: NOT_FOUND
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns not found error
+        400:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Bad request
+                    code: BAD_REQUEST
+                    params:
+                    - per_page
+              schema:
+                $ref: '#/components/schemas/The Root Schema'
+          description: Returns bad request error
+        412:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: host_is_not_ready
+                    code: PRECONDITION_FAILED
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns precondition failed error
+      summary: List all networks for an existing kubernetes baremetal node
+      tags:
+      - Kubernetes Baremetal Node
+      x-code-samples:
+      - lang: curl
+        label: cURL
+        source: 'curl -g "https://api.servers.com/v1/hosts/kubernetes_baremetal_nodes/zPdy8WbQ/networks"
+          -X GET '
+  /v1/hosts/kubernetes_baremetal_nodes/{server_id}/power_feeds:
+    get:
+      operationId: ListAllPowerFeedsForAnExistingKubernetesBaremetalNode
+      parameters:
+      - example: LDdwRb1Y
+        explode: false
+        in: path
+        name: server_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        200:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                  - name: Power 2
+                    status: on
+                  - name: Power 1
+                    status: on
+              schema:
+                items:
+                  $ref: '#/components/schemas/Power feed'
+                title: List of power feeds
+                type: array
+          description: Returns list of feeds
+          headers:
+            X-RateLimit-Limit:
+              description: X-RateLimit-Limit
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Remaining:
+              description: X-RateLimit-Remaining
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Reset:
+              description: X-RateLimit-Reset
+              explode: false
+              schema:
+                type: string
+              style: simple
+        412:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: host_is_not_ready
+                    code: PRECONDITION_FAILED
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns precondition failed error
+        404:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Not found
+                    code: NOT_FOUND
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns not found error
+      summary: List all power feeds for an existing kubernetes baremetal node
+      tags:
+      - Kubernetes Baremetal Node
+      x-code-samples:
+      - lang: curl
+        label: cURL
+        source: 'curl -g "https://api.servers.com/v1/hosts/kubernetes_baremetal_nodes/LDdwRb1Y/power_feeds"
+          -X GET '
+  /v1/kubernetes_clusters:
+    get:
+      operationId: KubernetesClusters
+      parameters:
+      - description: ' search pattern'
+        explode: true
+        in: query
+        name: search_pattern
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: ' location'
+        explode: true
+        in: query
+        name: location_id
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+        style: form
+      - description: ' per page'
+        explode: true
+        in: query
+        name: per_page
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          minimum: 1
+          type: integer
+        style: form
+      - description: ' page'
+        explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          minimum: 1
+          type: integer
+        style: form
+      - description: ' sorting'
+        explode: true
+        in: query
+        name: sorting
+        required: false
+        schema:
+          default: id
+          enum:
+          - id
+          - created_at
+          - updated_at
+          type: string
+        style: form
+      - description: ' direction'
+        explode: true
+        in: query
+        name: direction
+        required: false
+        schema:
+          default: ASC
+          enum:
+          - ASC
+          - DESC
+          type: string
+        style: form
+      responses:
+        400:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Bad request
+                    code: BAD_REQUEST
+                    params:
+                    - page
+              schema:
+                $ref: '#/components/schemas/The Root Schema'
+          description: Returns bad request error
+        200:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                  - id: J0dN6dLO
+                    name: some_cluster
+                    status: pending
+                    location_id: 102
+                    created_at: 2019-09-30T21:25:17Z
+                    updated_at: 2019-09-30T21:25:17Z
+                  - id: 3YaOpbxq
+                    name: some_cluster
+                    status: pending
+                    location_id: 102
+                    created_at: 2019-09-30T21:25:17Z
+                    updated_at: 2019-09-30T21:25:17Z
+              schema:
+                items:
+                  $ref: '#/components/schemas/The Items Schema'
+                title: The Root Schema
+                type: array
+          description: Returns list of kubernetes clusters
+          headers:
+            X-Total:
+              description: X-Total
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Limit:
+              description: X-RateLimit-Limit
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Remaining:
+              description: X-RateLimit-Remaining
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Reset:
+              description: X-RateLimit-Reset
+              explode: false
+              schema:
+                type: string
+              style: simple
+      summary: Kubernetes clusters
+      tags:
+      - Kubernetes Cluster
+      x-code-samples:
+      - lang: curl
+        label: cURL
+        source: 'curl -g "https://api.servers.com/v1/kubernetes_clusters" -X GET '
+  /v1/kubernetes_clusters/{id}:
+    get:
+      operationId: RetrieveAnExistingKubernetesCluster
+      parameters:
+      - example: xkazYeJ0
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        200:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    id: xkazYeJ0
+                    name: some_cluster
+                    status: pending
+                    location_id: 97
+                    created_at: 2019-09-30T21:25:16Z
+                    updated_at: 2019-09-30T21:25:16Z
+              schema:
+                $ref: '#/components/schemas/inline_response_200_1'
+          description: Returns kubernetes cluster
+          headers:
+            X-RateLimit-Limit:
+              description: X-RateLimit-Limit
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Remaining:
+              description: X-RateLimit-Remaining
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Reset:
+              description: X-RateLimit-Reset
+              explode: false
+              schema:
+                type: string
+              style: simple
+        404:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Not found
+                    code: NOT_FOUND
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns not found error
+      summary: Retrieve an existing kubernetes cluster
+      tags:
+      - Kubernetes Cluster
+      x-code-samples:
+      - lang: curl
+        label: cURL
+        source: 'curl -g "https://api.servers.com/v1/kubernetes_clusters/xkazYeJ0"
+          -X GET '
+  /v1/kubernetes_clusters/{kubernetes_cluster_id}/nodes:
+    get:
+      operationId: KubernetesClusterNodes
+      parameters:
+      - description: ' search pattern'
+        explode: true
+        in: query
+        name: search_pattern
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: ' per page'
+        explode: true
+        in: query
+        name: per_page
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          minimum: 1
+          type: integer
+        style: form
+      - description: ' page'
+        explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          minimum: 1
+          type: integer
+        style: form
+      - description: ' sorting'
+        explode: true
+        in: query
+        name: sorting
+        required: false
+        schema:
+          default: id
+          enum:
+          - id
+          - created_at
+          - updated_at
+          type: string
+        style: form
+      - description: ' direction'
+        explode: true
+        in: query
+        name: direction
+        required: false
+        schema:
+          default: ASC
+          enum:
+          - ASC
+          - DESC
+          type: string
+        style: form
+      - example: ELe3Mb69
+        explode: false
+        in: path
+        name: kubernetes_cluster_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        200:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                  - id: Jxbojagw
+                    number: 6
+                    hostname: name38
+                    configuration: SSD.50
+                    type: cloud
+                    role: master
+                    status: pending
+                    private_ipv4_address: 127.0.14.7
+                    public_ipv4_address: 127.0.15.7
+                    ref_id: olejRejN
+                    cluster_id: ELe3Mb69
+                    created_at: 2019-09-30T21:25:36Z
+                    updated_at: 2019-09-30T21:25:36Z
+                  - id: 8mep2bMy
+                    number: 7
+                    hostname: name39
+                    configuration: SSD.50
+                    type: cloud
+                    role: master
+                    status: pending
+                    private_ipv4_address: 127.0.16.8
+                    public_ipv4_address: 127.0.17.8
+                    ref_id: pmbk5ezJ
+                    cluster_id: ELe3Mb69
+                    created_at: 2019-09-30T21:25:36Z
+                    updated_at: 2019-09-30T21:25:36Z
+                  - id: 4zbq2dpr
+                    number: 8
+                    hostname: name40
+                    configuration: SSD.50
+                    type: cloud
+                    role: master
+                    status: pending
+                    private_ipv4_address: 127.0.18.9
+                    public_ipv4_address: 127.0.19.9
+                    ref_id: pnel5aKB
+                    cluster_id: ELe3Mb69
+                    created_at: 2019-09-30T21:25:36Z
+                    updated_at: 2019-09-30T21:25:36Z
+                  - id: MYerEdOB
+                    number: 9
+                    hostname: name41
+                    configuration: SSD.50
+                    type: cloud
+                    role: node
+                    status: pending
+                    private_ipv4_address: 127.0.20.10
+                    public_ipv4_address: 127.0.21.10
+                    ref_id: MvbmOeYA
+                    cluster_id: ELe3Mb69
+                    created_at: 2019-09-30T21:25:36Z
+                    updated_at: 2019-09-30T21:25:36Z
+                  - id: l9avmeG1
+                    number: 10
+                    hostname: name42
+                    configuration: SSD.50
+                    type: cloud
+                    role: node
+                    status: pending
+                    private_ipv4_address: 127.0.22.11
+                    public_ipv4_address: 127.0.23.11
+                    ref_id: openRe7A
+                    cluster_id: ELe3Mb69
+                    created_at: 2019-09-30T21:25:36Z
+                    updated_at: 2019-09-30T21:25:36Z
+                  - id: LDdwRb1Y
+                    number: 11
+                    hostname: name43
+                    configuration: SSD.50
+                    type: cloud
+                    role: node
+                    status: pending
+                    private_ipv4_address: 127.0.24.12
+                    public_ipv4_address: 127.0.25.12
+                    ref_id: Jxbojagw
+                    cluster_id: ELe3Mb69
+                    created_at: 2019-09-30T21:25:36Z
+                    updated_at: 2019-09-30T21:25:36Z
+              schema:
+                items:
+                  $ref: '#/components/schemas/The Items Schema_1'
+                title: The Root Schema
+                type: array
+          description: Returns list of kubernetes cluster nodes
+          headers:
+            X-Total:
+              description: X-Total
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Limit:
+              description: X-RateLimit-Limit
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Remaining:
+              description: X-RateLimit-Remaining
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Reset:
+              description: X-RateLimit-Reset
+              explode: false
+              schema:
+                type: string
+              style: simple
+      summary: Kubernetes cluster nodes
+      tags:
+      - Kubernetes Cluster
+      x-code-samples:
+      - lang: curl
+        label: cURL
+        source: 'curl -g "https://api.servers.com/v1/kubernetes_clusters/ELe3Mb69/nodes"
+          -X GET '
+  /v1/kubernetes_clusters/{kubernetes_cluster_id}/nodes/{node_id}:
+    get:
+      operationId: RetrieveAnExistingKubernetesClusterNode
+      parameters:
+      - example: Vyb8mdvA
+        explode: false
+        in: path
+        name: kubernetes_cluster_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - example: 3YaOpbxq
+        explode: false
+        in: path
+        name: node_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        404:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Not found
+                    code: NOT_FOUND
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns not found error
+        200:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    id: 3YaOpbxq
+                    number: 25
+                    hostname: name61
+                    configuration: SSD.50
+                    type: cloud
+                    role: master
+                    status: pending
+                    private_ipv4_address: 127.0.52.26
+                    public_ipv4_address: 127.0.53.26
+                    ref_id: YQdJ2dOG
+                    cluster_id: Vyb8mdvA
+                    created_at: 2019-09-30T21:25:37Z
+                    updated_at: 2019-09-30T21:25:37Z
+              schema:
+                $ref: '#/components/schemas/The Items Schema_1'
+          description: Returns kubernetes cluster node
+          headers:
+            X-RateLimit-Limit:
+              description: X-RateLimit-Limit
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Remaining:
+              description: X-RateLimit-Remaining
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Reset:
+              description: X-RateLimit-Reset
+              explode: false
+              schema:
+                type: string
+              style: simple
+      summary: Retrieve an existing kubernetes cluster node
+      tags:
+      - Kubernetes Cluster
+      x-code-samples:
+      - lang: curl
+        label: cURL
+        source: 'curl -g "https://api.servers.com/v1/kubernetes_clusters/Vyb8mdvA/nodes/3YaOpbxq"
+          -X GET '
+  /v1/l2_segments:
+    get:
+      operationId: ListAllL2Segments
+      parameters:
+      - description: ' per page'
+        explode: true
+        in: query
+        name: per_page
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          minimum: 1
+          type: integer
+        style: form
+      - description: ' page'
+        explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          minimum: 1
+          type: integer
+        style: form
+      - description: ' sorting'
+        explode: true
+        in: query
+        name: sorting
+        required: false
+        schema:
+          default: id
+          enum:
+          - id
+          type: string
+        style: form
+      - description: ' direction'
+        explode: true
+        in: query
+        name: direction
+        required: false
+        schema:
+          default: ASC
+          enum:
+          - ASC
+          - DESC
+          type: string
+        style: form
+      responses:
+        200:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                  - id: N1aMAaWm
+                    name: name139
+                    type: public
+                    status: active
+                    location_id: 485
+                    updated_at: 2019-09-30T21:26:33Z
+                    created_at: 2019-09-30T21:26:33Z
+                  - id: J0dN6dLO
+                    name: name140
+                    type: public
+                    status: active
+                    location_id: 485
+                    updated_at: 2019-09-30T21:26:33Z
+                    created_at: 2019-09-30T21:26:33Z
+                  - id: 3YaOpbxq
+                    name: name141
+                    type: public
+                    status: active
+                    location_id: 485
+                    updated_at: 2019-09-30T21:26:33Z
+                    created_at: 2019-09-30T21:26:33Z
+              schema:
+                items:
+                  $ref: '#/components/schemas/v1-l2_segments-_l2_segment'
+                title: The list of L2 Segments schema
+                type: array
+          description: Returns list of L2 Segments
+          headers:
+            X-Total:
+              description: X-Total
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Limit:
+              description: X-RateLimit-Limit
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Remaining:
+              description: X-RateLimit-Remaining
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Reset:
+              description: X-RateLimit-Reset
+              explode: false
+              schema:
+                type: string
+              style: simple
+      summary: List all L2 segments
+      tags:
+      - L2 Segment
+      x-code-samples:
+      - lang: curl
+        label: cURL
+        source: 'curl -g "https://api.servers.com/v1/l2_segments" -X GET '
+    post:
+      operationId: CreateANewL2Segment
+      requestBody:
+        $ref: '#/components/requestBodies/inline_object_2'
+        content:
+          application/json:
+            example:
+              name: name158
+              type: public
+              location_id: 532
+              members:
+              - id: oQeZY6dp
+                mode: native
+              - id: KQe1WjbJ
+                mode: native
+            schema:
+              properties:
+                name:
+                  description: ' name'
+                  maxLength: 255
+                  type: string
+                type:
+                  description: ' type'
+                  enum:
+                  - private
+                  - public
+                  type: string
+                location_id:
+                  description: ' location'
+                  type: integer
+                members:
+                  description: ' members'
+                  items:
+                    $ref: '#/components/schemas/_v1_l2_segments_members'
+                  minItems: 1
+                  type: array
+              required:
+              - location_id
+              - members
+              - type
+              type: object
+      responses:
+        201:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    id: M7e5Ba2v
+                    name: name158
+                    type: public
+                    status: pending
+                    location_id: 532
+                    updated_at: 2019-09-30T21:26:40Z
+                    created_at: 2019-09-30T21:26:40Z
+              schema:
+                $ref: '#/components/schemas/v1-l2_segments-_l2_segment_detailed'
+          description: Returns created L2 segment
+          headers:
+            X-RateLimit-Limit:
+              description: X-RateLimit-Limit
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Remaining:
+              description: X-RateLimit-Remaining
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Reset:
+              description: X-RateLimit-Reset
+              explode: false
+              schema:
+                type: string
+              style: simple
+        422:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Validation failed
+                    code: UNPROCESSABLE_ENTITY
+                    errors:
+                      members.0: dedicated server doesn't allow this mode
+                      members.1: dedicated server doesn't allow this mode
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns validation failed
+      summary: Create a new L2 segment
+      tags:
+      - L2 Segment
+      x-code-samples:
+      - lang: curl
+        label: cURL
+        source: "curl \"https://api.servers.com/v1/l2_segments\" -d '{\n  \"name\"\
+          : \"name158\",\n  \"type\": \"public\",\n  \"location_id\": 532,\n  \"members\"\
+          : [\n    {\n      \"id\": \"oQeZY6dp\",\n      \"mode\": \"native\"\n  \
+          \  },\n    {\n      \"id\": \"KQe1WjbJ\",\n      \"mode\": \"native\"\n\
+          \    }\n  ]\n}' -X POST "
+  /v1/l2_segments/{l2_segment_id}:
+    delete:
+      operationId: DeleteAnExistingL2Segment
+      parameters:
+      - example: y5eVMdEP
+        explode: false
+        in: path
+        name: l2_segment_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        204:
+          description: Returns success
+          headers:
+            X-RateLimit-Limit:
+              description: X-RateLimit-Limit
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Remaining:
+              description: X-RateLimit-Remaining
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Reset:
+              description: X-RateLimit-Reset
+              explode: false
+              schema:
+                type: string
+              style: simple
+        409:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Not ready
+                    code: NOT_READY
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns conflict
+        404:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Not found
+                    code: NOT_FOUND
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns not found error
+      summary: Delete an existing L2 segment
+      tags:
+      - L2 Segment
+      x-code-samples:
+      - lang: curl
+        label: cURL
+        source: 'curl "https://api.servers.com/v1/l2_segments/y5eVMdEP"  -X DELETE '
+    get:
+      operationId: RetrieveAnExistingL2Segment
+      parameters:
+      - example: ELe3Mb69
+        explode: false
+        in: path
+        name: l2_segment_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        200:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    id: ELe3Mb69
+                    name: name156
+                    type: public
+                    status: pending
+                    location_id: 527
+                    updated_at: 2019-09-30T21:26:39Z
+                    created_at: 2019-09-30T21:26:39Z
+              schema:
+                $ref: '#/components/schemas/v1-l2_segments-_l2_segment_detailed'
+          description: Returns L2 segment
+          headers:
+            X-RateLimit-Limit:
+              description: X-RateLimit-Limit
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Remaining:
+              description: X-RateLimit-Remaining
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Reset:
+              description: X-RateLimit-Reset
+              explode: false
+              schema:
+                type: string
+              style: simple
+        404:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Not found
+                    code: NOT_FOUND
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns not found error
+      summary: Retrieve an existing L2 segment
+      tags:
+      - L2 Segment
+      x-code-samples:
+      - lang: curl
+        label: cURL
+        source: 'curl -g "https://api.servers.com/v1/l2_segments/ELe3Mb69" -X GET '
+    put:
+      operationId: UpdateAnExistingL2Segment
+      parameters:
+      - example: 4QbYKezq
+        explode: false
+        in: path
+        name: l2_segment_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/inline_object_3'
+        content:
+          application/json:
+            example:
+              name: name149
+              members:
+              - id: 3YaOyNdx
+                mode: native
+              - id: WZdPZnaK
+                mode: native
+            schema:
+              properties:
+                name:
+                  description: ' name'
+                  maxLength: 255
+                  type: string
+                members:
+                  description: ' members'
+                  items:
+                    $ref: '#/components/schemas/_v1_l2_segments_members'
+                  minItems: 1
+                  type: array
+              type: object
+      responses:
+        200:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    id: 4QbYKezq
+                    name: name149
+                    type: public
+                    status: pending
+                    location_id: 511
+                    updated_at: 2019-09-30T21:26:37Z
+                    created_at: 2019-09-30T21:26:36Z
+              schema:
+                $ref: '#/components/schemas/v1-l2_segments-_l2_segment_detailed'
+          description: Returns updated L2 Segment
+          headers:
+            X-RateLimit-Limit:
+              description: X-RateLimit-Limit
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Remaining:
+              description: X-RateLimit-Remaining
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Reset:
+              description: X-RateLimit-Reset
+              explode: false
+              schema:
+                type: string
+              style: simple
+        409:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Not ready
+                    code: NOT_READY
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns conflict
+        422:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Validation failed
+                    code: UNPROCESSABLE_ENTITY
+                    errors:
+                      members.0.id: server has no public network feature
+              schema:
+                $ref: '#/components/schemas/The Root Schema_1'
+          description: Returns validation failed
+      summary: Update an existing L2 segment
+      tags:
+      - L2 Segment
+      x-code-samples:
+      - lang: curl
+        label: cURL
+        source: "curl \"https://api.servers.com/v1/l2_segments/4QbYKezq\" -d '{\n\
+          \  \"name\": \"name149\",\n  \"members\": [\n    {\n      \"id\": \"3YaOyNdx\"\
+          ,\n      \"mode\": \"native\"\n    },\n    {\n      \"id\": \"WZdPZnaK\"\
+          ,\n      \"mode\": \"native\"\n    }\n  ]\n}' -X PUT "
+  /v1/l2_segments/{l2_segment_id}/members:
+    get:
+      operationId: ListAllL2SegmentMembers
+      parameters:
+      - description: ' per page'
+        explode: true
+        in: query
+        name: per_page
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          minimum: 1
+          type: integer
+        style: form
+      - description: ' page'
+        explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          minimum: 1
+          type: integer
+        style: form
+      - example: YQdJ2dOG
+        explode: false
+        in: path
+        name: l2_segment_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        200:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                  - id: 46dBLJa7
+                    title: mebertitle
+                    mode: native
+                    vlan: null
+                    status: new
+                    updated_at: 2019-09-30T21:26:32Z
+                    created_at: 2019-09-30T21:26:32Z
+                  - id: BDbD9ndl
+                    title: mebertitle
+                    mode: native
+                    vlan: null
+                    status: new
+                    updated_at: 2019-09-30T21:26:32Z
+                    created_at: 2019-09-30T21:26:32Z
+                  - id: 4oeE9ke0
+                    title: mebertitle
+                    mode: native
+                    vlan: null
+                    status: new
+                    updated_at: 2019-09-30T21:26:32Z
+                    created_at: 2019-09-30T21:26:32Z
+              schema:
+                items:
+                  $ref: '#/components/schemas/v1-l2_segments-_l2_member'
+                title: The L2 segment members schema
+                type: array
+          description: Returns list of L2 Segment members
+          headers:
+            X-Total:
+              description: X-Total
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Limit:
+              description: X-RateLimit-Limit
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Remaining:
+              description: X-RateLimit-Remaining
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Reset:
+              description: X-RateLimit-Reset
+              explode: false
+              schema:
+                type: string
+              style: simple
+        404:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Not found
+                    code: NOT_FOUND
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns not found error
+      summary: List all L2 segment members
+      tags:
+      - L2 Segment
+      x-code-samples:
+      - lang: curl
+        label: cURL
+        source: 'curl -g "https://api.servers.com/v1/l2_segments/YQdJ2dOG/members"
+          -X GET '
+  /v1/l2_segments/{l2_segment_id}/networks:
+    get:
+      operationId: ListAllL2SegmentNetworks
+      parameters:
+      - description: ' per page'
+        explode: true
+        in: query
+        name: per_page
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          minimum: 1
+          type: integer
+        style: form
+      - description: ' page'
+        explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          minimum: 1
+          type: integer
+        style: form
+      - description: ' sorting'
+        explode: true
+        in: query
+        name: sorting
+        required: false
+        schema:
+          default: id
+          enum:
+          - id
+          type: string
+        style: form
+      - description: ' direction'
+        explode: true
+        in: query
+        name: direction
+        required: false
+        schema:
+          default: ASC
+          enum:
+          - ASC
+          - DESC
+          type: string
+        style: form
+      - example: openRe7A
+        explode: false
+        in: path
+        name: l2_segment_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        200:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                  - id: pmbk8xdz
+                    title: Alias
+                    state: new
+                    cidr: 127.0.14.0/24
+                    family: ipv4
+                    interface_type: public
+                    distribution_method: route
+                    additional: true
+                    updated_at: 2019-09-30T21:25:41Z
+                    created_at: 2019-09-30T21:25:41Z
+                  - id: pnelxleK
+                    title: Alias
+                    state: new
+                    cidr: 127.0.15.0/24
+                    family: ipv4
+                    interface_type: public
+                    distribution_method: route
+                    additional: true
+                    updated_at: 2019-09-30T21:25:41Z
+                    created_at: 2019-09-30T21:25:41Z
+                  - id: MvbmOpeY
+                    title: Alias
+                    state: new
+                    cidr: 127.0.16.0/24
+                    family: ipv4
+                    interface_type: public
+                    distribution_method: route
+                    additional: true
+                    updated_at: 2019-09-30T21:25:41Z
+                    created_at: 2019-09-30T21:25:41Z
+              schema:
+                items:
+                  $ref: '#/components/schemas/v1-l2_segments-_l2_network'
+                title: The L2 segment networks schema
+                type: array
+          description: Returns list of L2 Segments networks
+          headers:
+            X-Total:
+              description: X-Total
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Limit:
+              description: X-RateLimit-Limit
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Remaining:
+              description: X-RateLimit-Remaining
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Reset:
+              description: X-RateLimit-Reset
+              explode: false
+              schema:
+                type: string
+              style: simple
+        404:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Not found
+                    code: NOT_FOUND
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns not found error
+      summary: List all l2 segment networks
+      tags:
+      - L2 Segment
+      x-code-samples:
+      - lang: curl
+        label: cURL
+        source: 'curl -g "https://api.servers.com/v1/l2_segments/openRe7A/networks"
+          -X GET '
+    put:
+      operationId: UpdateAnExistingL2SegmentNetworks
+      parameters:
+      - example: olejRejN
+        explode: false
+        in: path
+        name: l2_segment_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/inline_object_4'
+        content:
+          application/json:
+            example:
+              create:
+              - mask: 32
+                distribution_method: route
+              delete:
+              - Vyb81odv
+              - WPe913eL
+              - nXe0YXax
+            schema:
+              properties:
+                create:
+                  description: ' create'
+                  items:
+                    $ref: '#/components/schemas/_v1_l2_segments_l2_segment_id_networks_create'
+                  type: array
+                delete:
+                  description: ' delete'
+                  items:
+                    type: integer
+                  type: array
+              type: object
+      responses:
+        200:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    id: olejRejN
+                    name: name66
+                    type: public
+                    status: pending
+                    location_id: 178
+                    updated_at: 2019-09-30T21:25:39Z
+                    created_at: 2019-09-30T21:25:39Z
+              schema:
+                $ref: '#/components/schemas/v1-l2_segments-_l2_segment_detailed'
+          description: Returns updated L2 Segment
+          headers:
+            X-RateLimit-Limit:
+              description: X-RateLimit-Limit
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Remaining:
+              description: X-RateLimit-Remaining
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Reset:
+              description: X-RateLimit-Reset
+              explode: false
+              schema:
+                type: string
+              style: simple
+      summary: Update an existing L2 segment networks
+      tags:
+      - L2 Segment
+      x-code-samples:
+      - lang: curl
+        label: cURL
+        source: "curl \"https://api.servers.com/v1/l2_segments/olejRejN/networks\"\
+          \ -d '{\n  \"create\": [\n    {\n      \"mask\": 32,\n      \"distribution_method\"\
+          : \"route\"\n    }\n  ],\n  \"delete\": [\n    \"Vyb81odv\",\n    \"WPe913eL\"\
+          ,\n    \"nXe0YXax\"\n  ]\n}' -X PUT "
+  /v1/load_balancers:
+    get:
+      operationId: LoadBalancers
+      parameters:
+      - description: ' search pattern'
+        explode: true
+        in: query
+        name: search_pattern
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: ' location'
+        explode: true
+        in: query
+        name: location_id
+        required: false
+        schema:
+          minimum: 1
+          type: integer
+        style: form
+      - description: ' type'
+        explode: true
+        in: query
+        name: type
+        required: false
+        schema:
+          enum:
+          - l4
+          - l7
+          type: string
+        style: form
+      - description: ' per page'
+        explode: true
+        in: query
+        name: per_page
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          minimum: 1
+          type: integer
+        style: form
+      - description: ' page'
+        explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          minimum: 1
+          type: integer
+        style: form
+      - description: ' sorting'
+        explode: true
+        in: query
+        name: sorting
+        required: false
+        schema:
+          default: id
+          enum:
+          - id
+          - created_at
+          - updated_at
+          type: string
+        style: form
+      - description: ' direction'
+        explode: true
+        in: query
+        name: direction
+        required: false
+        schema:
+          default: ASC
+          enum:
+          - ASC
+          - DESC
+          type: string
+        style: form
+      responses:
+        400:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Bad request
+                    code: BAD_REQUEST
+                    params:
+                    - page
+              schema:
+                $ref: '#/components/schemas/The Root Schema'
+          description: Returns bad request error
+        200:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                  - id: QBeXWdyK
+                    name: name86
+                    type: l7
+                    status: pending
+                    external_addresses: []
+                    location_id: 232
+                    created_at: 2019-09-30T21:25:50Z
+                    updated_at: 2019-09-30T21:25:50Z
+                  - id: 4QbYKezq
+                    name: name87
+                    type: l7
+                    status: pending
+                    external_addresses: []
+                    location_id: 232
+                    created_at: 2019-09-30T21:25:50Z
+                    updated_at: 2019-09-30T21:25:50Z
+                  - id: oQeZJepZ
+                    name: name88
+                    type: l7
+                    status: pending
+                    external_addresses: []
+                    location_id: 232
+                    created_at: 2019-09-30T21:25:50Z
+                    updated_at: 2019-09-30T21:25:50Z
+              schema:
+                items:
+                  $ref: '#/components/schemas/The Items Schema_2'
+                title: The Root Schema
+                type: array
+          description: Returns list of load balancers
+          headers:
+            X-Total:
+              description: X-Total
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Limit:
+              description: X-RateLimit-Limit
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Remaining:
+              description: X-RateLimit-Remaining
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Reset:
+              description: X-RateLimit-Reset
+              explode: false
+              schema:
+                type: string
+              style: simple
+      summary: Load balancers
+      tags:
+      - Load Balancer
+      x-code-samples:
+      - lang: curl
+        label: cURL
+        source: 'curl -g "https://api.servers.com/v1/load_balancers" -X GET '
+  /v1/load_balancers/l4:
+    post:
+      operationId: CreateANewL4LoadBalancers
+      requestBody:
+        $ref: '#/components/requestBodies/inline_object_5'
+        content:
+          application/json:
+            example:
+              name: name25
+              location_id: 93
+              proxy_protocol_enabled: true
+              rules:
+              - src_proto: TCP
+                dst_proto: TCP
+                src_port: 42
+                dst_port: 43
+                upstreams:
+                - ip: 10.0.0.244
+                  weight: 19
+            schema:
+              properties:
+                name:
+                  description: ' name'
+                  maxLength: 255
+                  minLength: 1
+                  nullable: false
+                  type: string
+                location_id:
+                  description: ' location'
+                  minimum: 1
+                  nullable: false
+                  type: integer
+                proxy_protocol_enabled:
+                  description: ' proxy protocol enabled'
+                  nullable: false
+                  type: boolean
+                rules:
+                  description: ' rules'
+                  items:
+                    $ref: '#/components/schemas/_v1_load_balancers_l4_rules'
+                  type: array
+              required:
+              - location_id
+              - name
+              - rules
+              type: object
+      responses:
+        422:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Validation failed
+                    code: UNPROCESSABLE_ENTITY
+                    errors:
+                      name: is missing
+                      location_id: is missing
+                      rules: is missing
+              schema:
+                $ref: '#/components/schemas/The Root Schema_1'
+          description: Returns unprocessable entity error
+        201:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    id: y1aKReQG
+                    name: name25
+                    type: l4
+                    status: in_process
+                    external_addresses: []
+                    location_id: 93
+                    proxy_protocol_enabled: true
+                    created_at: 2019-09-30T21:25:15Z
+                    updated_at: 2019-09-30T21:25:15Z
+              schema:
+                $ref: '#/components/schemas/inline_response_201'
+          description: Returns a new load balancer
+          headers:
+            X-RateLimit-Limit:
+              description: X-RateLimit-Limit
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Remaining:
+              description: X-RateLimit-Remaining
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Reset:
+              description: X-RateLimit-Reset
+              explode: false
+              schema:
+                type: string
+              style: simple
+      summary: Create a new L4 load balancers
+      tags:
+      - Load Balancer
+      x-code-samples:
+      - lang: curl
+        label: cURL
+        source: "curl \"https://api.servers.com/v1/load_balancers/l4\" -d '{\n  \"\
+          name\": \"name25\",\n  \"location_id\": 93,\n  \"proxy_protocol_enabled\"\
+          : true,\n  \"rules\": [\n    {\n      \"src_proto\": \"TCP\",\n      \"\
+          dst_proto\": \"TCP\",\n      \"src_port\": 42,\n      \"dst_port\": 43,\n\
+          \      \"upstreams\": [\n        {\n          \"ip\": \"10.0.0.244\",\n\
+          \          \"weight\": 19\n        }\n      ]\n    }\n  ]\n}' -X POST "
+  /v1/load_balancers/l7:
+    post:
+      operationId: CreateANewL7LoadBalancers
+      requestBody:
+        $ref: '#/components/requestBodies/inline_object_6'
+        content:
+          application/json:
+            example:
+              name: name132
+              location_id: 470
+              healthcheck_url: /
+              redirect_http: false
+              geoip_enabled: false
+              rules:
+              - domains:
+                - example-72.com
+                ssl_certificate_id: Jxbo2jag
+                src_proto: HTTPS
+                dst_proto: HTTPS
+                src_path: /path53
+                dst_path: /path54
+                src_port: 86
+                dst_port: 87
+                upstreams:
+                - ip: 10.0.3.92
+                  weight: 51
+            schema:
+              properties:
+                name:
+                  description: ' name'
+                  maxLength: 255
+                  minLength: 1
+                  nullable: false
+                  type: string
+                location_id:
+                  description: ' location'
+                  minimum: 1
+                  nullable: false
+                  type: integer
+                healthcheck_url:
+                  description: ' healthcheck url'
+                  maxLength: 255
+                  nullable: false
+                  type: string
+                redirect_http:
+                  description: ' redirect http'
+                  nullable: false
+                  type: boolean
+                geoip_enabled:
+                  description: ' geoip enabled'
+                  nullable: false
+                  type: boolean
+                rules:
+                  description: ' rules'
+                  items:
+                    $ref: '#/components/schemas/_v1_load_balancers_l7_rules'
+                  type: array
+              required:
+              - healthcheck_url
+              - location_id
+              - name
+              - rules
+              type: object
+      responses:
+        422:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Validation failed
+                    code: UNPROCESSABLE_ENTITY
+                    errors:
+                      name: is missing
+                      location_id: is missing
+                      healthcheck_url: is missing
+                      rules: is missing
+              schema:
+                $ref: '#/components/schemas/The Root Schema_1'
+          description: Returns unprocessable entity error
+        201:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    id: LDdwpRe1
+                    name: name132
+                    type: l7
+                    status: in_process
+                    external_addresses: []
+                    location_id: 470
+                    redirect_http: false
+                    geoip_enabled: false
+                    created_at: 2019-09-30T21:26:30Z
+                    updated_at: 2019-09-30T21:26:31Z
+              schema:
+                $ref: '#/components/schemas/inline_response_201_1'
+          description: Returns a new load balancer
+          headers:
+            X-RateLimit-Limit:
+              description: X-RateLimit-Limit
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Remaining:
+              description: X-RateLimit-Remaining
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Reset:
+              description: X-RateLimit-Reset
+              explode: false
+              schema:
+                type: string
+              style: simple
+      summary: Create a new L7 load balancers
+      tags:
+      - Load Balancer
+      x-code-samples:
+      - lang: curl
+        label: cURL
+        source: "curl \"https://api.servers.com/v1/load_balancers/l7\" -d '{\n  \"\
+          name\": \"name132\",\n  \"location_id\": 470,\n  \"healthcheck_url\": \"\
+          /\",\n  \"redirect_http\": false,\n  \"geoip_enabled\": false,\n  \"rules\"\
+          : [\n    {\n      \"domains\": [\n        \"example-72.com\"\n      ],\n\
+          \      \"ssl_certificate_id\": \"Jxbo2jag\",\n      \"src_proto\": \"HTTPS\"\
+          ,\n      \"dst_proto\": \"HTTPS\",\n      \"src_path\": \"/path53\",\n \
+          \     \"dst_path\": \"/path54\",\n      \"src_port\": 86,\n      \"dst_port\"\
+          : 87,\n      \"upstreams\": [\n        {\n          \"ip\": \"10.0.3.92\"\
+          ,\n          \"weight\": 51\n        }\n      ]\n    }\n  ]\n}' -X POST "
+  /v1/load_balancers/l4/{id}:
+    delete:
+      operationId: DeleteAnExisitingL4LoadBalancer
+      parameters:
+      - example: 4oeEva0B
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        204:
+          description: Deletes load balancer
+          headers:
+            X-RateLimit-Limit:
+              description: X-RateLimit-Limit
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Remaining:
+              description: X-RateLimit-Remaining
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Reset:
+              description: X-RateLimit-Reset
+              explode: false
+              schema:
+                type: string
+              style: simple
+        400:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Bad request
+                    code: BAD_REQUEST
+                    params:
+                    - id
+              schema:
+                $ref: '#/components/schemas/The Root Schema'
+          description: Returns bad request
+        409:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Inactive load balancer remove error
+                    code: INACTIVE_LOAD_BALANCER_REMOVE_ERROR
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns conflict error
+        404:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Not found
+                    code: NOT_FOUND
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns not found error
+      summary: Delete an exisiting L4 load balancer
+      tags:
+      - Load Balancer
+      x-code-samples:
+      - lang: curl
+        label: cURL
+        source: 'curl "https://api.servers.com/v1/load_balancers/l4/4oeEva0B"  -X
+          DELETE '
+    get:
+      operationId: RetrieveAnExistingL4LoadBalancer
+      parameters:
+      - example: Jxbojagw
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        200:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    id: Jxbojagw
+                    name: name10
+                    type: l4
+                    status: pending
+                    external_addresses: []
+                    location_id: 41
+                    proxy_protocol_enabled: false
+                    created_at: 2019-09-30T21:25:02Z
+                    updated_at: 2019-09-30T21:25:02Z
+              schema:
+                $ref: '#/components/schemas/inline_response_201'
+          description: Returns load balancer
+          headers:
+            X-RateLimit-Limit:
+              description: X-RateLimit-Limit
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Remaining:
+              description: X-RateLimit-Remaining
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Reset:
+              description: X-RateLimit-Reset
+              explode: false
+              schema:
+                type: string
+              style: simple
+        400:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Bad request
+                    code: BAD_REQUEST
+                    params:
+                    - id
+              schema:
+                $ref: '#/components/schemas/The Root Schema'
+          description: Returns bad request
+        404:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Not found
+                    code: NOT_FOUND
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns not found error
+      summary: Retrieve an existing L4 load balancer
+      tags:
+      - Load Balancer
+      x-code-samples:
+      - lang: curl
+        label: cURL
+        source: 'curl -g "https://api.servers.com/v1/load_balancers/l4/Jxbojagw" -X
+          GET '
+    put:
+      operationId: UpdateAnExistingL4LoadBalancer
+      parameters:
+      - example: zPdy7aQr
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/inline_object_7'
+        content:
+          application/json:
+            example:
+              name: name17
+              rules:
+              - src_proto: TCP
+                dst_proto: TCP
+                src_port: 26
+                dst_port: 27
+                upstreams:
+                - ip: 10.0.0.220
+                  weight: 15
+                - ip: 10.0.0.212
+                  weight: 16
+            schema:
+              properties:
+                name:
+                  description: ' name'
+                  maxLength: 255
+                  minLength: 1
+                  nullable: false
+                  type: string
+                proxy_protocol_enabled:
+                  description: ' proxy protocol enabled'
+                  nullable: false
+                  type: boolean
+                rules:
+                  description: ' rules'
+                  items:
+                    $ref: '#/components/schemas/_v1_load_balancers_l4_rules'
+                  type: array
+              type: object
+      responses:
+        400:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Bad request
+                    code: BAD_REQUEST
+                    params:
+                    - id
+              schema:
+                $ref: '#/components/schemas/The Root Schema'
+          description: Returns bad request error
+        409:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Inactive load balancer update error
+                    code: INACTIVE_LOAD_BALANCER_UPDATE_ERROR
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns conflict error
+        422:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Validation failed
+                    code: UNPROCESSABLE_ENTITY
+                    errors:
+                      rules.0.src_proto: is missing
+                      rules.0.dst_proto: is missing
+                      rules.0.src_port: is missing
+                      rules.0.dst_port: is missing
+                      rules.0.upstreams: is missing
+              schema:
+                $ref: '#/components/schemas/The Root Schema_1'
+          description: Returns unprocessable entity error
+        200:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    id: zPdy7aQr
+                    name: name17
+                    type: l4
+                    status: in_process
+                    external_addresses:
+                    - 101.0.0.6
+                    location_id: 71
+                    proxy_protocol_enabled: false
+                    created_at: 2019-09-30T21:25:09Z
+                    updated_at: 2019-09-30T21:25:09Z
+              schema:
+                $ref: '#/components/schemas/inline_response_201'
+          description: Returns updated load balancer
+          headers:
+            X-RateLimit-Limit:
+              description: X-RateLimit-Limit
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Remaining:
+              description: X-RateLimit-Remaining
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Reset:
+              description: X-RateLimit-Reset
+              explode: false
+              schema:
+                type: string
+              style: simple
+        404:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Not found
+                    code: NOT_FOUND
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns not found error
+      summary: Update an existing L4 load balancer
+      tags:
+      - Load Balancer
+      x-code-samples:
+      - lang: curl
+        label: cURL
+        source: "curl \"https://api.servers.com/v1/load_balancers/l4/zPdy7aQr\" -d\
+          \ '{\n  \"name\": \"name17\",\n  \"rules\": [\n    {\n      \"src_proto\"\
+          : \"TCP\",\n      \"dst_proto\": \"TCP\",\n      \"src_port\": 26,\n   \
+          \   \"dst_port\": 27,\n      \"upstreams\": [\n        {\n          \"ip\"\
+          : \"10.0.0.220\",\n          \"weight\": 15\n        },\n        {\n   \
+          \       \"ip\": \"10.0.0.212\",\n          \"weight\": 16\n        }\n \
+          \     ]\n    }\n  ]\n}' -X PUT "
+  /v1/load_balancers/l7/{id}:
+    delete:
+      operationId: DeleteAnExistingL7LoadBalancer
+      parameters:
+      - example: Jrb2KdWL
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        204:
+          description: Deletes load balancer
+          headers:
+            X-RateLimit-Limit:
+              description: X-RateLimit-Limit
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Remaining:
+              description: X-RateLimit-Remaining
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Reset:
+              description: X-RateLimit-Reset
+              explode: false
+              schema:
+                type: string
+              style: simple
+        400:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Bad request
+                    code: BAD_REQUEST
+                    params:
+                    - id
+              schema:
+                $ref: '#/components/schemas/The Root Schema'
+          description: Returns bad request
+        409:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Inactive load balancer remove error
+                    code: INACTIVE_LOAD_BALANCER_REMOVE_ERROR
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns conflict error
+        404:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Not found
+                    code: NOT_FOUND
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns not found error
+      summary: Delete an existing L7 load balancer
+      tags:
+      - Load Balancer
+      x-code-samples:
+      - lang: curl
+        label: cURL
+        source: 'curl "https://api.servers.com/v1/load_balancers/l7/Jrb2KdWL"  -X
+          DELETE '
+    get:
+      operationId: RetrieveAnExistingL7LoadBalancer
+      parameters:
+      - example: nXe0vbxr
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        200:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    id: nXe0vbxr
+                    name: name120
+                    type: l7
+                    status: pending
+                    external_addresses: []
+                    location_id: 424
+                    redirect_http: false
+                    geoip_enabled: false
+                    created_at: 2019-09-30T21:26:23Z
+                    updated_at: 2019-09-30T21:26:23Z
+              schema:
+                $ref: '#/components/schemas/inline_response_201_1'
+          description: Returns load balancer
+          headers:
+            X-RateLimit-Limit:
+              description: X-RateLimit-Limit
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Remaining:
+              description: X-RateLimit-Remaining
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Reset:
+              description: X-RateLimit-Reset
+              explode: false
+              schema:
+                type: string
+              style: simple
+        404:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Not found
+                    code: NOT_FOUND
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns not found error
+        400:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Bad request
+                    code: BAD_REQUEST
+                    params:
+                    - id
+              schema:
+                $ref: '#/components/schemas/The Root Schema'
+          description: Returns bad request
+      summary: Retrieve an existing L7 load balancer
+      tags:
+      - Load Balancer
+      x-code-samples:
+      - lang: curl
+        label: cURL
+        source: 'curl -g "https://api.servers.com/v1/load_balancers/l7/nXe0vbxr" -X
+          GET '
+    put:
+      operationId: UpdateAnExistingL7LoadBalancer
+      parameters:
+      - example: MYerkEaO
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        $ref: '#/components/requestBodies/inline_object_8'
+        content:
+          application/json:
+            example:
+              name: name130
+              healthcheck_url: /
+              redirect_http: false
+              geoip_enabled: false
+              rules:
+              - domains:
+                - example-70.com
+                src_proto: HTTP
+                dst_proto: HTTP
+                src_path: /
+                dst_path: /
+                src_port: 82
+                dst_port: 83
+                upstreams:
+                - ip: 10.0.3.76
+                  weight: 48
+                - ip: 10.0.3.68
+                  weight: 49
+            schema:
+              properties:
+                name:
+                  description: ' name'
+                  maxLength: 255
+                  minLength: 1
+                  nullable: false
+                  type: string
+                healthcheck_url:
+                  description: ' healthcheck url'
+                  maxLength: 255
+                  nullable: false
+                  type: string
+                redirect_http:
+                  description: ' redirect http'
+                  nullable: false
+                  type: boolean
+                geoip_enabled:
+                  description: ' geoip enabled'
+                  nullable: false
+                  type: boolean
+                rules:
+                  description: ' rules'
+                  items:
+                    $ref: '#/components/schemas/_v1_load_balancers_l7_id_rules'
+                  type: array
+              type: object
+      responses:
+        404:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Not found
+                    code: NOT_FOUND
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns not found error
+        409:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Inactive load balancer update error
+                    code: INACTIVE_LOAD_BALANCER_UPDATE_ERROR
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns conflict error
+        400:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Bad request
+                    code: BAD_REQUEST
+                    params:
+                    - id
+              schema:
+                $ref: '#/components/schemas/The Root Schema'
+          description: Returns bad request error
+        200:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    id: MYerkEaO
+                    name: name130
+                    type: l7
+                    status: in_process
+                    external_addresses:
+                    - 101.0.0.24
+                    location_id: 462
+                    redirect_http: false
+                    geoip_enabled: false
+                    created_at: 2019-09-30T21:26:29Z
+                    updated_at: 2019-09-30T21:26:29Z
+              schema:
+                $ref: '#/components/schemas/inline_response_201_1'
+          description: Returns updated load balancer
+          headers:
+            X-RateLimit-Limit:
+              description: X-RateLimit-Limit
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Remaining:
+              description: X-RateLimit-Remaining
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Reset:
+              description: X-RateLimit-Reset
+              explode: false
+              schema:
+                type: string
+              style: simple
+        422:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Validation failed
+                    code: UNPROCESSABLE_ENTITY
+                    errors:
+                      rules.0.src_proto: is missing
+                      rules.0.dst_proto: is missing
+                      rules.0.src_port: is missing
+                      rules.0.dst_port: is missing
+                      rules.0.domains: is missing
+                      rules.0.src_path: is missing
+                      rules.0.dst_path: is missing
+                      rules.0.upstreams: is missing
+              schema:
+                $ref: '#/components/schemas/The Root Schema_1'
+          description: Returns unprocessable entity error
+      summary: Update an existing L7 load balancer
+      tags:
+      - Load Balancer
+      x-code-samples:
+      - lang: curl
+        label: cURL
+        source: "curl \"https://api.servers.com/v1/load_balancers/l7/MYerkEaO\" -d\
+          \ '{\n  \"name\": \"name130\",\n  \"healthcheck_url\": \"/\",\n  \"redirect_http\"\
+          : false,\n  \"geoip_enabled\": false,\n  \"rules\": [\n    {\n      \"domains\"\
+          : [\n        \"example-70.com\"\n      ],\n      \"src_proto\": \"HTTP\"\
+          ,\n      \"dst_proto\": \"HTTP\",\n      \"src_path\": \"/\",\n      \"\
+          dst_path\": \"/\",\n      \"src_port\": 82,\n      \"dst_port\": 83,\n \
+          \     \"upstreams\": [\n        {\n          \"ip\": \"10.0.3.76\",\n  \
+          \        \"weight\": 48\n        },\n        {\n          \"ip\": \"10.0.3.68\"\
+          ,\n          \"weight\": 49\n        }\n      ]\n    }\n  ]\n}' -X PUT "
+  /v1/locations:
+    get:
+      operationId: Locations
+      parameters:
+      - description: ' search pattern'
+        explode: true
+        in: query
+        name: search_pattern
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: ' per page'
+        explode: true
+        in: query
+        name: per_page
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          minimum: 1
+          type: integer
+        style: form
+      - description: ' page'
+        explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          minimum: 1
+          type: integer
+        style: form
+      - description: ' sorting'
+        explode: true
+        in: query
+        name: sorting
+        required: false
+        schema:
+          default: id
+          enum:
+          - id
+          type: string
+        style: form
+      - description: ' direction'
+        explode: true
+        in: query
+        name: direction
+        required: false
+        schema:
+          default: ASC
+          enum:
+          - ASC
+          - DESC
+          type: string
+        style: form
+      responses:
+        200:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                  - id: 140
+                    name: location140
+                    supported_features:
+                    - disaggregated_public_ports
+                    - disaggregated_private_ports
+                    - no_public_network
+                    - no_private_ip
+                    l2_segments_enabled: false
+                    private_racks_enabled: false
+                    load_balancers_enabled: false
+              schema:
+                items:
+                  $ref: '#/components/schemas/The Items Schema_3'
+                title: The Root Schema
+                type: array
+          description: Returns list of locations
+          headers:
+            X-Total:
+              description: X-Total
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Limit:
+              description: X-RateLimit-Limit
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Remaining:
+              description: X-RateLimit-Remaining
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Reset:
+              description: X-RateLimit-Reset
+              explode: false
+              schema:
+                type: string
+              style: simple
+        400:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Bad request
+                    code: BAD_REQUEST
+                    params:
+                    - page
+              schema:
+                $ref: '#/components/schemas/The Root Schema'
+          description: Returns bad request error
+      summary: Locations
+      tags:
+      - Location
+      x-code-samples:
+      - lang: curl
+        label: cURL
+        source: 'curl -g "https://api.servers.com/v1/locations" -X GET '
+  /v1/locations/{location_id}:
+    get:
+      operationId: RetrieveAnExisitingLocation
+      parameters:
+      - example: 138
+        explode: false
+        in: path
+        name: location_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        200:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    id: 138
+                    name: location138
+                    supported_features:
+                    - disaggregated_public_ports
+                    - disaggregated_private_ports
+                    - no_public_network
+                    - no_private_ip
+                    l2_segments_enabled: false
+                    private_racks_enabled: false
+                    load_balancers_enabled: false
+              schema:
+                $ref: '#/components/schemas/The Items Schema_3'
+          description: Returns list of locations
+          headers:
+            X-RateLimit-Limit:
+              description: X-RateLimit-Limit
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Remaining:
+              description: X-RateLimit-Remaining
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Reset:
+              description: X-RateLimit-Reset
+              explode: false
+              schema:
+                type: string
+              style: simple
+      summary: Retrieve an exisiting location
+      tags:
+      - Location
+      x-code-samples:
+      - lang: curl
+        label: cURL
+        source: 'curl -g "https://api.servers.com/v1/locations/138" -X GET '
+  /v1/ssl_certificates:
+    get:
+      operationId: SSLCertificates
+      parameters:
+      - description: ' search pattern'
+        explode: true
+        in: query
+        name: search_pattern
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: ' per page'
+        explode: true
+        in: query
+        name: per_page
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          minimum: 1
+          type: integer
+        style: form
+      - description: ' page'
+        explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          minimum: 1
+          type: integer
+        style: form
+      - description: ' sorting'
+        explode: true
+        in: query
+        name: sorting
+        required: false
+        schema:
+          default: id
+          enum:
+          - id
+          - created_at
+          - updated_at
+          type: string
+        style: form
+      - description: ' direction'
+        explode: true
+        in: query
+        name: direction
+        required: false
+        schema:
+          default: ASC
+          enum:
+          - ASC
+          - DESC
+          type: string
+        style: form
+      responses:
+        200:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                  - id: N1aMAaWm
+                    name: name31
+                    type: custom
+                    issuer: null
+                    subject: example-27.com
+                    domain_names: []
+                    sha1_fingerprint: d5c6b49d-8c63-44b6-8997-a2a3fb43fe3d
+                    expires_at: null
+                    created_at: 2019-09-30T21:25:32Z
+                    updated_at: 2019-09-30T21:25:32Z
+              schema:
+                items:
+                  $ref: '#/components/schemas/The Items Schema_4'
+                title: The Root Schema
+                type: array
+          description: Returns list of certificates
+          headers:
+            X-Total:
+              description: X-Total
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Limit:
+              description: X-RateLimit-Limit
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Remaining:
+              description: X-RateLimit-Remaining
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Reset:
+              description: X-RateLimit-Reset
+              explode: false
+              schema:
+                type: string
+              style: simple
+        400:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Bad request
+                    code: BAD_REQUEST
+                    params:
+                    - page
+              schema:
+                $ref: '#/components/schemas/The Root Schema'
+          description: Returns bad request error
+      summary: SSL Certificates
+      tags:
+      - SSL Certificate
+      x-code-samples:
+      - lang: curl
+        label: cURL
+        source: 'curl -g "https://api.servers.com/v1/ssl_certificates" -X GET '
+  /v1/ssl_certificates/custom:
+    post:
+      operationId: CreateANewCustomSslCertificate
+      requestBody:
+        $ref: '#/components/requestBodies/inline_object_9'
+        content:
+          application/json:
+            example:
+              name: name29
+              public_key: |
+                -----BEGIN CERTIFICATE-----
+                MIICuDCCAiGgAwIBAgIBADANBgkqhkiG9w0BAQUFADBEMQswCQYDVQQGEwJCRTEO
+                MAwGA1UECgwFVGVzdE8xDzANBgNVBAsMBlRlc3RPVTEUMBIGA1UEAwwLc2VydmVy
+                cy5jb20wHhcNMTkwOTMwMjEyNTMxWhcNMjAwOTI5MjEyNTMxWjBEMQswCQYDVQQG
+                EwJCRTEOMAwGA1UECgwFVGVzdE8xDzANBgNVBAsMBlRlc3RPVTEUMBIGA1UEAwwL
+                c2VydmVycy5jb20wgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBAMmhkqke/nVp
+                JSl8iA3xzq0K5kCqnzvnuznJnQe8zkO7cYkKjz8TXKBXJNob1t5+jp6Vo8Sr2WJg
+                SWS7HUyWbCorglYJFnUl0zHgYKqDcNPLEk+fHFnFKHs1il813enYntWPZ0yhbmUG
+                RA44DbNyHl92fby517z/flx9d2GaRkunAgMBAAGjgbkwgbYwDwYDVR0TAQH/BAUw
+                AwEB/zAdBgNVHQ4EFgQUpJW2Ds+ra1DvDCSgfB+f6OozZ0QwFgYDVR0RBA8wDYIL
+                c2VydmVycy5jb20wbAYDVR0jBGUwY4AUpJW2Ds+ra1DvDCSgfB+f6OozZ0ShSKRG
+                MEQxCzAJBgNVBAYTAkJFMQ4wDAYDVQQKDAVUZXN0TzEPMA0GA1UECwwGVGVzdE9V
+                MRQwEgYDVQQDDAtzZXJ2ZXJzLmNvbYIBADANBgkqhkiG9w0BAQUFAAOBgQBROXTN
+                UfpOvnkQ8s1JCMKpTqKUc0qh3DrBbWJ79glXe6Aa2o5qFvGhqCbBjLtW+A/CzCvH
+                mLNpwGBmOnrK9wAVIyL2FvONpIGpElAIIXWchccBBzQFZtuV5qZMJYBa8l45DlV2
+                2m18aNmY0Uzeyk7L7sjUusY96RR7N3G8B/JVOA==
+                -----END CERTIFICATE-----
+              private_key: |
+                -----BEGIN RSA PRIVATE KEY-----
+                MIICXQIBAAKBgQDJoZKpHv51aSUpfIgN8c6tCuZAqp8757s5yZ0HvM5Du3GJCo8/
+                E1ygVyTaG9befo6elaPEq9liYElkux1MlmwqK4JWCRZ1JdMx4GCqg3DTyxJPnxxZ
+                xSh7NYpfNd3p2J7Vj2dMoW5lBkQOOA2zch5fdn28ude8/35cfXdhmkZLpwIDAQAB
+                AoGAet+NwqZypxZWYTvUpbrQGj/kJVBVDWqgfAzTNx3mDPyzqbHXrbac4dF5UblZ
+                belt/FJwpK+dIAhRcaNdrYiVjN5x7SZzCXGGIVaVKFtAjS0j7s++mi5xb8nW7tj6
+                RtK3zx1mWjN5EnEL5IK92bdXV1aj32JcMCr/3CA1jLyZk9ECQQD/uay5z6AwK0Fp
+                KxqmO5C0FyrzZzdEvqQmHdr0Y8Uu7DG5awqeCP0zse4RNOcbxg27BqWctvjDTVhg
+                BQXIqR07AkEAydkFqV+gTgaveieVEPtQQfwNw4FHY/f1rcHrDxMzcBTNhLKv60ym
+                o59OqH3tklKIfG9Y0GqoKjEzfy//OEyUhQJAW4F6UCb+gB4KUvKsn40y825S3TQy
+                77N0E3udbNQCrA6yoFGwQ+qdiBEESj3u8N5G7YSsYE6M533WwM0rS6lQHwJBAMH5
+                urQjfsWdLSOiSGHychWHaZ65bWcH0uTx17g8BpGunDbrFZ51oiraHNhVdGrKv/l9
+                dAeOiB9L+yY+dPGgvpUCQQChj457oqom4bQik3DNdgvsCgoDZvZn6e83ORkdG8ux
+                rhKClKs+KMnJ5Xxi1RrgST0FUtaehaGkukA4QnihdlTZ
+                -----END RSA PRIVATE KEY-----
+            schema:
+              properties:
+                name:
+                  description: ' name'
+                  maxLength: 255
+                  minLength: 1
+                  nullable: false
+                  type: string
+                public_key:
+                  description: ' public key'
+                  maxLength: 32766
+                  nullable: false
+                  type: string
+                private_key:
+                  description: ' private key'
+                  maxLength: 32766
+                  nullable: false
+                  type: string
+                chain_key:
+                  description: ' chain key'
+                  maxLength: 32766
+                  nullable: false
+                  type: string
+              required:
+              - name
+              - private_key
+              - public_key
+              type: object
+      responses:
+        422:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Validation failed
+                    code: UNPROCESSABLE_ENTITY
+                    errors:
+                      public_key: already exists
+              schema:
+                $ref: '#/components/schemas/The Root Schema_1'
+          description: Returns validation error
+        201:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    id: olejRejN
+                    name: name29
+                    type: custom
+                    issuer: servers.com
+                    subject: servers.com
+                    domain_names:
+                    - servers.com
+                    sha1_fingerprint: 2f350f8674cf8c3ce21947cb7be0769778c7c6b5
+                    expires_at: 2020-09-29T21:25:31Z
+                    created_at: 2019-09-30T21:25:31Z
+                    updated_at: 2019-09-30T21:25:31Z
+              schema:
+                $ref: '#/components/schemas/The Items Schema_4'
+          description: Returns a new ssl certificate
+          headers:
+            X-RateLimit-Limit:
+              description: X-RateLimit-Limit
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Remaining:
+              description: X-RateLimit-Remaining
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Reset:
+              description: X-RateLimit-Reset
+              explode: false
+              schema:
+                type: string
+              style: simple
+      summary: Create a new custom SSL certificate
+      tags:
+      - SSL Certificate
+      x-code-samples:
+      - lang: curl
+        label: cURL
+        source: "curl \"https://api.servers.com/v1/ssl_certificates/custom\" -d '{\n\
+          \  \"name\": \"name29\",\n  \"public_key\": \"-----BEGIN CERTIFICATE-----\\\
+          nMIICuDCCAiGgAwIBAgIBADANBgkqhkiG9w0BAQUFADBEMQswCQYDVQQGEwJCRTEO\\nMAwGA1UECgwFVGVzdE8xDzANBgNVBAsMBlRlc3RPVTEUMBIGA1UEAwwLc2VydmVy\\\
+          ncy5jb20wHhcNMTkwOTMwMjEyNTMxWhcNMjAwOTI5MjEyNTMxWjBEMQswCQYDVQQG\\nEwJCRTEOMAwGA1UECgwFVGVzdE8xDzANBgNVBAsMBlRlc3RPVTEUMBIGA1UEAwwL\\\
+          nc2VydmVycy5jb20wgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBAMmhkqke/nVp\\nJSl8iA3xzq0K5kCqnzvnuznJnQe8zkO7cYkKjz8TXKBXJNob1t5+jp6Vo8Sr2WJg\\\
+          nSWS7HUyWbCorglYJFnUl0zHgYKqDcNPLEk+fHFnFKHs1il813enYntWPZ0yhbmUG\\nRA44DbNyHl92fby517z/flx9d2GaRkunAgMBAAGjgbkwgbYwDwYDVR0TAQH/BAUw\\\
+          nAwEB/zAdBgNVHQ4EFgQUpJW2Ds+ra1DvDCSgfB+f6OozZ0QwFgYDVR0RBA8wDYIL\\nc2VydmVycy5jb20wbAYDVR0jBGUwY4AUpJW2Ds+ra1DvDCSgfB+f6OozZ0ShSKRG\\\
+          nMEQxCzAJBgNVBAYTAkJFMQ4wDAYDVQQKDAVUZXN0TzEPMA0GA1UECwwGVGVzdE9V\\nMRQwEgYDVQQDDAtzZXJ2ZXJzLmNvbYIBADANBgkqhkiG9w0BAQUFAAOBgQBROXTN\\\
+          nUfpOvnkQ8s1JCMKpTqKUc0qh3DrBbWJ79glXe6Aa2o5qFvGhqCbBjLtW+A/CzCvH\\nmLNpwGBmOnrK9wAVIyL2FvONpIGpElAIIXWchccBBzQFZtuV5qZMJYBa8l45DlV2\\\
+          n2m18aNmY0Uzeyk7L7sjUusY96RR7N3G8B/JVOA==\\n-----END CERTIFICATE-----\\\
+          n\",\n  \"private_key\": \"-----BEGIN RSA PRIVATE KEY-----\\nMIICXQIBAAKBgQDJoZKpHv51aSUpfIgN8c6tCuZAqp8757s5yZ0HvM5Du3GJCo8/\\\
+          nE1ygVyTaG9befo6elaPEq9liYElkux1MlmwqK4JWCRZ1JdMx4GCqg3DTyxJPnxxZ\\nxSh7NYpfNd3p2J7Vj2dMoW5lBkQOOA2zch5fdn28ude8/35cfXdhmkZLpwIDAQAB\\\
+          nAoGAet+NwqZypxZWYTvUpbrQGj/kJVBVDWqgfAzTNx3mDPyzqbHXrbac4dF5UblZ\\nbelt/FJwpK+dIAhRcaNdrYiVjN5x7SZzCXGGIVaVKFtAjS0j7s++mi5xb8nW7tj6\\\
+          nRtK3zx1mWjN5EnEL5IK92bdXV1aj32JcMCr/3CA1jLyZk9ECQQD/uay5z6AwK0Fp\\nKxqmO5C0FyrzZzdEvqQmHdr0Y8Uu7DG5awqeCP0zse4RNOcbxg27BqWctvjDTVhg\\\
+          nBQXIqR07AkEAydkFqV+gTgaveieVEPtQQfwNw4FHY/f1rcHrDxMzcBTNhLKv60ym\\no59OqH3tklKIfG9Y0GqoKjEzfy//OEyUhQJAW4F6UCb+gB4KUvKsn40y825S3TQy\\\
+          n77N0E3udbNQCrA6yoFGwQ+qdiBEESj3u8N5G7YSsYE6M533WwM0rS6lQHwJBAMH5\\nurQjfsWdLSOiSGHychWHaZ65bWcH0uTx17g8BpGunDbrFZ51oiraHNhVdGrKv/l9\\\
+          ndAeOiB9L+yY+dPGgvpUCQQChj457oqom4bQik3DNdgvsCgoDZvZn6e83ORkdG8ux\\nrhKClKs+KMnJ5Xxi1RrgST0FUtaehaGkukA4QnihdlTZ\\\
+          n-----END RSA PRIVATE KEY-----\\n\"\n}' -X POST "
+  /v1/ssl_certificates/custom/{id}:
+    get:
+      operationId: RetrieveAnExistingCustomSslCertificate
+      parameters:
+      - example: 9wdLwbjP
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        200:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    id: 9wdLwbjP
+                    name: name30
+                    type: custom
+                    issuer: null
+                    subject: example-26.com
+                    domain_names: []
+                    sha1_fingerprint: 3395c151d3e86e750c928b32f5d80d1769a283ba
+                    expires_at: null
+                    created_at: 2019-09-30T21:25:31Z
+                    updated_at: 2019-09-30T21:25:31Z
+              schema:
+                $ref: '#/components/schemas/The Items Schema_4'
+          description: Returns custom ssl certificate
+          headers:
+            X-RateLimit-Limit:
+              description: X-RateLimit-Limit
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Remaining:
+              description: X-RateLimit-Remaining
+              explode: false
+              schema:
+                type: string
+              style: simple
+            X-RateLimit-Reset:
+              description: X-RateLimit-Reset
+              explode: false
+              schema:
+                type: string
+              style: simple
+      summary: Retrieve an existing custom ssl certificate
+      tags:
+      - SSL Certificate
+      x-code-samples:
+      - lang: curl
+        label: cURL
+        source: 'curl -g "https://api.servers.com/v1/ssl_certificates/custom/9wdLwbjP"
+          -X GET '
+components:
+  requestBodies:
+    inline_object_1:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/inline_object_1'
+    inline_object_9:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/inline_object_9'
+    inline_object:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/inline_object'
+    inline_object_8:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/inline_object_8'
+    inline_object_7:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/inline_object_7'
+    inline_object_6:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/inline_object_6'
+    inline_object_5:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/inline_object_5'
+    inline_object_4:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/inline_object_4'
+    inline_object_3:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/inline_object_3'
+    inline_object_2:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/inline_object_2'
+  schemas:
+    v1-hosts-kubernetes_baremetal_node-_entity:
+      properties:
+        id:
+          title: Id
+          type: string
+        kubernetes_cluster_id:
+          title: Kubernetes cluster node cluster id
+          type: string
+        kubernetes_cluster_node_id:
+          title: Kubernetes cluster node id
+          type: string
+        kubernetes_cluster_node_number:
+          title: Kubernetes cluster node number
+          type: integer
+        title:
+          nullable: true
+          title: Title
+          type: string
+        type:
+          enum:
+          - kubernetes_baremetal_node
+          title: Dedicated server type
+          type: string
+        status:
+          enum:
+          - init
+          - pending
+          - active
+          title: Status
+          type: string
+        configuration:
+          title: Configuration
+          type: string
+        location_id:
+          title: Location id
+          type: integer
+        private_ipv4_address:
+          format: ipv4
+          nullable: true
+          title: Private ipv4 address
+          type: string
+        public_ipv4_address:
+          format: ipv4
+          nullable: true
+          title: Public ipv4 address
+          type: string
+        lease_start_at:
+          format: date
+          nullable: true
+          title: Lease start at
+          type: string
+        scheduled_release_at:
+          format: date-time
+          nullable: true
+          title: Scheduled release at
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated at
+          type: string
+      title: The Kubernetes Baremetal Node Entity Schema
+      type: object
+    v1-hosts-dedicated_servers-_short_entity:
+      properties:
+        id:
+          title: Id
+          type: string
+        title:
+          title: Title
+          type: string
+        type:
+          enum:
+          - dedicated_server
+          title: Dedicated server type
+          type: string
+        status:
+          enum:
+          - init
+          - pending
+          - active
+          title: Status
+          type: string
+        configuration:
+          title: Configuration
+          type: string
+        location_id:
+          title: Location id
+          type: integer
+        private_ipv4_address:
+          format: ipv4
+          nullable: true
+          title: Private ipv4 address
+          type: string
+        public_ipv4_address:
+          format: ipv4
+          nullable: true
+          title: Public ipv4 address
+          type: string
+        lease_start_at:
+          format: date
+          nullable: true
+          title: Lease start at
+          type: string
+        scheduled_release_at:
+          format: date-time
+          nullable: true
+          title: Scheduled release at
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated at
+          type: string
+      title: The Dedicated Server Short Entity Schema
+      type: object
+    v1-hosts-dedicated_servers-_entity:
+      example:
+        scheduled_release_at: 2000-01-23T04:56:07.000+00:00
+        updated_at: 2000-01-23T04:56:07.000+00:00
+        configuration: configuration
+        private_ipv4_address: private_ipv4_address
+        id: id
+        title: title
+        type: dedicated_server
+        public_ipv4_address: public_ipv4_address
+        location_id: 0
+        status: init
+        lease_start_at: 2000-01-23
+      properties:
+        id:
+          title: Id
+          type: string
+        title:
+          title: Title
+          type: string
+        type:
+          enum:
+          - dedicated_server
+          title: Dedicated server type
+          type: string
+        status:
+          enum:
+          - init
+          - pending
+          - active
+          title: Status
+          type: string
+        configuration:
+          title: Configuration
+          type: string
+        location_id:
+          title: Location id
+          type: integer
+        private_ipv4_address:
+          format: ipv4
+          nullable: true
+          title: Private ipv4 address
+          type: string
+        public_ipv4_address:
+          format: ipv4
+          nullable: true
+          title: Public ipv4 address
+          type: string
+        lease_start_at:
+          format: date
+          nullable: true
+          title: Lease start at
+          type: string
+        scheduled_release_at:
+          format: date-time
+          nullable: true
+          title: Scheduled release at
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated at
+          type: string
+      title: The Dedicated Server Entity Schema
+      type: object
+    v1-l2_segments-_l2_segment:
+      example:
+        updated_at: 2000-01-23T04:56:07.000+00:00
+        name: name
+        created_at: 2000-01-23T04:56:07.000+00:00
+        id: id
+        type: public
+        location_id: 0
+        location_url: https://openapi-generator.tech
+        status: pending
+      properties:
+        id:
+          title: L2 Segment id
+          type: string
+        name:
+          title: L2 Segment name
+          type: string
+        type:
+          enum:
+          - public
+          - private
+          title: L2 Segment type
+          type: string
+        status:
+          enum:
+          - pending
+          - active
+          title: L2 Segment status
+          type: string
+        location_id:
+          title: Location id
+          type: integer
+        location_url:
+          format: uri
+          title: URL
+          type: string
+        created_at:
+          format: date-time
+          title: Created at
+          type: string
+        updated_at:
+          format: date-time
+          nullable: true
+          title: Updated at
+          type: string
+      title: The L2 Segment short description schema
+      type: object
+    v1-l2_segments-_l2_member:
+      example:
+        mode: mode
+        vlan: 328
+        updated_at: 2000-01-23T04:56:07.000+00:00
+        created_at: 2000-01-23T04:56:07.000+00:00
+        id: id
+        title: title
+        status: new
+      properties:
+        id:
+          title: member id
+          type: string
+        title:
+          title: Member title
+          type: string
+        mode:
+          title: Member mode
+          type: string
+        vlan:
+          maximum: 4096
+          minimum: 1
+          nullable: true
+          title: Member vlan
+          type: integer
+        status:
+          enum:
+          - new
+          - active
+          - removed
+          title: Membership status
+          type: string
+        created_at:
+          format: date-time
+          title: Created at
+          type: string
+        updated_at:
+          format: date-time
+          nullable: true
+          title: Updated at
+          type: string
+      title: The L2 member schema
+      type: object
+    v1-l2_segments-_l2_network:
+      example:
+        updated_at: 2000-01-23T04:56:07.000+00:00
+        additional: true
+        distribution_method: route
+        created_at: 2000-01-23T04:56:07.000+00:00
+        cidr: cidr
+        id: id
+        state: new
+        title: title
+        family: ipv4
+        interface_type: public
+      properties:
+        id:
+          title: network id
+          type: string
+        title:
+          title: network title
+          type: string
+        state:
+          enum:
+          - new
+          - active
+          - removed
+          title: network state
+          type: string
+        cidr:
+          nullable: true
+          title: network cidr
+          type: string
+        family:
+          enum:
+          - ipv4
+          - ipv6
+          title: network family
+          type: string
+        additional:
+          title: flag of is network additional
+          type: boolean
+        interface_type:
+          enum:
+          - public
+          - private
+          - oob
+          title: interface type
+          type: string
+        distribution_method:
+          enum:
+          - route
+          - gateway
+          title: network distribution method
+          type: string
+        updated_at:
+          format: date-time
+          nullable: true
+          title: network updated at
+          type: string
+        created_at:
+          format: date-time
+          title: network created at
+          type: string
+      title: L2 segment network schema
+      type: object
+    v1-l2_segments-_l2_segment_detailed:
+      example:
+        updated_at: 2000-01-23T04:56:07.000+00:00
+        name: name
+        created_at: 2000-01-23T04:56:07.000+00:00
+        id: id
+        type: public
+        location_id: 0
+        status: pending
+      properties:
+        id:
+          title: Id
+          type: string
+        name:
+          title: Name
+          type: string
+        type:
+          enum:
+          - public
+          - private
+          title: L2 Segment type
+          type: string
+        status:
+          enum:
+          - pending
+          - active
+          title: Status
+          type: string
+        location_id:
+          title: Location id
+          type: integer
+        created_at:
+          format: date-time
+          title: Created at
+          type: string
+        updated_at:
+          format: date-time
+          nullable: true
+          title: Updated at
+          type: string
+      title: The L2 Segment detailed description schema
+      type: object
+    _v1_hosts_dedicated_servers_uplink_models_public:
+      properties:
+        id:
+          minimum: 1
+          nullable: false
+          type: integer
+        bandwidth_model_id:
+          minimum: 1
+          nullable: true
+          type: integer
+      required:
+      - id
+    _v1_hosts_dedicated_servers_uplink_models_private:
+      properties:
+        id:
+          minimum: 1
+          nullable: false
+          type: integer
+      required:
+      - id
+    _v1_hosts_dedicated_servers_uplink_models:
+      description: ' uplink models'
+      properties:
+        public:
+          $ref: '#/components/schemas/_v1_hosts_dedicated_servers_uplink_models_public'
+        private:
+          $ref: '#/components/schemas/_v1_hosts_dedicated_servers_uplink_models_private'
+      required:
+      - private
+    _v1_hosts_dedicated_servers_drives_partitions:
+      properties:
+        target:
+          maxLength: 255
+          minLength: 1
+          nullable: false
+          type: string
+        size:
+          minimum: 1
+          nullable: false
+          type: integer
+        fs:
+          maxLength: 255
+          minLength: 1
+          nullable: false
+          type: string
+        fill:
+          nullable: false
+          type: boolean
+      required:
+      - size
+      - target
+    _v1_hosts_dedicated_servers_drives_layout:
+      properties:
+        slot_positions:
+          items:
+            minimum: 0
+            type: integer
+          type: array
+        raid:
+          minimum: 0
+          nullable: true
+          type: integer
+        ignore:
+          nullable: true
+          type: boolean
+        partitions:
+          items:
+            $ref: '#/components/schemas/_v1_hosts_dedicated_servers_drives_partitions'
+          type: array
+      required:
+      - slot_positions
+    _v1_hosts_dedicated_servers_drives:
+      description: ' drives'
+      properties:
+        slots:
+          nullable: false
+        layout:
+          items:
+            $ref: '#/components/schemas/_v1_hosts_dedicated_servers_drives_layout'
+          type: array
+      required:
+      - layout
+      - slots
+    inline_object:
+      properties:
+        location_id:
+          description: ' location'
+          minimum: 1
+          nullable: false
+          type: integer
+        server_model_id:
+          description: ' server model'
+          minimum: 1
+          nullable: false
+          type: integer
+        uplink_models:
+          $ref: '#/components/schemas/_v1_hosts_dedicated_servers_uplink_models'
+        ram_size:
+          description: ' ram size'
+          minimum: 1
+          nullable: false
+          type: integer
+        drives:
+          $ref: '#/components/schemas/_v1_hosts_dedicated_servers_drives'
+        features:
+          description: ' features'
+          items:
+            maxLength: 255
+            minLength: 1
+            type: string
+          type: array
+        ipv6:
+          description: ' ipv6'
+          nullable: false
+          type: boolean
+        hosts:
+          description: ' hosts'
+          items: {}
+          minLength: 1
+          nullable: false
+          type: array
+        operation_system_id:
+          description: ' operation system'
+          minimum: 1
+          nullable: false
+          type: integer
+        ssh_key_fingerprints:
+          description: ' ssh key fingerprints'
+          items: {}
+          maxLength: 1
+          nullable: true
+          type: array
+      required:
+      - drives
+      - hosts
+      - location_id
+      - ram_size
+      - server_model_id
+      - uplink_models
+      type: object
+    inline_response_402:
+      properties:
+        message:
+          title: Error message
+          type: string
+        code:
+          title: Error code
+          type: string
+    network:
+      example:
+        updated_at: 2000-01-23T04:56:07.000+00:00
+        additional: true
+        distribution_method: route
+        created_at: 2000-01-23T04:56:07.000+00:00
+        cidr: cidr
+        id: id
+        title: title
+        family: ipv4
+        interface_type: public
+        status: new
+      properties:
+        id:
+          title: Network id
+          type: string
+        title:
+          title: network title
+          type: string
+        status:
+          enum:
+          - new
+          - active
+          - removed
+          title: network status
+          type: string
+        cidr:
+          nullable: true
+          title: network cidr
+          type: string
+        family:
+          enum:
+          - ipv4
+          - ipv6
+          title: network family
+          type: string
+        additional:
+          title: is network additional
+          type: boolean
+        interface_type:
+          enum:
+          - public
+          - private
+          - oob
+          title: interface type
+          type: string
+        distribution_method:
+          enum:
+          - route
+          - gateway
+          title: network distribution method
+          type: string
+        updated_at:
+          format: date-time
+          nullable: true
+          title: network updated at
+          type: string
+        created_at:
+          format: date-time
+          title: network created at
+          type: string
+    The Root Schema:
+      properties:
+        message:
+          title: Error message
+          type: string
+        code:
+          title: Error code
+          type: string
+        params:
+          items:
+            type: string
+          title: List of invalid params
+          type: array
+    Power feed:
+      example:
+        name: name
+        status: on
+      properties:
+        name:
+          title: Feed name
+          type: string
+        status:
+          enum:
+          - on
+          - off
+          title: Feed status
+          type: string
+    inline_response_200:
+      example:
+        ip: ip
+        domain: domain
+        id: id
+        priority: 0
+        ttl: 6
+      properties:
+        id:
+          title: Record id
+          type: string
+        ip:
+          title: Address
+          type: string
+        domain:
+          title: Domain name
+          type: string
+        priority:
+          title: Record priority
+          type: integer
+        ttl:
+          title: Record ttl
+          type: integer
+    inline_object_1:
+      properties:
+        ip:
+          description: ' ip'
+          nullable: false
+        domain:
+          description: ' domain'
+          nullable: false
+          type: string
+        ttl:
+          description: ' ttl'
+          minimum: 0
+          nullable: false
+          type: integer
+        priority:
+          description: ' priority'
+          minimum: 0
+          nullable: false
+          type: integer
+      required:
+      - domain
+      - ip
+      type: object
+    The Root Schema_1:
+      properties:
+        code:
+          title: Error codee
+          type: string
+        message:
+          title: Error message
+          type: string
+        errors:
+          title: Errors dictionary
+          type: object
+    The Dedicated Server Entity Schema:
+      example:
+        scheduled_release_at: 2000-01-23T04:56:07.000+00:00
+        updated_at: 2000-01-23T04:56:07.000+00:00
+        configuration: configuration
+        private_ipv4_address: private_ipv4_address
+        id: id
+        title: title
+        type: dedicated_server
+        public_ipv4_address: public_ipv4_address
+        location_id: 0
+        status: init
+        lease_start_at: 2000-01-23
+      properties:
+        id:
+          title: Id
+          type: string
+        title:
+          nullable: true
+          title: Title
+          type: string
+        type:
+          enum:
+          - dedicated_server
+          - kubernetes_baremetal_node
+          title: Dedicated server type
+          type: string
+        status:
+          enum:
+          - init
+          - pending
+          - active
+          title: Status
+          type: string
+        configuration:
+          title: Configuration
+          type: string
+        location_id:
+          title: Location id
+          type: integer
+        private_ipv4_address:
+          format: ipv4
+          nullable: true
+          title: Private ipv4 address
+          type: string
+        public_ipv4_address:
+          format: ipv4
+          nullable: true
+          title: Public ipv4 address
+          type: string
+        lease_start_at:
+          format: date
+          nullable: true
+          title: Lease start at
+          type: string
+        scheduled_release_at:
+          format: date-time
+          nullable: true
+          title: Scheduled release at
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated at
+          type: string
+    The Kubernetes Baremetal Node Entity Schema:
+      example:
+        scheduled_release_at: 2000-01-23T04:56:07.000+00:00
+        configuration: configuration
+        private_ipv4_address: private_ipv4_address
+        kubernetes_cluster_id: kubernetes_cluster_id
+        title: title
+        type: kubernetes_baremetal_node
+        public_ipv4_address: public_ipv4_address
+        location_id: 6
+        kubernetes_cluster_node_number: 0
+        kubernetes_cluster_node_id: kubernetes_cluster_node_id
+        updated_at: 2000-01-23T04:56:07.000+00:00
+        id: id
+        status: init
+        lease_start_at: 2000-01-23
+      properties:
+        id:
+          title: Id
+          type: string
+        kubernetes_cluster_id:
+          title: Kubernetes cluster node cluster id
+          type: string
+        kubernetes_cluster_node_id:
+          title: Kubernetes cluster node id
+          type: string
+        kubernetes_cluster_node_number:
+          title: Kubernetes cluster node number
+          type: integer
+        title:
+          nullable: true
+          title: Title
+          type: string
+        type:
+          enum:
+          - kubernetes_baremetal_node
+          title: Dedicated server type
+          type: string
+        status:
+          enum:
+          - init
+          - pending
+          - active
+          title: Status
+          type: string
+        configuration:
+          title: Configuration
+          type: string
+        location_id:
+          title: Location id
+          type: integer
+        private_ipv4_address:
+          format: ipv4
+          nullable: true
+          title: Private ipv4 address
+          type: string
+        public_ipv4_address:
+          format: ipv4
+          nullable: true
+          title: Public ipv4 address
+          type: string
+        lease_start_at:
+          format: date
+          nullable: true
+          title: Lease start at
+          type: string
+        scheduled_release_at:
+          format: date-time
+          nullable: true
+          title: Scheduled release at
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated at
+          type: string
+    The Items Schema:
+      example:
+        updated_at: 2000-01-23T04:56:07.000+00:00
+        name: name
+        created_at: 2000-01-23T04:56:07.000+00:00
+        id: id
+        location_id: 0
+        status: pending
+      properties:
+        id:
+          title: Kubernetes cluster id
+          type: string
+        name:
+          title: Kubernetes cluster name
+          type: string
+        status:
+          enum:
+          - pending
+          - active
+          - removed
+          title: Current status
+          type: string
+        location_id:
+          title: Kubernetes cluster location id
+          type: integer
+        created_at:
+          format: date-time
+          title: Created at
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated at
+          type: string
+    inline_response_200_1:
+      example:
+        updated_at: 2000-01-23T04:56:07.000+00:00
+        name: name
+        created_at: 2000-01-23T04:56:07.000+00:00
+        id: id
+        location_id: 0
+        status: pending
+      properties:
+        id:
+          title: Kubernetes cluster id
+          type: string
+        name:
+          title: Kubernetes cluster name
+          type: string
+        status:
+          enum:
+          - pending
+          - active
+          title: Current status
+          type: string
+        location_id:
+          title: Kubernetes cluster location id
+          type: integer
+        created_at:
+          format: date-time
+          title: Created at
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated at
+          type: string
+    The Items Schema_1:
+      example:
+        ref_id: ref_id
+        role: master
+        configuration: configuration
+        private_ipv4_address: private_ipv4_address
+        created_at: 2000-01-23T04:56:07.000+00:00
+        type: baremetal
+        public_ipv4_address: public_ipv4_address
+        number: 0
+        hostname: hostname
+        cluster_id: cluster_id
+        updated_at: 2000-01-23T04:56:07.000+00:00
+        id: id
+        status: pending
+      properties:
+        id:
+          title: Kubernetes cluster node id
+          type: string
+        number:
+          title: Kubernetes cluster node number
+          type: integer
+        hostname:
+          title: Kubernetes cluster node hostname
+          type: string
+        configuration:
+          title: Kubernetes cluster node configuration
+          type: string
+        type:
+          enum:
+          - baremetal
+          - cloud
+          title: Kubernetes cluster node type
+          type: string
+        role:
+          enum:
+          - master
+          - node
+          title: Kubernetes cluster node role
+          type: string
+        status:
+          enum:
+          - pending
+          - processing
+          - created
+          - active
+          - removed
+          title: Current status
+          type: string
+        private_ipv4_address:
+          format: ipv4
+          title: Kubernetes cluster node private ipv4 address
+          type: string
+        public_ipv4_address:
+          format: ipv4
+          title: Kubernetes cluster node public ipv4 address
+          type: string
+        ref_id:
+          title: Kubernetes cluster node reference id
+          type: string
+        cluster_id:
+          title: Kubernetes cluster node cluster id
+          type: string
+        created_at:
+          format: date-time
+          title: Created at
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated at
+          type: string
+    _v1_l2_segments_members:
+      properties:
+        id:
+          type: string
+        mode:
+          default: native
+          enum:
+          - native
+          - trunk
+          type: string
+      required:
+      - id
+      - mode
+    inline_object_2:
+      properties:
+        name:
+          description: ' name'
+          maxLength: 255
+          type: string
+        type:
+          description: ' type'
+          enum:
+          - private
+          - public
+          type: string
+        location_id:
+          description: ' location'
+          type: integer
+        members:
+          description: ' members'
+          items:
+            $ref: '#/components/schemas/_v1_l2_segments_members'
+          minItems: 1
+          type: array
+      required:
+      - location_id
+      - members
+      - type
+      type: object
+    inline_object_3:
+      properties:
+        name:
+          description: ' name'
+          maxLength: 255
+          type: string
+        members:
+          description: ' members'
+          items:
+            $ref: '#/components/schemas/_v1_l2_segments_members'
+          minItems: 1
+          type: array
+      type: object
+    _v1_l2_segments_l2_segment_id_networks_create:
+      properties:
+        mask:
+          type: integer
+        distribution_method:
+          enum:
+          - route
+          type: string
+      required:
+      - distribution_method
+      - mask
+    inline_object_4:
+      properties:
+        create:
+          description: ' create'
+          items:
+            $ref: '#/components/schemas/_v1_l2_segments_l2_segment_id_networks_create'
+          type: array
+        delete:
+          description: ' delete'
+          items:
+            type: integer
+          type: array
+      type: object
+    The Items Schema_2:
+      example:
+        updated_at: 2000-01-23T04:56:07.000+00:00
+        name: name
+        created_at: 2000-01-23T04:56:07.000+00:00
+        external_addresses:
+        - external_addresses
+        - external_addresses
+        id: id
+        type: l4
+        location_id: 0
+        status: pending
+      properties:
+        id:
+          title: Load balancer id
+          type: string
+        name:
+          title: Load balancer name
+          type: string
+        type:
+          enum:
+          - l4
+          - l7
+          title: Load balanacer type
+          type: string
+        status:
+          enum:
+          - pending
+          - in_process
+          - active
+          title: Current status
+          type: string
+        external_addresses:
+          items:
+            format: ipv4
+            title: IP
+            type: string
+          title: List of addresses
+          type: array
+        location_id:
+          title: Load balancer location id
+          type: integer
+        created_at:
+          format: date-time
+          title: Created at
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated at
+          type: string
+    _v1_load_balancers_l4_upstreams:
+      properties:
+        ip:
+          nullable: false
+          type: string
+        weight:
+          minimum: 0
+          nullable: false
+          type: integer
+      required:
+      - ip
+      - weight
+    _v1_load_balancers_l4_rules:
+      properties:
+        src_proto:
+          enum:
+          - TCP
+          - UDP
+          nullable: false
+          type: string
+        dst_proto:
+          enum:
+          - TCP
+          - UDP
+          nullable: false
+          type: string
+        src_port:
+          maximum: 65535
+          minimum: 1
+          nullable: false
+          type: integer
+        dst_port:
+          maximum: 65535
+          minimum: 1
+          nullable: false
+          type: integer
+        description:
+          maxLength: 255
+          nullable: true
+          type: string
+        upstreams:
+          items:
+            $ref: '#/components/schemas/_v1_load_balancers_l4_upstreams'
+          type: array
+      required:
+      - dst_port
+      - dst_proto
+      - src_port
+      - src_proto
+      - upstreams
+    inline_object_5:
+      properties:
+        name:
+          description: ' name'
+          maxLength: 255
+          minLength: 1
+          nullable: false
+          type: string
+        location_id:
+          description: ' location'
+          minimum: 1
+          nullable: false
+          type: integer
+        proxy_protocol_enabled:
+          description: ' proxy protocol enabled'
+          nullable: false
+          type: boolean
+        rules:
+          description: ' rules'
+          items:
+            $ref: '#/components/schemas/_v1_load_balancers_l4_rules'
+          type: array
+      required:
+      - location_id
+      - name
+      - rules
+      type: object
+    inline_response_201:
+      example:
+        updated_at: 2000-01-23T04:56:07.000+00:00
+        name: name
+        proxy_protocol_enabled: true
+        created_at: 2000-01-23T04:56:07.000+00:00
+        external_addresses:
+        - external_addresses
+        - external_addresses
+        id: id
+        type: l4
+        location_id: 0
+        status: pending
+      properties:
+        id:
+          title: Load balancer id
+          type: string
+        name:
+          title: Load balancer name
+          type: string
+        type:
+          enum:
+          - l4
+          - l7
+          title: Load balanacer type
+          type: string
+        status:
+          enum:
+          - pending
+          - in_process
+          - active
+          title: Current status
+          type: string
+        external_addresses:
+          items:
+            format: ipv4
+            title: IP
+            type: string
+          title: List of addresses
+          type: array
+        location_id:
+          title: Load balancer location id
+          type: integer
+        proxy_protocol_enabled:
+          title: Is proxy protocol enabled
+          type: boolean
+        created_at:
+          format: date-time
+          title: Created at
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated at
+          type: string
+    _v1_load_balancers_l7_rules:
+      properties:
+        src_proto:
+          enum:
+          - HTTPS
+          - HTTP
+          nullable: false
+          type: string
+        dst_proto:
+          enum:
+          - HTTPS
+          - HTTP
+          nullable: false
+          type: string
+        src_port:
+          maximum: 65535
+          minimum: 1
+          nullable: false
+          type: integer
+        dst_port:
+          maximum: 65535
+          minimum: 1
+          nullable: false
+          type: integer
+        domains:
+          items:
+            maxLength: 255
+            type: string
+          minLength: 1
+          type: array
+        ssl_certificate_id:
+          nullable: true
+          type: integer
+        src_path:
+          maxLength: 255
+          nullable: false
+          type: string
+        dst_path:
+          maxLength: 255
+          nullable: false
+          type: string
+        description:
+          maxLength: 255
+          nullable: true
+          type: string
+        upstreams:
+          items:
+            $ref: '#/components/schemas/_v1_load_balancers_l4_upstreams'
+          type: array
+      required:
+      - domains
+      - dst_path
+      - dst_port
+      - dst_proto
+      - src_path
+      - src_port
+      - src_proto
+      - upstreams
+    inline_object_6:
+      properties:
+        name:
+          description: ' name'
+          maxLength: 255
+          minLength: 1
+          nullable: false
+          type: string
+        location_id:
+          description: ' location'
+          minimum: 1
+          nullable: false
+          type: integer
+        healthcheck_url:
+          description: ' healthcheck url'
+          maxLength: 255
+          nullable: false
+          type: string
+        redirect_http:
+          description: ' redirect http'
+          nullable: false
+          type: boolean
+        geoip_enabled:
+          description: ' geoip enabled'
+          nullable: false
+          type: boolean
+        rules:
+          description: ' rules'
+          items:
+            $ref: '#/components/schemas/_v1_load_balancers_l7_rules'
+          type: array
+      required:
+      - healthcheck_url
+      - location_id
+      - name
+      - rules
+      type: object
+    inline_response_201_1:
+      example:
+        redirect_http: true
+        updated_at: 2000-01-23T04:56:07.000+00:00
+        name: name
+        created_at: 2000-01-23T04:56:07.000+00:00
+        external_addresses:
+        - external_addresses
+        - external_addresses
+        id: id
+        type: l4
+        geoip_enabled: true
+        location_id: 0
+        status: pending
+      properties:
+        id:
+          title: Load balancer id
+          type: string
+        name:
+          title: Load balancer name
+          type: string
+        type:
+          enum:
+          - l4
+          - l7
+          title: Load balanacer type
+          type: string
+        status:
+          enum:
+          - pending
+          - in_process
+          - active
+          title: Current status
+          type: string
+        external_addresses:
+          items:
+            format: ipv4
+            title: IP
+            type: string
+          title: List of addresses
+          type: array
+        location_id:
+          title: Load balancer location id
+          type: integer
+        redirect_http:
+          title: Is http redirect enabled
+          type: boolean
+        geoip_enabled:
+          title: Is geoip headers enabled
+          type: boolean
+        created_at:
+          format: date-time
+          title: Created at
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated at
+          type: string
+    inline_object_7:
+      properties:
+        name:
+          description: ' name'
+          maxLength: 255
+          minLength: 1
+          nullable: false
+          type: string
+        proxy_protocol_enabled:
+          description: ' proxy protocol enabled'
+          nullable: false
+          type: boolean
+        rules:
+          description: ' rules'
+          items:
+            $ref: '#/components/schemas/_v1_load_balancers_l4_rules'
+          type: array
+      type: object
+    _v1_load_balancers_l7_id_rules:
+      properties:
+        src_proto:
+          enum:
+          - HTTPS
+          - HTTP
+          type: string
+        dst_proto:
+          enum:
+          - HTTPS
+          - HTTP
+          type: string
+        src_port:
+          maximum: 65535
+          minimum: 1
+          nullable: false
+          type: integer
+        dst_port:
+          maximum: 65535
+          minimum: 1
+          nullable: false
+          type: integer
+        domains:
+          items:
+            maxLength: 255
+            type: string
+          minLength: 1
+          type: array
+        ssl_certificate_id:
+          nullable: true
+          type: integer
+        src_path:
+          maxLength: 255
+          nullable: false
+          type: string
+        dst_path:
+          maxLength: 255
+          nullable: false
+          type: string
+        description:
+          maxLength: 255
+          nullable: true
+          type: string
+        upstreams:
+          items:
+            $ref: '#/components/schemas/_v1_load_balancers_l4_upstreams'
+          type: array
+      required:
+      - domains
+      - dst_path
+      - dst_port
+      - dst_proto
+      - src_path
+      - src_port
+      - src_proto
+      - upstreams
+    inline_object_8:
+      properties:
+        name:
+          description: ' name'
+          maxLength: 255
+          minLength: 1
+          nullable: false
+          type: string
+        healthcheck_url:
+          description: ' healthcheck url'
+          maxLength: 255
+          nullable: false
+          type: string
+        redirect_http:
+          description: ' redirect http'
+          nullable: false
+          type: boolean
+        geoip_enabled:
+          description: ' geoip enabled'
+          nullable: false
+          type: boolean
+        rules:
+          description: ' rules'
+          items:
+            $ref: '#/components/schemas/_v1_load_balancers_l7_id_rules'
+          type: array
+      type: object
+    The Items Schema_3:
+      example:
+        load_balancers_enabled: true
+        supported_features:
+        - supported_features
+        - supported_features
+        name: name
+        private_racks_enabled: true
+        id: 0
+        l2_segments_enabled: true
+      properties:
+        id:
+          title: Location id
+          type: integer
+        name:
+          title: Location name
+          type: string
+        supported_features:
+          items:
+            title: Features
+            type: string
+          title: List of supported features
+          type: array
+        l2_segments_enabled:
+          title: Is L2 segments enabled for location
+          type: boolean
+        private_racks_enabled:
+          title: Is Private racks enabled for location
+          type: boolean
+        load_balancers_enabled:
+          title: Is Load balancers enabled for location
+          type: boolean
+    The Items Schema_4:
+      example:
+        updated_at: 2000-01-23T04:56:07.000+00:00
+        name: name
+        created_at: 2000-01-23T04:56:07.000+00:00
+        sha1_fingerprint: sha1_fingerprint
+        id: id
+        type: custom
+        domain_names:
+        - domain_names
+        - domain_names
+      properties:
+        id:
+          title: Certificate id
+          type: string
+        name:
+          title: Certificate name
+          type: string
+        type:
+          enum:
+          - custom
+          - letsencrypt
+          title: Certificate type
+          type: string
+        domain_names:
+          items:
+            type: string
+          title: Certificate domain names
+          type: array
+        sha1_fingerprint:
+          title: Certificate fingerprint
+          type: string
+        created_at:
+          format: date-time
+          title: Created at
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated at
+          type: string
+    inline_object_9:
+      properties:
+        name:
+          description: ' name'
+          maxLength: 255
+          minLength: 1
+          nullable: false
+          type: string
+        public_key:
+          description: ' public key'
+          maxLength: 32766
+          nullable: false
+          type: string
+        private_key:
+          description: ' private key'
+          maxLength: 32766
+          nullable: false
+          type: string
+        chain_key:
+          description: ' chain key'
+          maxLength: 32766
+          nullable: false
+          type: string
+      required:
+      - name
+      - private_key
+      - public_key
+      type: object
+  securitySchemes:
+    bearerAuth:
+      bearerFormat: JWT
+      scheme: bearer
+      type: http
