@@ -10,6 +10,6 @@
 package client
 // V1HostsDedicatedServersUplinkModels  uplink models
 type V1HostsDedicatedServersUplinkModels struct {
-	Public V1HostsDedicatedServersUplinkModelsPublic `json:"public,omitempty"`
 	Private V1HostsDedicatedServersUplinkModelsPrivate `json:"private"`
+	Public V1HostsDedicatedServersUplinkModelsPublic `json:"public,omitempty"`
 }

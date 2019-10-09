@@ -8,7 +8,7 @@
  */
 
 package client
-// V1HostsDedicatedServersUplinkModelsPrivate struct for V1HostsDedicatedServersUplinkModelsPrivate
+// V1HostsDedicatedServersUplinkModelsPrivate Uplink models private
 type V1HostsDedicatedServersUplinkModelsPrivate struct {
 	Id int32 `json:"id"`
 }

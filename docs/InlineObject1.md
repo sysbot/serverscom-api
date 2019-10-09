@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Ip** | [**map[string]interface{}**](map[string]interface{}.md) |  ip | 
+**Ip** | **string** |  ip | 
 **Domain** | **string** |  domain | 
 **Ttl** | **int32** |  ttl | [optional] 
 **Priority** | **int32** |  priority | [optional] 

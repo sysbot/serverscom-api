@@ -11,7 +11,7 @@ package client
 // InlineObject1 struct for InlineObject1
 type InlineObject1 struct {
 	//  ip
-	Ip map[string]interface{} `json:"ip"`
+	Ip string `json:"ip"`
 	//  domain
 	Domain string `json:"domain"`
 	//  ttl

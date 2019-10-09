@@ -8,8 +8,8 @@
  */
 
 package client
-// V1HostsDedicatedServersUplinkModelsPublic Uplink models public
-type V1HostsDedicatedServersUplinkModelsPublic struct {
-	Id int32 `json:"id"`
-	BandwidthModelId *int32 `json:"bandwidth_model_id,omitempty"`
+// InlineResponse422 struct for InlineResponse422
+type InlineResponse422 struct {
+	Message string `json:"message,omitempty"`
+	Code string `json:"code,omitempty"`
 }

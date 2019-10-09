@@ -8,8 +8,8 @@
  */
 
 package client
-// V1HostsDedicatedServersUplinkModelsPublic Uplink models public
-type V1HostsDedicatedServersUplinkModelsPublic struct {
-	Id int32 `json:"id"`
-	BandwidthModelId *int32 `json:"bandwidth_model_id,omitempty"`
+// V1HostsDedicatedServersDrivesSlots struct for V1HostsDedicatedServersDrivesSlots
+type V1HostsDedicatedServersDrivesSlots struct {
+	Position int32 `json:"position"`
+	DriveModelId int32 `json:"drive_model_id"`
 }

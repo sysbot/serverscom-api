@@ -347,7 +347,7 @@ func (a *KubernetesClusterApiService) RetrieveAnExistingKubernetesCluster(ctx _c
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v InlineResponse402
+			var v InlineResponse422
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -435,8 +435,8 @@ func (a *KubernetesClusterApiService) RetrieveAnExistingKubernetesClusterNode(ct
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		if localVarHTTPResponse.StatusCode == 404 {
-			var v InlineResponse402
+		if localVarHTTPResponse.StatusCode == 200 {
+			var v TheItemsSchema1
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -445,8 +445,8 @@ func (a *KubernetesClusterApiService) RetrieveAnExistingKubernetesClusterNode(ct
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		if localVarHTTPResponse.StatusCode == 200 {
-			var v TheItemsSchema1
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v InlineResponse422
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
