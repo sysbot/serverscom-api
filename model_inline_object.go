@@ -23,9 +23,9 @@ type InlineObject struct {
 	//  ipv6
 	Ipv6 bool `json:"ipv6,omitempty"`
 	//  hosts
-	Hosts []map[string]interface{} `json:"hosts"`
+	Hosts []V1HostsDedicatedServersHosts `json:"hosts"`
 	//  operation system
 	OperationSystemId int32 `json:"operation_system_id,omitempty"`
 	//  ssh key fingerprints
-	SshKeyFingerprints *[]map[string]interface{} `json:"ssh_key_fingerprints,omitempty"`
+	SshKeyFingerprints []string `json:"ssh_key_fingerprints,omitempty"`
 }

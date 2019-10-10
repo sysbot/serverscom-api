@@ -10,6 +10,8 @@
 package client
 // V1HostsDedicatedServersDrives  drives
 type V1HostsDedicatedServersDrives struct {
-	Slots map[string]interface{} `json:"slots"`
+	// Drives slots
+	Slots []V1HostsDedicatedServersDrivesSlots `json:"slots"`
+	// Drives layout
 	Layout []V1HostsDedicatedServersDrivesLayout `json:"layout"`
 }
