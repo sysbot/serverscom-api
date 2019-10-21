@@ -34,21 +34,21 @@ paths:
         content:
           application/json:
             example:
-              server_model_id: 9
-              location_id: 370
+              server_model_id: 4
+              location_id: 292
               ram_size: 2
               uplink_models:
                 public:
-                  id: 17
-                  bandwidth_model_id: 9
+                  id: 7
+                  bandwidth_model_id: 4
                 private:
-                  id: 18
+                  id: 8
               drives:
                 slots:
                 - position: 1
-                  drive_model_id: 9
+                  drive_model_id: 4
                 - position: 2
-                  drive_model_id: 9
+                  drive_model_id: 4
                 layout:
                 - slot_positions:
                   - 1
@@ -70,7 +70,7 @@ paths:
               hosts:
               - hostname: example.aa
               - hostname: example.bb
-              operation_system_id: 9
+              operating_system_id: 4
             schema:
               properties:
                 location_id:
@@ -100,8 +100,8 @@ paths:
                     $ref: '#/components/schemas/_v1_hosts_dedicated_servers_hosts'
                   minItems: 1
                   type: array
-                operation_system_id:
-                  description: ' operation system'
+                operating_system_id:
+                  description: ' operating system'
                   type: integer
                 ssh_key_fingerprints:
                   description: ' ssh key fingerprints'
@@ -130,51 +130,41 @@ paths:
                     message: Validation failed
                     code: UNPROCESSABLE_ENTITY
                     errors:
-                      server_model_id: server model doesn't exists
-                      uplink_models.public.id: uplink model doesn't exists
-                      uplink_models.private.id: uplink model doesn't exists
+                      drives: Mount point '/' not specified
               schema:
-                $ref: '#/components/schemas/inline_response_422'
+                properties: {}
+                type: object
           description: Returns validation error
-        402:
-          content:
-            application/json:
-              examples:
-                default:
-                  value:
-                    message: Payment failure
-                    code: PAYMENT_REQUIED
-              schema:
-                $ref: '#/components/schemas/inline_response_422'
-          description: Return payment required error
         201:
           content:
             application/json:
               examples:
                 default:
                   value:
-                  - id: lNbWngay
+                  - id: pmbk55ez
                     title: example.aa
-                    location_id: 370
+                    location_id: 292
                     status: init
-                    configuration: Dell chassis-9072 / 2 GB RAM / 2 x hdd-model-426
+                    configuration: Dell chassis-9049 / 2 GB RAM / 2 x hdd-model-411
                     private_ipv4_address: null
                     public_ipv4_address: null
                     lease_start_at: null
                     scheduled_release_at: null
                     type: dedicated_server
-                    updated_at: 2019-10-09T15:20:00Z
-                  - id: QBeX6mby
+                    created_at: 2019-10-16T12:11:41Z
+                    updated_at: 2019-10-16T12:11:42Z
+                  - id: pnelO5dK
                     title: example.bb
-                    location_id: 370
+                    location_id: 292
                     status: init
-                    configuration: Dell chassis-9072 / 2 GB RAM / 2 x hdd-model-426
+                    configuration: Dell chassis-9049 / 2 GB RAM / 2 x hdd-model-411
                     private_ipv4_address: null
                     public_ipv4_address: null
                     lease_start_at: null
                     scheduled_release_at: null
                     type: dedicated_server
-                    updated_at: 2019-10-09T15:20:00Z
+                    created_at: 2019-10-16T12:11:41Z
+                    updated_at: 2019-10-16T12:11:42Z
               schema:
                 items:
                   $ref: '#/components/schemas/v1-hosts-dedicated_servers-_entity'
@@ -200,6 +190,17 @@ paths:
               schema:
                 type: string
               style: simple
+        402:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Payment failure
+                    code: PAYMENT_REQUIED
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Return payment required error
       summary: Create a new dedicated server
       tags:
       - Dedicated Server
@@ -207,28 +208,27 @@ paths:
       - lang: curl
         label: cURL
         source: "curl \"https://api.servers.com/v1/hosts/dedicated_servers\" -d '{\n\
-          \  \"server_model_id\": 9,\n  \"location_id\": 370,\n  \"ram_size\": 2,\n\
-          \  \"uplink_models\": {\n    \"public\": {\n      \"id\": 17,\n      \"\
-          bandwidth_model_id\": 9\n    },\n    \"private\": {\n      \"id\": 18\n\
-          \    }\n  },\n  \"drives\": {\n    \"slots\": [\n      {\n        \"position\"\
-          : 1,\n        \"drive_model_id\": 9\n      },\n      {\n        \"position\"\
-          : 2,\n        \"drive_model_id\": 9\n      }\n    ],\n    \"layout\": [\n\
-          \      {\n        \"slot_positions\": [\n          1,\n          2\n   \
-          \     ],\n        \"raid\": 1,\n        \"partitions\": [\n          {\n\
-          \            \"target\": \"/\",\n            \"size\": 10240,\n        \
-          \    \"fill\": false,\n            \"fs\": \"ext4\"\n          },\n    \
-          \      {\n            \"target\": \"/home\",\n            \"size\": 1,\n\
-          \            \"fill\": true,\n            \"fs\": \"ext4\"\n          },\n\
-          \          {\n            \"target\": \"swap\",\n            \"size\": 4096,\n\
-          \            \"fill\": false\n          }\n        ]\n      }\n    ]\n \
-          \ },\n  \"ipv6\": true,\n  \"hosts\": [\n    {\n      \"hostname\": \"example.aa\"\
-          \n    },\n    {\n      \"hostname\": \"example.bb\"\n    }\n  ],\n  \"operation_system_id\"\
-          : 9\n}' -X POST "
+          \  \"server_model_id\": 4,\n  \"location_id\": 292,\n  \"ram_size\": 2,\n\
+          \  \"uplink_models\": {\n    \"public\": {\n      \"id\": 7,\n      \"bandwidth_model_id\"\
+          : 4\n    },\n    \"private\": {\n      \"id\": 8\n    }\n  },\n  \"drives\"\
+          : {\n    \"slots\": [\n      {\n        \"position\": 1,\n        \"drive_model_id\"\
+          : 4\n      },\n      {\n        \"position\": 2,\n        \"drive_model_id\"\
+          : 4\n      }\n    ],\n    \"layout\": [\n      {\n        \"slot_positions\"\
+          : [\n          1,\n          2\n        ],\n        \"raid\": 1,\n     \
+          \   \"partitions\": [\n          {\n            \"target\": \"/\",\n   \
+          \         \"size\": 10240,\n            \"fill\": false,\n            \"\
+          fs\": \"ext4\"\n          },\n          {\n            \"target\": \"/home\"\
+          ,\n            \"size\": 1,\n            \"fill\": true,\n            \"\
+          fs\": \"ext4\"\n          },\n          {\n            \"target\": \"swap\"\
+          ,\n            \"size\": 4096,\n            \"fill\": false\n          }\n\
+          \        ]\n      }\n    ]\n  },\n  \"ipv6\": true,\n  \"hosts\": [\n  \
+          \  {\n      \"hostname\": \"example.aa\"\n    },\n    {\n      \"hostname\"\
+          : \"example.bb\"\n    }\n  ],\n  \"operating_system_id\": 4\n}' -X POST "
   /v1/hosts/dedicated_servers/{server_id}:
     get:
       operationId: RetrieveAnExistingDedicatedServer
       parameters:
-      - example: 4QbYvpdz
+      - example: 4zbqj2dp
         explode: false
         in: path
         name: server_id
@@ -243,17 +243,18 @@ paths:
               examples:
                 default:
                   value:
-                    id: 4QbYvpdz
-                    title: title166
-                    location_id: 371
+                    id: 4zbqj2dp
+                    title: title142
+                    location_id: 297
                     status: active
                     configuration: REMM R123
-                    private_ipv4_address: 10.0.0.45
-                    public_ipv4_address: 169.254.0.45
-                    lease_start_at: 2019-10-07
+                    private_ipv4_address: 10.0.0.18
+                    public_ipv4_address: 169.254.0.18
+                    lease_start_at: 2019-10-14
                     scheduled_release_at: null
                     type: dedicated_server
-                    updated_at: 2019-10-09T15:20:00Z
+                    created_at: 2019-10-16T12:11:45Z
+                    updated_at: 2019-10-16T12:11:45Z
               schema:
                 $ref: '#/components/schemas/v1-hosts-dedicated_servers-_entity'
           description: Returns dedicated server
@@ -285,7 +286,7 @@ paths:
                     message: Not found
                     code: NOT_FOUND
               schema:
-                $ref: '#/components/schemas/inline_response_422'
+                $ref: '#/components/schemas/inline_response_402'
           description: Returns not found error
       summary: Retrieve an existing dedicated server
       tags:
@@ -293,7 +294,7 @@ paths:
       x-code-samples:
       - lang: curl
         label: cURL
-        source: 'curl -g "https://api.servers.com/v1/hosts/dedicated_servers/4QbYvpdz"
+        source: 'curl -g "https://api.servers.com/v1/hosts/dedicated_servers/4zbqj2dp"
           -X GET '
   /v1/hosts/dedicated_servers/{server_id}/networks:
     get:
@@ -405,7 +406,7 @@ paths:
           - DESC
           type: string
         style: form
-      - example: LDdwjwb1
+      - example: WZdPwbKg
         explode: false
         in: path
         name: server_id
@@ -420,57 +421,57 @@ paths:
               examples:
                 default:
                   value:
-                  - id: Vyb8B2ev
+                  - id: xkaz6raJ
                     title: Public
                     status: active
-                    cidr: 100.0.1.8/29
+                    cidr: 100.0.0.248/29
                     family: ipv4
                     interface_type: public
                     distribution_method: gateway
                     additional: false
-                    updated_at: 2019-10-09T15:19:44Z
-                    created_at: 2019-10-09T15:19:44Z
-                  - id: jnegQZbw
+                    updated_at: 2019-10-16T12:10:44Z
+                    created_at: 2019-10-16T12:10:44Z
+                  - id: BDbDqBdl
                     title: Private
                     status: active
-                    cidr: 10.0.1.240/29
+                    cidr: 10.0.0.248/29
                     family: ipv4
                     interface_type: private
                     distribution_method: gateway
                     additional: false
-                    updated_at: 2019-10-09T15:19:44Z
-                    created_at: 2019-10-09T15:19:44Z
-                  - id: olejOYaj
+                    updated_at: 2019-10-16T12:10:44Z
+                    created_at: 2019-10-16T12:10:44Z
+                  - id: 4oeEqNe0
                     title: Public
                     status: active
-                    cidr: 100.0.1.16/29
+                    cidr: 100.0.1.0/29
                     family: ipv4
                     interface_type: public
                     distribution_method: gateway
                     additional: true
-                    updated_at: 2019-10-09T15:19:44Z
-                    created_at: 2019-10-09T15:19:44Z
-                  - id: pmbkOrbz
+                    updated_at: 2019-10-16T12:10:44Z
+                    created_at: 2019-10-16T12:10:44Z
+                  - id: YRdGRybD
                     title: Private
                     status: active
-                    cidr: 10.0.1.248/29
+                    cidr: 10.0.1.0/29
                     family: ipv4
                     interface_type: private
                     distribution_method: gateway
                     additional: true
-                    updated_at: 2019-10-09T15:19:45Z
-                    created_at: 2019-10-09T15:19:45Z
-                  - id: MvbmMEbY
+                    updated_at: 2019-10-16T12:10:44Z
+                    created_at: 2019-10-16T12:10:44Z
+                  - id: y1aKLrbQ
                     title: Alias
                     status: active
-                    cidr: 127.0.53.0/24
+                    cidr: 127.0.16.0/24
                     family: ipv4
                     interface_type: public
                     distribution_method: route
                     additional: true
-                    updated_at: 2019-10-09T15:19:45Z
-                    created_at: 2019-10-09T15:19:45Z
-                  - id: Jxbo6Aag
+                    updated_at: 2019-10-16T12:10:44Z
+                    created_at: 2019-10-16T12:10:44Z
+                  - id: N1aMJQbW
                     title: OOB
                     status: active
                     cidr: 100.35.0.32/31
@@ -478,9 +479,9 @@ paths:
                     interface_type: oob
                     distribution_method: gateway
                     additional: true
-                    updated_at: 2019-10-09T15:19:45Z
-                    created_at: 2019-10-09T15:19:45Z
-                  - id: 4zbqMDbp
+                    updated_at: 2019-10-16T12:10:44Z
+                    created_at: 2019-10-16T12:10:44Z
+                  - id: 3YaOPgbx
                     title: Default drac network
                     status: active
                     cidr: 10.172.8.32/31
@@ -488,9 +489,9 @@ paths:
                     interface_type: oob
                     distribution_method: gateway
                     additional: true
-                    updated_at: 2019-10-09T15:19:45Z
-                    created_at: 2019-10-09T15:19:45Z
-                  - id: LDdwRgb1
+                    updated_at: 2019-10-16T12:10:44Z
+                    created_at: 2019-10-16T12:10:44Z
+                  - id: APdRPLaG
                     title: Public IPv6
                     status: active
                     cidr: 2a05:93c0:25:10::/64
@@ -498,8 +499,8 @@ paths:
                     interface_type: public
                     distribution_method: route
                     additional: true
-                    updated_at: 2019-10-09T15:19:45Z
-                    created_at: 2019-10-09T15:19:45Z
+                    updated_at: 2019-10-16T12:10:45Z
+                    created_at: 2019-10-16T12:10:45Z
               schema:
                 items:
                   $ref: '#/components/schemas/network'
@@ -531,17 +532,6 @@ paths:
               schema:
                 type: string
               style: simple
-        412:
-          content:
-            application/json:
-              examples:
-                default:
-                  value:
-                    message: host_is_not_ready
-                    code: PRECONDITION_FAILED
-              schema:
-                $ref: '#/components/schemas/inline_response_422'
-          description: Returns precondition failed error
         404:
           content:
             application/json:
@@ -551,8 +541,19 @@ paths:
                     message: Not found
                     code: NOT_FOUND
               schema:
-                $ref: '#/components/schemas/inline_response_422'
+                $ref: '#/components/schemas/inline_response_402'
           description: Returns not found error
+        412:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: host_is_not_ready
+                    code: PRECONDITION_FAILED
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns precondition failed error
         400:
           content:
             application/json:
@@ -572,7 +573,7 @@ paths:
       x-code-samples:
       - lang: curl
         label: cURL
-        source: 'curl -g "https://api.servers.com/v1/hosts/dedicated_servers/LDdwjwb1/networks"
+        source: 'curl -g "https://api.servers.com/v1/hosts/dedicated_servers/WZdPwbKg/networks"
           -X GET '
   /v1/hosts/dedicated_servers/{server_id}/ptr_records:
     get:
@@ -623,7 +624,7 @@ paths:
           - DESC
           type: string
         style: form
-      - example: openZRe7
+      - example: 8mep2bMy
         explode: false
         in: path
         name: server_id
@@ -632,6 +633,17 @@ paths:
           type: string
         style: simple
       responses:
+        404:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Not found
+                    code: NOT_FOUND
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns not found error
         412:
           content:
             application/json:
@@ -641,7 +653,7 @@ paths:
                     message: host_is_not_ready
                     code: PRECONDITION_FAILED
               schema:
-                $ref: '#/components/schemas/inline_response_422'
+                $ref: '#/components/schemas/inline_response_402'
           description: Returns precondition failed error
         200:
           content:
@@ -684,29 +696,18 @@ paths:
               schema:
                 type: string
               style: simple
-        404:
-          content:
-            application/json:
-              examples:
-                default:
-                  value:
-                    message: Not found
-                    code: NOT_FOUND
-              schema:
-                $ref: '#/components/schemas/inline_response_422'
-          description: Returns not found error
       summary: List all PTR records for server networks
       tags:
       - Dedicated Server
       x-code-samples:
       - lang: curl
         label: cURL
-        source: 'curl -g "https://api.servers.com/v1/hosts/dedicated_servers/openZRe7/ptr_records"
+        source: 'curl -g "https://api.servers.com/v1/hosts/dedicated_servers/8mep2bMy/ptr_records"
           -X GET '
     post:
       operationId: CreatePtrRecordForServerNetworks
       parameters:
-      - example: olej2Rej
+      - example: pmbk5ezJ
         explode: false
         in: path
         name: server_id
@@ -751,21 +752,8 @@ paths:
                     message: host_is_not_ready
                     code: PRECONDITION_FAILED
               schema:
-                $ref: '#/components/schemas/inline_response_422'
+                $ref: '#/components/schemas/inline_response_402'
           description: Returns precondition failed error
-        422:
-          content:
-            application/json:
-              examples:
-                default:
-                  value:
-                    message: Validation failed
-                    code: UNPROCESSABLE_ENTITY
-                    errors:
-                      ip: address does not belongs to host
-              schema:
-                $ref: '#/components/schemas/The Root Schema_1'
-          description: Returns Validation failed error
         201:
           content:
             application/json:
@@ -799,20 +787,33 @@ paths:
               schema:
                 type: string
               style: simple
+        422:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Validation failed
+                    code: UNPROCESSABLE_ENTITY
+                    errors:
+                      ip: address does not belongs to host
+              schema:
+                $ref: '#/components/schemas/The Root Schema_1'
+          description: Returns Validation failed error
       summary: Create PTR record for server networks
       tags:
       - Dedicated Server
       x-code-samples:
       - lang: curl
         label: cURL
-        source: "curl \"https://api.servers.com/v1/hosts/dedicated_servers/olej2Rej/ptr_records\"\
+        source: "curl \"https://api.servers.com/v1/hosts/dedicated_servers/pmbk5ezJ/ptr_records\"\
           \ -d '{\n  \"ip\": \"100.0.0.4\",\n  \"domain\": \"ai.privateservergrid.com\"\
           ,\n  \"ttl\": 300,\n  \"priority\": 3\n}' -X POST "
   /v1/hosts/dedicated_servers/{server_id}/power_feeds:
     get:
       operationId: ListAllPowerFeedsForAnExistingDedicatedServer
       parameters:
-      - example: K9b6R9bE
+      - example: pnelO6dK
         explode: false
         in: path
         name: server_id
@@ -865,7 +866,7 @@ paths:
                     message: Not found
                     code: NOT_FOUND
               schema:
-                $ref: '#/components/schemas/inline_response_422'
+                $ref: '#/components/schemas/inline_response_402'
           description: Returns not found error
         412:
           content:
@@ -876,7 +877,7 @@ paths:
                     message: host_is_not_ready
                     code: PRECONDITION_FAILED
               schema:
-                $ref: '#/components/schemas/inline_response_422'
+                $ref: '#/components/schemas/inline_response_402'
           description: Returns precondition failed error
       summary: List all power feeds for an existing dedicated server
       tags:
@@ -884,13 +885,13 @@ paths:
       x-code-samples:
       - lang: curl
         label: cURL
-        source: 'curl -g "https://api.servers.com/v1/hosts/dedicated_servers/K9b6R9bE/power_feeds"
+        source: 'curl -g "https://api.servers.com/v1/hosts/dedicated_servers/pnelO6dK/power_feeds"
           -X GET '
   /v1/hosts/dedicated_servers/{server_id}/abort_release:
     post:
       operationId: AbortReleaseForAnExistingDedicatedServer
       parameters:
-      - example: LDdwmwa1
+      - example: l9av2maG
         explode: false
         in: path
         name: server_id
@@ -905,17 +906,18 @@ paths:
               examples:
                 default:
                   value:
-                    id: LDdwmwa1
-                    title: title203
-                    location_id: 496
+                    id: l9av2maG
+                    title: title126
+                    location_id: 233
                     status: active
                     configuration: REMM R123
-                    private_ipv4_address: 10.0.0.52
-                    public_ipv4_address: 169.254.0.52
-                    lease_start_at: 2019-10-07
+                    private_ipv4_address: 10.0.0.17
+                    public_ipv4_address: 169.254.0.17
+                    lease_start_at: 2019-10-14
                     scheduled_release_at: null
                     type: dedicated_server
-                    updated_at: 2019-10-09T15:20:21Z
+                    created_at: 2019-10-16T12:11:27Z
+                    updated_at: 2019-10-16T12:11:27Z
               schema:
                 $ref: '#/components/schemas/v1-hosts-dedicated_servers-_entity'
           description: Returns updated hosts
@@ -938,6 +940,17 @@ paths:
               schema:
                 type: string
               style: simple
+        409:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Host release not scheduled
+                    code: HOST_RELEASE_NOT_SCHEDULED
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns conflict error
         404:
           content:
             application/json:
@@ -947,7 +960,7 @@ paths:
                     message: Not found
                     code: NOT_FOUND
               schema:
-                $ref: '#/components/schemas/inline_response_422'
+                $ref: '#/components/schemas/inline_response_402'
           description: Returns not found error
         412:
           content:
@@ -958,32 +971,21 @@ paths:
                     message: host_is_not_ready
                     code: PRECONDITION_FAILED
               schema:
-                $ref: '#/components/schemas/inline_response_422'
+                $ref: '#/components/schemas/inline_response_402'
           description: Returns precondition failed error
-        409:
-          content:
-            application/json:
-              examples:
-                default:
-                  value:
-                    message: Host release not scheduled
-                    code: HOST_RELEASE_NOT_SCHEDULED
-              schema:
-                $ref: '#/components/schemas/inline_response_422'
-          description: Returns conflict error
       summary: Abort release for an existing dedicated server
       tags:
       - Dedicated Server
       x-code-samples:
       - lang: curl
         label: cURL
-        source: 'curl "https://api.servers.com/v1/hosts/dedicated_servers/LDdwmwa1/abort_release"  -X
+        source: 'curl "https://api.servers.com/v1/hosts/dedicated_servers/l9av2maG/abort_release"  -X
           POST '
   /v1/hosts/dedicated_servers/{server_id}/schedule_release:
     post:
       operationId: ScheduleReleaseForAnExistingDedicatedServer
       parameters:
-      - example: 8mepQ6aM
+      - example: Jxbo2jag
         explode: false
         in: path
         name: server_id
@@ -998,17 +1000,18 @@ paths:
               examples:
                 default:
                   value:
-                    id: 8mepQ6aM
-                    title: title199
-                    location_id: 488
+                    id: Jxbo2jag
+                    title: title122
+                    location_id: 225
                     status: active
                     configuration: REMM R123
-                    private_ipv4_address: 10.0.0.51
-                    public_ipv4_address: 169.254.0.51
-                    lease_start_at: 2019-10-07
-                    scheduled_release_at: 2019-11-08T15:20:21Z
+                    private_ipv4_address: 10.0.0.16
+                    public_ipv4_address: 169.254.0.16
+                    lease_start_at: 2019-10-14
+                    scheduled_release_at: 2019-11-15T12:11:26Z
                     type: dedicated_server
-                    updated_at: 2019-10-09T15:20:21Z
+                    created_at: 2019-10-16T12:11:26Z
+                    updated_at: 2019-10-16T12:11:26Z
               schema:
                 $ref: '#/components/schemas/v1-hosts-dedicated_servers-_entity'
           description: Returns updated host
@@ -1031,17 +1034,6 @@ paths:
               schema:
                 type: string
               style: simple
-        404:
-          content:
-            application/json:
-              examples:
-                default:
-                  value:
-                    message: Not found
-                    code: NOT_FOUND
-              schema:
-                $ref: '#/components/schemas/inline_response_422'
-          description: Returns not found error
         409:
           content:
             application/json:
@@ -1051,8 +1043,19 @@ paths:
                     message: Host release already scheduled
                     code: HOST_RELEASE_ALREADY_SCHEDULED
               schema:
-                $ref: '#/components/schemas/inline_response_422'
+                $ref: '#/components/schemas/inline_response_402'
           description: Returns conflict error
+        404:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Not found
+                    code: NOT_FOUND
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns not found error
         412:
           content:
             application/json:
@@ -1062,7 +1065,7 @@ paths:
                     message: host_is_not_ready
                     code: PRECONDITION_FAILED
               schema:
-                $ref: '#/components/schemas/inline_response_422'
+                $ref: '#/components/schemas/inline_response_402'
           description: Returns precondition failed error
       summary: Schedule release for an existing dedicated server
       tags:
@@ -1070,13 +1073,13 @@ paths:
       x-code-samples:
       - lang: curl
         label: cURL
-        source: 'curl "https://api.servers.com/v1/hosts/dedicated_servers/8mepQ6aM/schedule_release"  -X
+        source: 'curl "https://api.servers.com/v1/hosts/dedicated_servers/Jxbo2jag/schedule_release"  -X
           POST '
   /v1/hosts/dedicated_servers/{server_id}/ptr_records/{record_id}:
     delete:
       operationId: DeleteAnExistingPtrRecord
       parameters:
-      - example: pmbk55ez
+      - example: l9avmeG1
         explode: false
         in: path
         name: server_id
@@ -1093,6 +1096,17 @@ paths:
           type: string
         style: simple
       responses:
+        404:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Not found
+                    code: NOT_FOUND
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns not found error
         204:
           description: Deletes ptr record
           headers:
@@ -1114,24 +1128,13 @@ paths:
               schema:
                 type: string
               style: simple
-        404:
-          content:
-            application/json:
-              examples:
-                default:
-                  value:
-                    message: Not found
-                    code: NOT_FOUND
-              schema:
-                $ref: '#/components/schemas/inline_response_422'
-          description: Returns not found error
       summary: Delete an existing PTR record
       tags:
       - Dedicated Server
       x-code-samples:
       - lang: curl
         label: cURL
-        source: 'curl "https://api.servers.com/v1/hosts/dedicated_servers/pmbk55ez/ptr_records/oQeZzvep"  -X
+        source: 'curl "https://api.servers.com/v1/hosts/dedicated_servers/l9avmeG1/ptr_records/oQeZzvep"  -X
           DELETE '
   /v1/hosts:
     get:
@@ -1159,6 +1162,9 @@ paths:
         name: type
         required: false
         schema:
+          enum:
+          - dedicated_server
+          - kubernetes_baremetal_node
           type: string
         style: form
       - description: ' per page'
@@ -1212,42 +1218,45 @@ paths:
               examples:
                 default:
                   value:
-                  - id: olejRejN
-                    title: title1
-                    location_id: 1
+                  - id: APdRgReG
+                    title: title187
+                    location_id: 512
                     status: active
                     configuration: REMM R123
-                    private_ipv4_address: 10.0.0.1
-                    public_ipv4_address: 169.254.0.1
-                    lease_start_at: 2019-10-07
+                    private_ipv4_address: 10.0.0.24
+                    public_ipv4_address: 169.254.0.24
+                    lease_start_at: 2019-10-14
                     scheduled_release_at: null
                     type: dedicated_server
-                    updated_at: 2019-10-09T15:18:45Z
-                  - id: pmbk5ezJ
-                    title: title2
-                    location_id: 1
+                    created_at: 2019-10-16T12:12:34Z
+                    updated_at: 2019-10-19T12:12:34Z
+                  - id: y5eVm1dE
+                    title: title188
+                    location_id: 512
                     status: active
                     configuration: REMM R123
-                    private_ipv4_address: 10.0.0.2
-                    public_ipv4_address: 169.254.0.2
-                    lease_start_at: 2019-10-07
+                    private_ipv4_address: 10.0.0.25
+                    public_ipv4_address: 169.254.0.25
+                    lease_start_at: 2019-10-14
                     scheduled_release_at: null
                     type: dedicated_server
-                    updated_at: 2019-10-09T15:18:45Z
-                  - id: pnel5aKB
-                    title: title3
-                    location_id: 1
+                    created_at: 2019-10-16T12:12:34Z
+                    updated_at: 2019-10-19T12:12:34Z
+                  - id: lNbWngay
+                    title: title189
+                    location_id: 512
                     status: active
                     configuration: REMM R123
-                    private_ipv4_address: 10.0.0.3
-                    public_ipv4_address: 169.254.0.3
-                    lease_start_at: 2019-10-07
+                    private_ipv4_address: 10.0.0.26
+                    public_ipv4_address: 169.254.0.26
+                    lease_start_at: 2019-10-14
                     scheduled_release_at: null
                     type: dedicated_server
-                    updated_at: 2019-10-09T15:18:45Z
-                  - id: MvbmOeYA
-                    title: x-0-uc00-uc9003
-                    location_id: 1
+                    created_at: 2019-10-16T12:12:34Z
+                    updated_at: 2019-10-19T12:12:34Z
+                  - id: QBeX6mby
+                    title: x-0-uc00-uc9489
+                    location_id: 512
                     status: init
                     configuration: Dell 1850/Dual Xeon 2.8/2GB/2x73GB SCSI
                     private_ipv4_address: null
@@ -1255,10 +1264,11 @@ paths:
                     lease_start_at: null
                     scheduled_release_at: null
                     type: dedicated_server
-                    updated_at: 2019-10-09T15:18:45Z
-                  - id: openRe7A
-                    title: x-0-uc00-uc9004
-                    location_id: 1
+                    created_at: 2019-10-16T12:12:34Z
+                    updated_at: 2019-10-16T12:12:34Z
+                  - id: 4QbYvpdz
+                    title: x-0-uc00-uc9490
+                    location_id: 512
                     status: init
                     configuration: Dell 1850/Dual Xeon 2.8/2GB/2x73GB SCSI
                     private_ipv4_address: null
@@ -1266,10 +1276,11 @@ paths:
                     lease_start_at: null
                     scheduled_release_at: null
                     type: dedicated_server
-                    updated_at: 2019-10-09T15:18:45Z
-                  - id: Jxbojagw
-                    title: x-0-uc00-uc9005
-                    location_id: 1
+                    created_at: 2019-10-16T12:12:34Z
+                    updated_at: 2019-10-16T12:12:34Z
+                  - id: oQeZV6ep
+                    title: x-0-uc00-uc9491
+                    location_id: 512
                     status: init
                     configuration: Dell 1850/Dual Xeon 2.8/2GB/2x73GB SCSI
                     private_ipv4_address: null
@@ -1277,7 +1288,8 @@ paths:
                     lease_start_at: null
                     scheduled_release_at: null
                     type: dedicated_server
-                    updated_at: 2019-10-09T15:18:45Z
+                    created_at: 2019-10-16T12:12:34Z
+                    updated_at: 2019-10-16T12:12:34Z
               schema:
                 items:
                   $ref: '#/components/schemas/The Dedicated Server Entity Schema'
@@ -1333,7 +1345,7 @@ paths:
     get:
       operationId: RetrieveAnExistingKubernetesBaremetalNode
       parameters:
-      - example: Jrb2vvbW
+      - example: l9avgmbG
         explode: false
         in: path
         name: node_id
@@ -1342,37 +1354,27 @@ paths:
           type: string
         style: simple
       responses:
-        404:
-          content:
-            application/json:
-              examples:
-                default:
-                  value:
-                    message: Not found
-                    code: NOT_FOUND
-              schema:
-                $ref: '#/components/schemas/inline_response_422'
-          description: Returns not found error
         200:
           content:
             application/json:
               examples:
                 default:
                   value:
-                    id: Jrb2vvbW
-                    kubernetes_cluster_id: pmbkR5az
-                    kubernetes_cluster_node_id: K9b6nbEv
-                    kubernetes_cluster_node_number: 39
+                    id: l9avgmbG
+                    kubernetes_cluster_id: y5eVMdEP
+                    kubernetes_cluster_node_id: 46dBXa79
+                    kubernetes_cluster_node_number: 16
                     title: null
-                    location_id: 380
+                    location_id: 299
                     status: active
                     configuration: REMM R123
-                    private_ipv4_address: 10.0.0.48
-                    public_ipv4_address: 169.254.0.48
-                    lease_start_at: 2019-10-07
+                    private_ipv4_address: 10.0.0.20
+                    public_ipv4_address: 169.254.0.20
+                    lease_start_at: 2019-10-14
                     scheduled_release_at: null
                     type: kubernetes_baremetal_node
-                    updated_at: 2019-10-09T15:20:03Z
+                    created_at: 2019-10-16T12:11:46Z
+                    updated_at: 2019-10-16T12:11:46Z
               schema:
                 $ref: '#/components/schemas/The Kubernetes Baremetal Node Entity Schema'
           description: Returns kubernetes cluster node
@@ -1395,13 +1397,24 @@ paths:
               schema:
                 type: string
               style: simple
+        404:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Not found
+                    code: NOT_FOUND
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns not found error
       summary: Retrieve an existing kubernetes baremetal node
       tags:
       - Kubernetes Baremetal Node
       x-code-samples:
       - lang: curl
         label: cURL
-        source: 'curl -g "https://api.servers.com/v1/hosts/kubernetes_baremetal_nodes/Jrb2vvbW"
+        source: 'curl -g "https://api.servers.com/v1/hosts/kubernetes_baremetal_nodes/l9avgmbG"
           -X GET '
   /v1/hosts/kubernetes_baremetal_nodes/{server_id}/networks:
     get:
@@ -1513,7 +1526,7 @@ paths:
           - DESC
           type: string
         style: form
-      - example: 4zbqj2dp
+      - example: LDdwRb1Y
         explode: false
         in: path
         name: server_id
@@ -1528,57 +1541,57 @@ paths:
               examples:
                 default:
                   value:
-                  - id: olejYWdj
+                  - id: 4oeEva0B
                     title: Public
                     status: active
-                    cidr: 100.0.0.24/29
+                    cidr: 100.0.0.8/29
                     family: ipv4
                     interface_type: public
                     distribution_method: gateway
                     additional: false
-                    updated_at: 2019-10-09T15:19:34Z
-                    created_at: 2019-10-09T15:19:34Z
-                  - id: MvbmqpbY
+                    updated_at: 2019-10-16T12:10:27Z
+                    created_at: 2019-10-16T12:10:27Z
+                  - id: y1aKReQG
                     title: Private
                     status: active
-                    cidr: 10.0.1.0/29
+                    cidr: 10.0.0.8/29
                     family: ipv4
                     interface_type: private
                     distribution_method: gateway
                     additional: false
-                    updated_at: 2019-10-09T15:19:34Z
-                    created_at: 2019-10-09T15:19:34Z
-                  - id: openR4e7
+                    updated_at: 2019-10-16T12:10:27Z
+                    created_at: 2019-10-16T12:10:27Z
+                  - id: 9wdLwbjP
                     title: Public
                     status: active
-                    cidr: 100.0.0.32/29
+                    cidr: 100.0.0.16/29
                     family: ipv4
                     interface_type: public
                     distribution_method: gateway
                     additional: true
-                    updated_at: 2019-10-09T15:19:34Z
-                    created_at: 2019-10-09T15:19:34Z
-                  - id: JxboZzag
+                    updated_at: 2019-10-16T12:10:27Z
+                    created_at: 2019-10-16T12:10:27Z
+                  - id: N1aMAaWm
                     title: Private
                     status: active
-                    cidr: 10.0.1.8/29
+                    cidr: 10.0.0.16/29
                     family: ipv4
                     interface_type: private
                     distribution_method: gateway
                     additional: true
-                    updated_at: 2019-10-09T15:19:34Z
-                    created_at: 2019-10-09T15:19:34Z
-                  - id: 4zbqQ3bp
+                    updated_at: 2019-10-16T12:10:27Z
+                    created_at: 2019-10-16T12:10:27Z
+                  - id: 3YaOpbxq
                     title: Alias
                     status: active
-                    cidr: 127.0.38.0/24
+                    cidr: 127.0.1.0/24
                     family: ipv4
                     interface_type: public
                     distribution_method: route
                     additional: true
-                    updated_at: 2019-10-09T15:19:34Z
-                    created_at: 2019-10-09T15:19:34Z
-                  - id: l9avQVeG
+                    updated_at: 2019-10-16T12:10:27Z
+                    created_at: 2019-10-16T12:10:27Z
+                  - id: YqaQlenj
                     title: OOB
                     status: active
                     cidr: 100.35.0.2/31
@@ -1586,9 +1599,9 @@ paths:
                     interface_type: oob
                     distribution_method: gateway
                     additional: true
-                    updated_at: 2019-10-09T15:19:34Z
-                    created_at: 2019-10-09T15:19:34Z
-                  - id: X7ax6Jdy
+                    updated_at: 2019-10-16T12:10:27Z
+                    created_at: 2019-10-16T12:10:27Z
+                  - id: y5eVMdEP
                     title: Default drac network
                     status: active
                     cidr: 10.172.8.2/31
@@ -1596,9 +1609,9 @@ paths:
                     interface_type: oob
                     distribution_method: gateway
                     additional: true
-                    updated_at: 2019-10-09T15:19:34Z
-                    created_at: 2019-10-09T15:19:34Z
-                  - id: w9aA6Bbv
+                    updated_at: 2019-10-16T12:10:27Z
+                    created_at: 2019-10-16T12:10:27Z
+                  - id: 4QbYKezq
                     title: Public IPv6
                     status: active
                     cidr: 2a05:93c0:25:10::/64
@@ -1606,8 +1619,8 @@ paths:
                     interface_type: public
                     distribution_method: route
                     additional: true
-                    updated_at: 2019-10-09T15:19:34Z
-                    created_at: 2019-10-09T15:19:34Z
+                    updated_at: 2019-10-16T12:10:27Z
+                    created_at: 2019-10-16T12:10:27Z
               schema:
                 items:
                   $ref: '#/components/schemas/network'
@@ -1648,8 +1661,19 @@ paths:
                     message: Not found
                     code: NOT_FOUND
               schema:
-                $ref: '#/components/schemas/inline_response_422'
+                $ref: '#/components/schemas/inline_response_402'
           description: Returns not found error
+        412:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: host_is_not_ready
+                    code: PRECONDITION_FAILED
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns precondition failed error
         400:
           content:
             application/json:
@@ -1663,30 +1687,19 @@ paths:
               schema:
                 $ref: '#/components/schemas/The Root Schema'
           description: Returns bad request error
-        412:
-          content:
-            application/json:
-              examples:
-                default:
-                  value:
-                    message: host_is_not_ready
-                    code: PRECONDITION_FAILED
-              schema:
-                $ref: '#/components/schemas/inline_response_422'
-          description: Returns precondition failed error
       summary: List all networks for an existing kubernetes baremetal node
       tags:
       - Kubernetes Baremetal Node
       x-code-samples:
       - lang: curl
         label: cURL
-        source: 'curl -g "https://api.servers.com/v1/hosts/kubernetes_baremetal_nodes/4zbqj2dp/networks"
+        source: 'curl -g "https://api.servers.com/v1/hosts/kubernetes_baremetal_nodes/LDdwRb1Y/networks"
           -X GET '
   /v1/hosts/kubernetes_baremetal_nodes/{server_id}/power_feeds:
     get:
       operationId: ListAllPowerFeedsForAnExistingKubernetesBaremetalNode
       parameters:
-      - example: ELe32Qd6
+      - example: jneg56bw
         explode: false
         in: path
         name: server_id
@@ -1701,9 +1714,9 @@ paths:
               examples:
                 default:
                   value:
-                  - name: Power 1
-                    status: on
                   - name: Power 2
+                    status: on
+                  - name: Power 1
                     status: on
               schema:
                 items:
@@ -1730,17 +1743,6 @@ paths:
               schema:
                 type: string
               style: simple
-        412:
-          content:
-            application/json:
-              examples:
-                default:
-                  value:
-                    message: host_is_not_ready
-                    code: PRECONDITION_FAILED
-              schema:
-                $ref: '#/components/schemas/inline_response_422'
-          description: Returns precondition failed error
         404:
           content:
             application/json:
@@ -1750,15 +1752,26 @@ paths:
                     message: Not found
                     code: NOT_FOUND
               schema:
-                $ref: '#/components/schemas/inline_response_422'
+                $ref: '#/components/schemas/inline_response_402'
           description: Returns not found error
+        412:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: host_is_not_ready
+                    code: PRECONDITION_FAILED
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns precondition failed error
       summary: List all power feeds for an existing kubernetes baremetal node
       tags:
       - Kubernetes Baremetal Node
       x-code-samples:
       - lang: curl
         label: cURL
-        source: 'curl -g "https://api.servers.com/v1/hosts/kubernetes_baremetal_nodes/ELe32Qd6/power_feeds"
+        source: 'curl -g "https://api.servers.com/v1/hosts/kubernetes_baremetal_nodes/jneg56bw/power_feeds"
           -X GET '
   /v1/kubernetes_clusters:
     get:
@@ -1847,18 +1860,18 @@ paths:
               examples:
                 default:
                   value:
-                  - id: y5eVOMaE
+                  - id: 3YaOYpdx
                     name: some_cluster
                     status: pending
-                    location_id: 474
-                    created_at: 2019-10-09T15:20:19Z
-                    updated_at: 2019-10-09T15:20:19Z
-                  - id: lNbW6Jay
+                    location_id: 538
+                    created_at: 2019-10-16T12:12:44Z
+                    updated_at: 2019-10-16T12:12:44Z
+                  - id: WZdPNwaK
                     name: some_cluster
                     status: pending
-                    location_id: 474
-                    created_at: 2019-10-09T15:20:19Z
-                    updated_at: 2019-10-09T15:20:19Z
+                    location_id: 538
+                    created_at: 2019-10-16T12:12:44Z
+                    updated_at: 2019-10-16T12:12:44Z
               schema:
                 items:
                   $ref: '#/components/schemas/The Items Schema'
@@ -1901,7 +1914,7 @@ paths:
     get:
       operationId: RetrieveAnExistingKubernetesCluster
       parameters:
-      - example: YRdG67bD
+      - example: w9aADOev
         explode: false
         in: path
         name: id
@@ -1916,12 +1929,12 @@ paths:
               examples:
                 default:
                   value:
-                    id: YRdG67bD
+                    id: w9aADOev
                     name: some_cluster
                     status: pending
-                    location_id: 469
-                    created_at: 2019-10-09T15:20:18Z
-                    updated_at: 2019-10-09T15:20:18Z
+                    location_id: 533
+                    created_at: 2019-10-16T12:12:43Z
+                    updated_at: 2019-10-16T12:12:43Z
               schema:
                 $ref: '#/components/schemas/inline_response_200_1'
           description: Returns kubernetes cluster
@@ -1953,7 +1966,7 @@ paths:
                     message: Not found
                     code: NOT_FOUND
               schema:
-                $ref: '#/components/schemas/inline_response_422'
+                $ref: '#/components/schemas/inline_response_402'
           description: Returns not found error
       summary: Retrieve an existing kubernetes cluster
       tags:
@@ -1961,7 +1974,7 @@ paths:
       x-code-samples:
       - lang: curl
         label: cURL
-        source: 'curl -g "https://api.servers.com/v1/kubernetes_clusters/YRdG67bD"
+        source: 'curl -g "https://api.servers.com/v1/kubernetes_clusters/w9aADOev"
           -X GET '
   /v1/kubernetes_clusters/{kubernetes_cluster_id}/nodes:
     get:
@@ -2021,7 +2034,7 @@ paths:
           - DESC
           type: string
         style: form
-      - example: YQdJ2dOG
+      - example: LDdwpRe1
         explode: false
         in: path
         name: kubernetes_cluster_id
@@ -2036,84 +2049,84 @@ paths:
               examples:
                 default:
                   value:
-                  - id: openRe7A
-                    number: 5
-                    hostname: name80
+                  - id: 3YaOpbxq
+                    number: 25
+                    hostname: name129
                     configuration: SSD.50
                     type: cloud
                     role: master
                     status: pending
-                    private_ipv4_address: 127.0.22.11
-                    public_ipv4_address: 127.0.23.11
+                    private_ipv4_address: 127.0.35.17
+                    public_ipv4_address: 127.0.36.18
                     ref_id: openRe7A
-                    cluster_id: YQdJ2dOG
-                    created_at: 2019-10-09T15:19:32Z
-                    updated_at: 2019-10-09T15:19:32Z
-                  - id: Jxbojagw
-                    number: 6
-                    hostname: name81
+                    cluster_id: LDdwpRe1
+                    created_at: 2019-10-16T12:12:40Z
+                    updated_at: 2019-10-16T12:12:40Z
+                  - id: WZdPwbKg
+                    number: 26
+                    hostname: name130
                     configuration: SSD.50
                     type: cloud
                     role: master
                     status: pending
-                    private_ipv4_address: 127.0.24.12
-                    public_ipv4_address: 127.0.25.12
+                    private_ipv4_address: 127.0.37.18
+                    public_ipv4_address: 127.0.38.19
                     ref_id: Jxbojagw
-                    cluster_id: YQdJ2dOG
-                    created_at: 2019-10-09T15:19:32Z
-                    updated_at: 2019-10-09T15:19:32Z
-                  - id: 8mep2bMy
-                    number: 7
-                    hostname: name82
+                    cluster_id: LDdwpRe1
+                    created_at: 2019-10-16T12:12:40Z
+                    updated_at: 2019-10-16T12:12:40Z
+                  - id: YqaQlenj
+                    number: 27
+                    hostname: name131
                     configuration: SSD.50
                     type: cloud
                     role: master
                     status: pending
-                    private_ipv4_address: 127.0.26.13
-                    public_ipv4_address: 127.0.27.13
+                    private_ipv4_address: 127.0.39.19
+                    public_ipv4_address: 127.0.40.20
                     ref_id: 8mep2bMy
-                    cluster_id: YQdJ2dOG
-                    created_at: 2019-10-09T15:19:32Z
-                    updated_at: 2019-10-09T15:19:32Z
-                  - id: 4zbq2dpr
-                    number: 8
-                    hostname: name83
+                    cluster_id: LDdwpRe1
+                    created_at: 2019-10-16T12:12:40Z
+                    updated_at: 2019-10-16T12:12:40Z
+                  - id: APdRqbGy
+                    number: 28
+                    hostname: name132
                     configuration: SSD.50
                     type: cloud
                     role: node
                     status: pending
-                    private_ipv4_address: 127.0.28.14
-                    public_ipv4_address: 127.0.29.14
+                    private_ipv4_address: 127.0.41.20
+                    public_ipv4_address: 127.0.42.21
                     ref_id: 4zbq2dpr
-                    cluster_id: YQdJ2dOG
-                    created_at: 2019-10-09T15:19:32Z
-                    updated_at: 2019-10-09T15:19:32Z
-                  - id: MYerEdOB
-                    number: 9
-                    hostname: name84
+                    cluster_id: LDdwpRe1
+                    created_at: 2019-10-16T12:12:40Z
+                    updated_at: 2019-10-16T12:12:40Z
+                  - id: y5eVMdEP
+                    number: 29
+                    hostname: name133
                     configuration: SSD.50
                     type: cloud
                     role: node
                     status: pending
-                    private_ipv4_address: 127.0.30.15
-                    public_ipv4_address: 127.0.31.15
+                    private_ipv4_address: 127.0.43.21
+                    public_ipv4_address: 127.0.44.22
                     ref_id: MYerEdOB
-                    cluster_id: YQdJ2dOG
-                    created_at: 2019-10-09T15:19:32Z
-                    updated_at: 2019-10-09T15:19:32Z
-                  - id: l9avmeG1
-                    number: 10
-                    hostname: name85
+                    cluster_id: LDdwpRe1
+                    created_at: 2019-10-16T12:12:40Z
+                    updated_at: 2019-10-16T12:12:40Z
+                  - id: lNbWJayg
+                    number: 30
+                    hostname: name134
                     configuration: SSD.50
                     type: cloud
                     role: node
                     status: pending
-                    private_ipv4_address: 127.0.32.16
-                    public_ipv4_address: 127.0.33.16
+                    private_ipv4_address: 127.0.45.22
+                    public_ipv4_address: 127.0.46.23
                     ref_id: l9avmeG1
-                    cluster_id: YQdJ2dOG
-                    created_at: 2019-10-09T15:19:32Z
-                    updated_at: 2019-10-09T15:19:32Z
+                    cluster_id: LDdwpRe1
+                    created_at: 2019-10-16T12:12:40Z
+                    updated_at: 2019-10-16T12:12:40Z
               schema:
                 items:
                   $ref: '#/components/schemas/The Items Schema_1'
@@ -2151,13 +2164,13 @@ paths:
       x-code-samples:
       - lang: curl
         label: cURL
-        source: 'curl -g "https://api.servers.com/v1/kubernetes_clusters/YQdJ2dOG/nodes"
+        source: 'curl -g "https://api.servers.com/v1/kubernetes_clusters/LDdwpRe1/nodes"
           -X GET '
   /v1/kubernetes_clusters/{kubernetes_cluster_id}/nodes/{node_id}:
     get:
       operationId: RetrieveAnExistingKubernetesClusterNode
       parameters:
-      - example: 4oeEva0B
+      - example: l9av2maG
         explode: false
         in: path
         name: kubernetes_cluster_id
@@ -2165,7 +2178,7 @@ paths:
         schema:
           type: string
         style: simple
-      - example: pnel5aKB
+      - example: J0dN6dLO
         explode: false
         in: path
         name: node_id
@@ -2174,25 +2187,36 @@ paths:
           type: string
         style: simple
       responses:
+        404:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Not found
+                    code: NOT_FOUND
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns not found error
         200:
           content:
             application/json:
               examples:
                 default:
                   value:
-                    id: pnel5aKB
-                    number: 3
-                    hostname: name76
+                    id: J0dN6dLO
+                    number: 24
+                    hostname: name127
                     configuration: SSD.50
                     type: cloud
                     role: master
                     status: pending
-                    private_ipv4_address: 127.0.18.9
-                    public_ipv4_address: 127.0.19.9
-                    ref_id: pnel5aKB
-                    cluster_id: 4oeEva0B
-                    created_at: 2019-10-09T15:19:31Z
-                    updated_at: 2019-10-09T15:19:31Z
+                    private_ipv4_address: 127.0.33.16
+                    public_ipv4_address: 127.0.34.17
+                    ref_id: MvbmOeYA
+                    cluster_id: l9av2maG
+                    created_at: 2019-10-16T12:12:40Z
+                    updated_at: 2019-10-16T12:12:40Z
               schema:
                 $ref: '#/components/schemas/The Items Schema_1'
           description: Returns kubernetes cluster node
@@ -2215,24 +2239,13 @@ paths:
               schema:
                 type: string
               style: simple
-        404:
-          content:
-            application/json:
-              examples:
-                default:
-                  value:
-                    message: Not found
-                    code: NOT_FOUND
-              schema:
-                $ref: '#/components/schemas/inline_response_422'
-          description: Returns not found error
       summary: Retrieve an existing kubernetes cluster node
       tags:
       - Kubernetes Cluster
       x-code-samples:
       - lang: curl
         label: cURL
-        source: 'curl -g "https://api.servers.com/v1/kubernetes_clusters/4oeEva0B/nodes/pnel5aKB"
+        source: 'curl -g "https://api.servers.com/v1/kubernetes_clusters/l9av2maG/nodes/J0dN6dLO"
           -X GET '
   /v1/l2_segments:
     get:
@@ -2289,27 +2302,27 @@ paths:
               examples:
                 default:
                   value:
-                  - id: 4zbq2dpr
-                    name: name18
+                  - id: ELe3Mb69
+                    name: name104
                     type: public
                     status: active
-                    location_id: 72
-                    updated_at: 2019-10-09T15:19:00Z
-                    created_at: 2019-10-09T15:19:00Z
-                  - id: MYerEdOB
-                    name: name19
+                    location_id: 461
+                    updated_at: 2019-10-16T12:12:26Z
+                    created_at: 2019-10-16T12:12:26Z
+                  - id: GRb41dBL
+                    name: name105
                     type: public
                     status: active
-                    location_id: 72
-                    updated_at: 2019-10-09T15:19:00Z
-                    created_at: 2019-10-09T15:19:00Z
-                  - id: l9avmeG1
-                    name: name20
+                    location_id: 461
+                    updated_at: 2019-10-16T12:12:26Z
+                    created_at: 2019-10-16T12:12:26Z
+                  - id: M7e5Ba2v
+                    name: name106
                     type: public
                     status: active
-                    location_id: 72
-                    updated_at: 2019-10-09T15:19:00Z
-                    created_at: 2019-10-09T15:19:00Z
+                    location_id: 461
+                    updated_at: 2019-10-16T12:12:26Z
+                    created_at: 2019-10-16T12:12:26Z
               schema:
                 items:
                   $ref: '#/components/schemas/v1-l2_segments-_l2_segment'
@@ -2355,13 +2368,13 @@ paths:
         content:
           application/json:
             example:
-              name: name26
+              name: name97
               type: public
-              location_id: 97
+              location_id: 447
               members:
-              - id: YQdJ62dO
+              - id: xkazm8eJ
                 mode: native
-              - id: y1aKrReQ
+              - id: w9aAnzbv
                 mode: native
             schema:
               properties:
@@ -2396,13 +2409,13 @@ paths:
               examples:
                 default:
                   value:
-                    id: 46dBXa79
-                    name: name26
+                    id: 4QbYKezq
+                    name: name97
                     type: public
                     status: pending
-                    location_id: 97
-                    updated_at: 2019-10-09T15:19:03Z
-                    created_at: 2019-10-09T15:19:03Z
+                    location_id: 447
+                    updated_at: 2019-10-16T12:12:22Z
+                    created_at: 2019-10-16T12:12:22Z
               schema:
                 $ref: '#/components/schemas/v1-l2_segments-_l2_segment_detailed'
           description: Returns created L2 segment
@@ -2445,15 +2458,15 @@ paths:
       - lang: curl
         label: cURL
         source: "curl \"https://api.servers.com/v1/l2_segments\" -d '{\n  \"name\"\
-          : \"name26\",\n  \"type\": \"public\",\n  \"location_id\": 97,\n  \"members\"\
-          : [\n    {\n      \"id\": \"YQdJ62dO\",\n      \"mode\": \"native\"\n  \
-          \  },\n    {\n      \"id\": \"y1aKrReQ\",\n      \"mode\": \"native\"\n\
+          : \"name97\",\n  \"type\": \"public\",\n  \"location_id\": 447,\n  \"members\"\
+          : [\n    {\n      \"id\": \"xkazm8eJ\",\n      \"mode\": \"native\"\n  \
+          \  },\n    {\n      \"id\": \"w9aAnzbv\",\n      \"mode\": \"native\"\n\
           \    }\n  ]\n}' -X POST "
   /v1/l2_segments/{l2_segment_id}:
     delete:
       operationId: DeleteAnExistingL2Segment
       parameters:
-      - example: J0dN6dLO
+      - example: YqaQlenj
         explode: false
         in: path
         name: l2_segment_id
@@ -2483,17 +2496,6 @@ paths:
               schema:
                 type: string
               style: simple
-        404:
-          content:
-            application/json:
-              examples:
-                default:
-                  value:
-                    message: Not found
-                    code: NOT_FOUND
-              schema:
-                $ref: '#/components/schemas/inline_response_422'
-          description: Returns not found error
         409:
           content:
             application/json:
@@ -2503,19 +2505,30 @@ paths:
                     message: Not ready
                     code: NOT_READY
               schema:
-                $ref: '#/components/schemas/inline_response_422'
+                $ref: '#/components/schemas/inline_response_402'
           description: Returns conflict
+        404:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Not found
+                    code: NOT_FOUND
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns not found error
       summary: Delete an existing L2 segment
       tags:
       - L2 Segment
       x-code-samples:
       - lang: curl
         label: cURL
-        source: 'curl "https://api.servers.com/v1/l2_segments/J0dN6dLO"  -X DELETE '
+        source: 'curl "https://api.servers.com/v1/l2_segments/YqaQlenj"  -X DELETE '
     get:
       operationId: RetrieveAnExistingL2Segment
       parameters:
-      - example: xkazYeJ0
+      - example: lNbWJayg
         explode: false
         in: path
         name: l2_segment_id
@@ -2530,13 +2543,13 @@ paths:
               examples:
                 default:
                   value:
-                    id: xkazYeJ0
-                    name: name24
+                    id: lNbWJayg
+                    name: name95
                     type: public
                     status: pending
-                    location_id: 92
-                    updated_at: 2019-10-09T15:19:02Z
-                    created_at: 2019-10-09T15:19:02Z
+                    location_id: 442
+                    updated_at: 2019-10-16T12:12:20Z
+                    created_at: 2019-10-16T12:12:20Z
               schema:
                 $ref: '#/components/schemas/v1-l2_segments-_l2_segment_detailed'
           description: Returns L2 segment
@@ -2568,7 +2581,7 @@ paths:
                     message: Not found
                     code: NOT_FOUND
               schema:
-                $ref: '#/components/schemas/inline_response_422'
+                $ref: '#/components/schemas/inline_response_402'
           description: Returns not found error
       summary: Retrieve an existing L2 segment
       tags:
@@ -2576,11 +2589,11 @@ paths:
       x-code-samples:
       - lang: curl
         label: cURL
-        source: 'curl -g "https://api.servers.com/v1/l2_segments/xkazYeJ0" -X GET '
+        source: 'curl -g "https://api.servers.com/v1/l2_segments/lNbWJayg" -X GET '
     put:
       operationId: UpdateAnExistingL2Segment
       parameters:
-      - example: YQdJ2dOG
+      - example: N1aMAaWm
         explode: false
         in: path
         name: l2_segment_id
@@ -2593,11 +2606,11 @@ paths:
         content:
           application/json:
             example:
-              name: name34
+              name: name85
               members:
-              - id: KQe1wRbJ
+              - id: JxboYKeg
                 mode: native
-              - id: Jrb2kKdW
+              - id: 8mepg6dM
                 mode: native
             schema:
               properties:
@@ -2619,13 +2632,13 @@ paths:
               examples:
                 default:
                   value:
-                    id: YQdJ2dOG
-                    name: name34
+                    id: N1aMAaWm
+                    name: name85
                     type: public
                     status: pending
-                    location_id: 111
-                    updated_at: 2019-10-09T15:19:07Z
-                    created_at: 2019-10-09T15:19:06Z
+                    location_id: 420
+                    updated_at: 2019-10-16T12:12:15Z
+                    created_at: 2019-10-16T12:12:15Z
               schema:
                 $ref: '#/components/schemas/v1-l2_segments-_l2_segment_detailed'
           description: Returns updated L2 Segment
@@ -2648,17 +2661,6 @@ paths:
               schema:
                 type: string
               style: simple
-        409:
-          content:
-            application/json:
-              examples:
-                default:
-                  value:
-                    message: Not ready
-                    code: NOT_READY
-              schema:
-                $ref: '#/components/schemas/inline_response_422'
-          description: Returns conflict
         422:
           content:
             application/json:
@@ -2672,15 +2674,26 @@ paths:
               schema:
                 $ref: '#/components/schemas/The Root Schema_1'
           description: Returns validation failed
+        409:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Not ready
+                    code: NOT_READY
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns conflict
       summary: Update an existing L2 segment
       tags:
       - L2 Segment
       x-code-samples:
       - lang: curl
         label: cURL
-        source: "curl \"https://api.servers.com/v1/l2_segments/YQdJ2dOG\" -d '{\n\
-          \  \"name\": \"name34\",\n  \"members\": [\n    {\n      \"id\": \"KQe1wRbJ\"\
-          ,\n      \"mode\": \"native\"\n    },\n    {\n      \"id\": \"Jrb2kKdW\"\
+        source: "curl \"https://api.servers.com/v1/l2_segments/N1aMAaWm\" -d '{\n\
+          \  \"name\": \"name85\",\n  \"members\": [\n    {\n      \"id\": \"JxboYKeg\"\
+          ,\n      \"mode\": \"native\"\n    },\n    {\n      \"id\": \"8mepg6dM\"\
           ,\n      \"mode\": \"native\"\n    }\n  ]\n}' -X PUT "
   /v1/l2_segments/{l2_segment_id}/members:
     get:
@@ -2707,7 +2720,7 @@ paths:
           minimum: 1
           type: integer
         style: form
-      - example: 4QbYKezq
+      - example: olejRejN
         explode: false
         in: path
         name: l2_segment_id
@@ -2722,27 +2735,27 @@ paths:
               examples:
                 default:
                   value:
-                  - id: WPe9Q3eL
+                  - id: Vyb8mdvA
                     title: mebertitle
                     mode: native
                     vlan: null
                     status: new
-                    updated_at: 2019-10-09T15:20:19Z
-                    created_at: 2019-10-09T15:20:19Z
-                  - id: nXe0VXbx
+                    updated_at: 2019-10-16T12:11:03Z
+                    created_at: 2019-10-16T12:11:03Z
+                  - id: WPe9xdLy
                     title: mebertitle
                     mode: native
                     vlan: null
                     status: new
-                    updated_at: 2019-10-09T15:20:19Z
-                    created_at: 2019-10-09T15:20:19Z
-                  - id: jnegL6aw
+                    updated_at: 2019-10-16T12:11:03Z
+                    created_at: 2019-10-16T12:11:03Z
+                  - id: nXe0vbxr
                     title: mebertitle
                     mode: native
                     vlan: null
                     status: new
-                    updated_at: 2019-10-09T15:20:19Z
-                    created_at: 2019-10-09T15:20:19Z
+                    updated_at: 2019-10-16T12:11:03Z
+                    created_at: 2019-10-16T12:11:03Z
               schema:
                 items:
                   $ref: '#/components/schemas/v1-l2_segments-_l2_member'
@@ -2783,7 +2796,7 @@ paths:
                     message: Not found
                     code: NOT_FOUND
               schema:
-                $ref: '#/components/schemas/inline_response_422'
+                $ref: '#/components/schemas/inline_response_402'
           description: Returns not found error
       summary: List all L2 segment members
       tags:
@@ -2791,7 +2804,7 @@ paths:
       x-code-samples:
       - lang: curl
         label: cURL
-        source: 'curl -g "https://api.servers.com/v1/l2_segments/4QbYKezq/members"
+        source: 'curl -g "https://api.servers.com/v1/l2_segments/olejRejN/members"
           -X GET '
   /v1/l2_segments/{l2_segment_id}/networks:
     get:
@@ -2841,7 +2854,7 @@ paths:
           - DESC
           type: string
         style: form
-      - example: openRe7A
+      - example: 46dBXa79
         explode: false
         in: path
         name: l2_segment_id
@@ -2856,36 +2869,36 @@ paths:
               examples:
                 default:
                   value:
-                  - id: y1aKrReQ
+                  - id: oQeZgQap
                     title: Alias
                     state: new
-                    cidr: 127.0.14.0/24
+                    cidr: 127.0.46.0/24
                     family: ipv4
                     interface_type: public
                     distribution_method: route
                     additional: true
-                    updated_at: 2019-10-09T15:18:58Z
-                    created_at: 2019-10-09T15:18:58Z
-                  - id: 9wdL9wej
+                    updated_at: 2019-10-16T12:12:10Z
+                    created_at: 2019-10-16T12:12:10Z
+                  - id: KQe1MZeJ
                     title: Alias
                     state: new
-                    cidr: 127.0.15.0/24
+                    cidr: 127.0.47.0/24
                     family: ipv4
                     interface_type: public
                     distribution_method: route
                     additional: true
-                    updated_at: 2019-10-09T15:18:58Z
-                    created_at: 2019-10-09T15:18:58Z
-                  - id: N1aM8AeW
+                    updated_at: 2019-10-16T12:12:10Z
+                    created_at: 2019-10-16T12:12:10Z
+                  - id: Jrb2XMeW
                     title: Alias
                     state: new
-                    cidr: 127.0.16.0/24
+                    cidr: 127.0.48.0/24
                     family: ipv4
                     interface_type: public
                     distribution_method: route
                     additional: true
-                    updated_at: 2019-10-09T15:18:58Z
-                    created_at: 2019-10-09T15:18:58Z
+                    updated_at: 2019-10-16T12:12:10Z
+                    created_at: 2019-10-16T12:12:10Z
               schema:
                 items:
                   $ref: '#/components/schemas/v1-l2_segments-_l2_network'
@@ -2926,7 +2939,7 @@ paths:
                     message: Not found
                     code: NOT_FOUND
               schema:
-                $ref: '#/components/schemas/inline_response_422'
+                $ref: '#/components/schemas/inline_response_402'
           description: Returns not found error
       summary: List all l2 segment networks
       tags:
@@ -2934,12 +2947,12 @@ paths:
       x-code-samples:
       - lang: curl
         label: cURL
-        source: 'curl -g "https://api.servers.com/v1/l2_segments/openRe7A/networks"
+        source: 'curl -g "https://api.servers.com/v1/l2_segments/46dBXa79/networks"
           -X GET '
     put:
       operationId: UpdateAnExistingL2SegmentNetworks
       parameters:
-      - example: olejRejN
+      - example: YRdG7dDz
         explode: false
         in: path
         name: l2_segment_id
@@ -2956,9 +2969,9 @@ paths:
               - mask: 32
                 distribution_method: route
               delete:
-              - MvbmZOdY
-              - open5Rd7
-              - Jxbo2jag
+              - Vyb8gjav
+              - WPe9jJaL
+              - nXe0M5ax
             schema:
               properties:
                 create:
@@ -2979,13 +2992,13 @@ paths:
               examples:
                 default:
                   value:
-                    id: olejRejN
-                    name: name11
+                    id: YRdG7dDz
+                    name: name80
                     type: public
                     status: pending
-                    location_id: 46
-                    updated_at: 2019-10-09T15:18:56Z
-                    created_at: 2019-10-09T15:18:56Z
+                    location_id: 403
+                    updated_at: 2019-10-16T12:12:12Z
+                    created_at: 2019-10-16T12:12:12Z
               schema:
                 $ref: '#/components/schemas/v1-l2_segments-_l2_segment_detailed'
           description: Returns updated L2 Segment
@@ -3014,10 +3027,10 @@ paths:
       x-code-samples:
       - lang: curl
         label: cURL
-        source: "curl \"https://api.servers.com/v1/l2_segments/olejRejN/networks\"\
+        source: "curl \"https://api.servers.com/v1/l2_segments/YRdG7dDz/networks\"\
           \ -d '{\n  \"create\": [\n    {\n      \"mask\": 32,\n      \"distribution_method\"\
-          : \"route\"\n    }\n  ],\n  \"delete\": [\n    \"MvbmZOdY\",\n    \"open5Rd7\"\
-          ,\n    \"Jxbo2jag\"\n  ]\n}' -X PUT "
+          : \"route\"\n    }\n  ],\n  \"delete\": [\n    \"Vyb8gjav\",\n    \"WPe9jJaL\"\
+          ,\n    \"nXe0M5ax\"\n  ]\n}' -X PUT "
   /v1/load_balancers:
     get:
       operationId: LoadBalancers
@@ -3097,49 +3110,36 @@ paths:
           type: string
         style: form
       responses:
-        400:
-          content:
-            application/json:
-              examples:
-                default:
-                  value:
-                    message: Bad request
-                    code: BAD_REQUEST
-                    params:
-                    - page
-              schema:
-                $ref: '#/components/schemas/The Root Schema'
-          description: Returns bad request error
         200:
           content:
             application/json:
               examples:
                 default:
                   value:
-                  - id: QBeXWdyK
-                    name: name112
+                  - id: open5Rd7
+                    name: name157
                     type: l7
                     status: pending
                     external_addresses: []
-                    location_id: 377
-                    created_at: 2019-10-09T15:20:02Z
-                    updated_at: 2019-10-09T15:20:02Z
-                  - id: 4QbYKezq
-                    name: name113
+                    location_id: 542
+                    created_at: 2019-10-16T12:12:45Z
+                    updated_at: 2019-10-16T12:12:45Z
+                  - id: Jxbo2jag
+                    name: name158
                     type: l7
                     status: pending
                     external_addresses: []
-                    location_id: 377
-                    created_at: 2019-10-09T15:20:02Z
-                    updated_at: 2019-10-09T15:20:02Z
-                  - id: oQeZJepZ
-                    name: name114
+                    location_id: 542
+                    created_at: 2019-10-16T12:12:45Z
+                    updated_at: 2019-10-16T12:12:45Z
+                  - id: 8mepY2aM
+                    name: name159
                     type: l7
                     status: pending
                     external_addresses: []
-                    location_id: 377
-                    created_at: 2019-10-09T15:20:02Z
-                    updated_at: 2019-10-09T15:20:02Z
+                    location_id: 542
+                    created_at: 2019-10-16T12:12:45Z
+                    updated_at: 2019-10-16T12:12:45Z
               schema:
                 items:
                   $ref: '#/components/schemas/The Items Schema_2'
@@ -3171,6 +3171,19 @@ paths:
               schema:
                 type: string
               style: simple
+        400:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Bad request
+                    code: BAD_REQUEST
+                    params:
+                    - page
+              schema:
+                $ref: '#/components/schemas/The Root Schema'
+          description: Returns bad request error
       summary: Load balancers
       tags:
       - Load Balancer
@@ -3186,17 +3199,17 @@ paths:
         content:
           application/json:
             example:
-              name: name49
-              location_id: 155
+              name: name24
+              location_id: 220
               proxy_protocol_enabled: true
               rules:
               - src_proto: TCP
                 dst_proto: TCP
-                src_port: 2
-                dst_port: 3
+                src_port: 42
+                dst_port: 43
                 upstreams:
-                - ip: 10.0.0.124
-                  weight: 11
+                - ip: 10.0.2.100
+                  weight: 15
             schema:
               properties:
                 name:
@@ -3225,21 +3238,36 @@ paths:
               - rules
               type: object
       responses:
+        422:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Validation failed
+                    code: UNPROCESSABLE_ENTITY
+                    errors:
+                      name: is missing
+                      location_id: is missing
+                      rules: is missing
+              schema:
+                $ref: '#/components/schemas/The Root Schema_1'
+          description: Returns unprocessable entity error
         201:
           content:
             application/json:
               examples:
                 default:
                   value:
-                    id: olejRejN
-                    name: name49
+                    id: y1aKReQG
+                    name: name24
                     type: l4
                     status: in_process
                     external_addresses: []
-                    location_id: 155
+                    location_id: 220
                     proxy_protocol_enabled: true
-                    created_at: 2019-10-09T15:19:16Z
-                    updated_at: 2019-10-09T15:19:16Z
+                    created_at: 2019-10-16T12:11:24Z
+                    updated_at: 2019-10-16T12:11:25Z
               schema:
                 $ref: '#/components/schemas/inline_response_201'
           description: Returns a new load balancer
@@ -3262,21 +3290,6 @@ paths:
               schema:
                 type: string
               style: simple
-        422:
-          content:
-            application/json:
-              examples:
-                default:
-                  value:
-                    message: Validation failed
-                    code: UNPROCESSABLE_ENTITY
-                    errors:
-                      name: is missing
-                      location_id: is missing
-                      rules: is missing
-              schema:
-                $ref: '#/components/schemas/The Root Schema_1'
-          description: Returns unprocessable entity error
       summary: Create a new L4 load balancers
       tags:
       - Load Balancer
@@ -3284,11 +3297,11 @@ paths:
       - lang: curl
         label: cURL
         source: "curl \"https://api.servers.com/v1/load_balancers/l4\" -d '{\n  \"\
-          name\": \"name49\",\n  \"location_id\": 155,\n  \"proxy_protocol_enabled\"\
+          name\": \"name24\",\n  \"location_id\": 220,\n  \"proxy_protocol_enabled\"\
           : true,\n  \"rules\": [\n    {\n      \"src_proto\": \"TCP\",\n      \"\
-          dst_proto\": \"TCP\",\n      \"src_port\": 2,\n      \"dst_port\": 3,\n\
-          \      \"upstreams\": [\n        {\n          \"ip\": \"10.0.0.124\",\n\
-          \          \"weight\": 11\n        }\n      ]\n    }\n  ]\n}' -X POST "
+          dst_proto\": \"TCP\",\n      \"src_port\": 42,\n      \"dst_port\": 43,\n\
+          \      \"upstreams\": [\n        {\n          \"ip\": \"10.0.2.100\",\n\
+          \          \"weight\": 15\n        }\n      ]\n    }\n  ]\n}' -X POST "
   /v1/load_balancers/l7:
     post:
       operationId: CreateANewL7LoadBalancers
@@ -3297,24 +3310,24 @@ paths:
         content:
           application/json:
             example:
-              name: name136
-              location_id: 465
+              name: name59
+              location_id: 313
               healthcheck_url: /
               redirect_http: false
               geoip_enabled: false
               rules:
               - domains:
-                - example-72.com
-                ssl_certificate_id: Jxbo2jag
+                - example-27.com
+                ssl_certificate_id: BDbDxbl2
                 src_proto: HTTPS
                 dst_proto: HTTPS
-                src_path: /path53
-                dst_path: /path54
-                src_port: 86
-                dst_port: 87
+                src_path: /path27
+                dst_path: /path28
+                src_port: 46
+                dst_port: 47
                 upstreams:
-                - ip: 10.0.3.92
-                  weight: 51
+                - ip: 10.0.2.116
+                  weight: 18
             schema:
               properties:
                 name:
@@ -3353,38 +3366,22 @@ paths:
               - rules
               type: object
       responses:
-        422:
-          content:
-            application/json:
-              examples:
-                default:
-                  value:
-                    message: Validation failed
-                    code: UNPROCESSABLE_ENTITY
-                    errors:
-                      name: is missing
-                      location_id: is missing
-                      healthcheck_url: is missing
-                      rules: is missing
-              schema:
-                $ref: '#/components/schemas/The Root Schema_1'
-          description: Returns unprocessable entity error
         201:
           content:
             application/json:
               examples:
                 default:
                   value:
-                    id: LDdwpRe1
-                    name: name136
+                    id: y5eVMdEP
+                    name: name59
                     type: l7
                     status: in_process
                     external_addresses: []
-                    location_id: 465
+                    location_id: 313
                     redirect_http: false
                     geoip_enabled: false
-                    created_at: 2019-10-09T15:20:17Z
-                    updated_at: 2019-10-09T15:20:17Z
+                    created_at: 2019-10-16T12:11:50Z
+                    updated_at: 2019-10-16T12:11:51Z
               schema:
                 $ref: '#/components/schemas/inline_response_201_1'
           description: Returns a new load balancer
@@ -3407,6 +3404,22 @@ paths:
               schema:
                 type: string
               style: simple
+        422:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Validation failed
+                    code: UNPROCESSABLE_ENTITY
+                    errors:
+                      name: is missing
+                      location_id: is missing
+                      healthcheck_url: is missing
+                      rules: is missing
+              schema:
+                $ref: '#/components/schemas/The Root Schema_1'
+          description: Returns unprocessable entity error
       summary: Create a new L7 load balancers
       tags:
       - Load Balancer
@@ -3414,19 +3427,19 @@ paths:
       - lang: curl
         label: cURL
         source: "curl \"https://api.servers.com/v1/load_balancers/l7\" -d '{\n  \"\
-          name\": \"name136\",\n  \"location_id\": 465,\n  \"healthcheck_url\": \"\
+          name\": \"name59\",\n  \"location_id\": 313,\n  \"healthcheck_url\": \"\
           /\",\n  \"redirect_http\": false,\n  \"geoip_enabled\": false,\n  \"rules\"\
-          : [\n    {\n      \"domains\": [\n        \"example-72.com\"\n      ],\n\
-          \      \"ssl_certificate_id\": \"Jxbo2jag\",\n      \"src_proto\": \"HTTPS\"\
-          ,\n      \"dst_proto\": \"HTTPS\",\n      \"src_path\": \"/path53\",\n \
-          \     \"dst_path\": \"/path54\",\n      \"src_port\": 86,\n      \"dst_port\"\
-          : 87,\n      \"upstreams\": [\n        {\n          \"ip\": \"10.0.3.92\"\
-          ,\n          \"weight\": 51\n        }\n      ]\n    }\n  ]\n}' -X POST "
+          : [\n    {\n      \"domains\": [\n        \"example-27.com\"\n      ],\n\
+          \      \"ssl_certificate_id\": \"BDbDxbl2\",\n      \"src_proto\": \"HTTPS\"\
+          ,\n      \"dst_proto\": \"HTTPS\",\n      \"src_path\": \"/path27\",\n \
+          \     \"dst_path\": \"/path28\",\n      \"src_port\": 46,\n      \"dst_port\"\
+          : 47,\n      \"upstreams\": [\n        {\n          \"ip\": \"10.0.2.116\"\
+          ,\n          \"weight\": 18\n        }\n      ]\n    }\n  ]\n}' -X POST "
   /v1/load_balancers/l4/{id}:
     delete:
       operationId: DeleteAnExisitingL4LoadBalancer
       parameters:
-      - example: zPdy7aQr
+      - example: MYerEdOB
         explode: false
         in: path
         name: id
@@ -3435,17 +3448,6 @@ paths:
           type: string
         style: simple
       responses:
-        409:
-          content:
-            application/json:
-              examples:
-                default:
-                  value:
-                    message: Inactive load balancer remove error
-                    code: INACTIVE_LOAD_BALANCER_REMOVE_ERROR
-              schema:
-                $ref: '#/components/schemas/inline_response_422'
-          description: Returns conflict error
         404:
           content:
             application/json:
@@ -3455,7 +3457,7 @@ paths:
                     message: Not found
                     code: NOT_FOUND
               schema:
-                $ref: '#/components/schemas/inline_response_422'
+                $ref: '#/components/schemas/inline_response_402'
           description: Returns not found error
         400:
           content:
@@ -3470,6 +3472,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/The Root Schema'
           description: Returns bad request
+        409:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Inactive load balancer remove error
+                    code: INACTIVE_LOAD_BALANCER_REMOVE_ERROR
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns conflict error
         204:
           description: Deletes load balancer
           headers:
@@ -3497,12 +3510,12 @@ paths:
       x-code-samples:
       - lang: curl
         label: cURL
-        source: 'curl "https://api.servers.com/v1/load_balancers/l4/zPdy7aQr"  -X
+        source: 'curl "https://api.servers.com/v1/load_balancers/l4/MYerEdOB"  -X
           DELETE '
     get:
       operationId: RetrieveAnExistingL4LoadBalancer
       parameters:
-      - example: 9wdLwbjP
+      - example: pmbk5ezJ
         explode: false
         in: path
         name: id
@@ -3524,32 +3537,21 @@ paths:
               schema:
                 $ref: '#/components/schemas/The Root Schema'
           description: Returns bad request
-        404:
-          content:
-            application/json:
-              examples:
-                default:
-                  value:
-                    message: Not found
-                    code: NOT_FOUND
-              schema:
-                $ref: '#/components/schemas/inline_response_422'
-          description: Returns not found error
         200:
           content:
             application/json:
               examples:
                 default:
                   value:
-                    id: 9wdLwbjP
-                    name: name70
+                    id: pmbk5ezJ
+                    name: name5
                     type: l4
                     status: pending
                     external_addresses: []
-                    location_id: 219
+                    location_id: 160
                     proxy_protocol_enabled: false
-                    created_at: 2019-10-09T15:19:30Z
-                    updated_at: 2019-10-09T15:19:30Z
+                    created_at: 2019-10-16T12:11:07Z
+                    updated_at: 2019-10-16T12:11:07Z
               schema:
                 $ref: '#/components/schemas/inline_response_201'
           description: Returns load balancer
@@ -3572,18 +3574,29 @@ paths:
               schema:
                 type: string
               style: simple
+        404:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Not found
+                    code: NOT_FOUND
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns not found error
       summary: Retrieve an existing L4 load balancer
       tags:
       - Load Balancer
       x-code-samples:
       - lang: curl
         label: cURL
-        source: 'curl -g "https://api.servers.com/v1/load_balancers/l4/9wdLwbjP" -X
+        source: 'curl -g "https://api.servers.com/v1/load_balancers/l4/pmbk5ezJ" -X
           GET '
     put:
       operationId: UpdateAnExistingL4LoadBalancer
       parameters:
-      - example: 4zbq2dpr
+      - example: zPdy7aQr
         explode: false
         in: path
         name: id
@@ -3596,17 +3609,17 @@ paths:
         content:
           application/json:
             example:
-              name: name56
+              name: name16
               rules:
               - src_proto: TCP
                 dst_proto: TCP
-                src_port: 26
-                dst_port: 27
+                src_port: 14
+                dst_port: 15
                 upstreams:
-                - ip: 10.0.0.220
-                  weight: 21
-                - ip: 10.0.0.212
-                  weight: 22
+                - ip: 10.0.1.244
+                  weight: 1
+                - ip: 10.0.1.236
+                  weight: 2
             schema:
               properties:
                 name:
@@ -3626,50 +3639,22 @@ paths:
                   type: array
               type: object
       responses:
-        409:
-          content:
-            application/json:
-              examples:
-                default:
-                  value:
-                    message: Inactive load balancer update error
-                    code: INACTIVE_LOAD_BALANCER_UPDATE_ERROR
-              schema:
-                $ref: '#/components/schemas/inline_response_422'
-          description: Returns conflict error
-        422:
-          content:
-            application/json:
-              examples:
-                default:
-                  value:
-                    message: Validation failed
-                    code: UNPROCESSABLE_ENTITY
-                    errors:
-                      rules.0.src_proto: is missing
-                      rules.0.dst_proto: is missing
-                      rules.0.src_port: is missing
-                      rules.0.dst_port: is missing
-                      rules.0.upstreams: is missing
-              schema:
-                $ref: '#/components/schemas/The Root Schema_1'
-          description: Returns unprocessable entity error
         200:
           content:
             application/json:
               examples:
                 default:
                   value:
-                    id: 4zbq2dpr
-                    name: name56
+                    id: zPdy7aQr
+                    name: name16
                     type: l4
                     status: in_process
                     external_addresses:
                     - 101.0.0.5
                     location_id: 182
                     proxy_protocol_enabled: false
-                    created_at: 2019-10-09T15:19:22Z
-                    updated_at: 2019-10-09T15:19:23Z
+                    created_at: 2019-10-16T12:11:15Z
+                    updated_at: 2019-10-16T12:11:16Z
               schema:
                 $ref: '#/components/schemas/inline_response_201'
           description: Returns updated load balancer
@@ -3692,6 +3677,34 @@ paths:
               schema:
                 type: string
               style: simple
+        409:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Inactive load balancer update error
+                    code: INACTIVE_LOAD_BALANCER_UPDATE_ERROR
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns conflict error
+        422:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Validation failed
+                    code: UNPROCESSABLE_ENTITY
+                    errors:
+                      rules.0.src_proto: is missing
+                      rules.0.dst_proto: is missing
+                      rules.0.src_port: is missing
+                      rules.0.dst_port: is missing
+                      rules.0.upstreams: is missing
+              schema:
+                $ref: '#/components/schemas/The Root Schema_1'
+          description: Returns unprocessable entity error
         400:
           content:
             application/json:
@@ -3714,7 +3727,7 @@ paths:
                     message: Not found
                     code: NOT_FOUND
               schema:
-                $ref: '#/components/schemas/inline_response_422'
+                $ref: '#/components/schemas/inline_response_402'
           description: Returns not found error
       summary: Update an existing L4 load balancer
       tags:
@@ -3722,18 +3735,18 @@ paths:
       x-code-samples:
       - lang: curl
         label: cURL
-        source: "curl \"https://api.servers.com/v1/load_balancers/l4/4zbq2dpr\" -d\
-          \ '{\n  \"name\": \"name56\",\n  \"rules\": [\n    {\n      \"src_proto\"\
-          : \"TCP\",\n      \"dst_proto\": \"TCP\",\n      \"src_port\": 26,\n   \
-          \   \"dst_port\": 27,\n      \"upstreams\": [\n        {\n          \"ip\"\
-          : \"10.0.0.220\",\n          \"weight\": 21\n        },\n        {\n   \
-          \       \"ip\": \"10.0.0.212\",\n          \"weight\": 22\n        }\n \
-          \     ]\n    }\n  ]\n}' -X PUT "
+        source: "curl \"https://api.servers.com/v1/load_balancers/l4/zPdy7aQr\" -d\
+          \ '{\n  \"name\": \"name16\",\n  \"rules\": [\n    {\n      \"src_proto\"\
+          : \"TCP\",\n      \"dst_proto\": \"TCP\",\n      \"src_port\": 14,\n   \
+          \   \"dst_port\": 15,\n      \"upstreams\": [\n        {\n          \"ip\"\
+          : \"10.0.1.244\",\n          \"weight\": 1\n        },\n        {\n    \
+          \      \"ip\": \"10.0.1.236\",\n          \"weight\": 2\n        }\n   \
+          \   ]\n    }\n  ]\n}' -X PUT "
   /v1/load_balancers/l7/{id}:
     delete:
       operationId: DeleteAnExistingL7LoadBalancer
       parameters:
-      - example: Vyb8mdvA
+      - example: Jrb2KdWL
         explode: false
         in: path
         name: id
@@ -3742,6 +3755,30 @@ paths:
           type: string
         style: simple
       responses:
+        409:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Inactive load balancer remove error
+                    code: INACTIVE_LOAD_BALANCER_REMOVE_ERROR
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns conflict error
+        400:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Bad request
+                    code: BAD_REQUEST
+                    params:
+                    - id
+              schema:
+                $ref: '#/components/schemas/The Root Schema'
+          description: Returns bad request
         204:
           description: Deletes load balancer
           headers:
@@ -3772,44 +3809,20 @@ paths:
                     message: Not found
                     code: NOT_FOUND
               schema:
-                $ref: '#/components/schemas/inline_response_422'
+                $ref: '#/components/schemas/inline_response_402'
           description: Returns not found error
-        409:
-          content:
-            application/json:
-              examples:
-                default:
-                  value:
-                    message: Inactive load balancer remove error
-                    code: INACTIVE_LOAD_BALANCER_REMOVE_ERROR
-              schema:
-                $ref: '#/components/schemas/inline_response_422'
-          description: Returns conflict error
-        400:
-          content:
-            application/json:
-              examples:
-                default:
-                  value:
-                    message: Bad request
-                    code: BAD_REQUEST
-                    params:
-                    - id
-              schema:
-                $ref: '#/components/schemas/The Root Schema'
-          description: Returns bad request
       summary: Delete an existing L7 load balancer
       tags:
       - Load Balancer
       x-code-samples:
       - lang: curl
         label: cURL
-        source: 'curl "https://api.servers.com/v1/load_balancers/l7/Vyb8mdvA"  -X
+        source: 'curl "https://api.servers.com/v1/load_balancers/l7/Jrb2KdWL"  -X
           DELETE '
     get:
       operationId: RetrieveAnExistingL7LoadBalancer
       parameters:
-      - example: GRb41dBL
+      - example: 3YaOpbxq
         explode: false
         in: path
         name: id
@@ -3824,16 +3837,16 @@ paths:
               examples:
                 default:
                   value:
-                    id: GRb41dBL
-                    name: name118
+                    id: 3YaOpbxq
+                    name: name55
                     type: l7
                     status: pending
                     external_addresses: []
-                    location_id: 407
+                    location_id: 305
                     redirect_http: false
                     geoip_enabled: false
-                    created_at: 2019-10-09T15:20:06Z
-                    updated_at: 2019-10-09T15:20:06Z
+                    created_at: 2019-10-16T12:11:48Z
+                    updated_at: 2019-10-16T12:11:48Z
               schema:
                 $ref: '#/components/schemas/inline_response_201_1'
           description: Returns load balancer
@@ -3856,17 +3869,6 @@ paths:
               schema:
                 type: string
               style: simple
-        404:
-          content:
-            application/json:
-              examples:
-                default:
-                  value:
-                    message: Not found
-                    code: NOT_FOUND
-              schema:
-                $ref: '#/components/schemas/inline_response_422'
-          description: Returns not found error
         400:
           content:
             application/json:
@@ -3880,18 +3882,29 @@ paths:
               schema:
                 $ref: '#/components/schemas/The Root Schema'
           description: Returns bad request
+        404:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Not found
+                    code: NOT_FOUND
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns not found error
       summary: Retrieve an existing L7 load balancer
       tags:
       - Load Balancer
       x-code-samples:
       - lang: curl
         label: cURL
-        source: 'curl -g "https://api.servers.com/v1/load_balancers/l7/GRb41dBL" -X
+        source: 'curl -g "https://api.servers.com/v1/load_balancers/l7/3YaOpbxq" -X
           GET '
     put:
       operationId: UpdateAnExistingL7LoadBalancer
       parameters:
-      - example: Jxbo2jag
+      - example: K9b6nbEv
         explode: false
         in: path
         name: id
@@ -3904,13 +3917,13 @@ paths:
         content:
           application/json:
             example:
-              name: name131
+              name: name71
               healthcheck_url: /
               redirect_http: false
               geoip_enabled: false
               rules:
               - domains:
-                - example-64.com
+                - example-42.com
                 src_proto: HTTP
                 dst_proto: HTTP
                 src_path: /
@@ -3918,10 +3931,10 @@ paths:
                 src_port: 70
                 dst_port: 71
                 upstreams:
-                - ip: 10.0.3.28
-                  weight: 42
-                - ip: 10.0.3.20
-                  weight: 43
+                - ip: 10.0.2.172
+                  weight: 25
+                - ip: 10.0.2.164
+                  weight: 26
             schema:
               properties:
                 name:
@@ -3950,23 +3963,47 @@ paths:
                   type: array
               type: object
       responses:
+        400:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Bad request
+                    code: BAD_REQUEST
+                    params:
+                    - id
+              schema:
+                $ref: '#/components/schemas/The Root Schema'
+          description: Returns bad request error
+        409:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Inactive load balancer update error
+                    code: INACTIVE_LOAD_BALANCER_UPDATE_ERROR
+              schema:
+                $ref: '#/components/schemas/inline_response_402'
+          description: Returns conflict error
         200:
           content:
             application/json:
               examples:
                 default:
                   value:
-                    id: Jxbo2jag
-                    name: name131
+                    id: K9b6nbEv
+                    name: name71
                     type: l7
                     status: in_process
                     external_addresses:
-                    - 101.0.0.21
-                    location_id: 442
+                    - 101.0.0.20
+                    location_id: 339
                     redirect_http: false
                     geoip_enabled: false
-                    created_at: 2019-10-09T15:20:13Z
-                    updated_at: 2019-10-09T15:20:14Z
+                    created_at: 2019-10-16T12:11:59Z
+                    updated_at: 2019-10-16T12:12:00Z
               schema:
                 $ref: '#/components/schemas/inline_response_201_1'
           description: Returns updated load balancer
@@ -3989,17 +4026,6 @@ paths:
               schema:
                 type: string
               style: simple
-        409:
-          content:
-            application/json:
-              examples:
-                default:
-                  value:
-                    message: Inactive load balancer update error
-                    code: INACTIVE_LOAD_BALANCER_UPDATE_ERROR
-              schema:
-                $ref: '#/components/schemas/inline_response_422'
-          description: Returns conflict error
         404:
           content:
             application/json:
@@ -4009,21 +4035,8 @@ paths:
                     message: Not found
                     code: NOT_FOUND
               schema:
-                $ref: '#/components/schemas/inline_response_422'
+                $ref: '#/components/schemas/inline_response_402'
           description: Returns not found error
-        400:
-          content:
-            application/json:
-              examples:
-                default:
-                  value:
-                    message: Bad request
-                    code: BAD_REQUEST
-                    params:
-                    - id
-              schema:
-                $ref: '#/components/schemas/The Root Schema'
-          description: Returns bad request error
         422:
           content:
             application/json:
@@ -4050,15 +4063,15 @@ paths:
       x-code-samples:
       - lang: curl
         label: cURL
-        source: "curl \"https://api.servers.com/v1/load_balancers/l7/Jxbo2jag\" -d\
-          \ '{\n  \"name\": \"name131\",\n  \"healthcheck_url\": \"/\",\n  \"redirect_http\"\
+        source: "curl \"https://api.servers.com/v1/load_balancers/l7/K9b6nbEv\" -d\
+          \ '{\n  \"name\": \"name71\",\n  \"healthcheck_url\": \"/\",\n  \"redirect_http\"\
           : false,\n  \"geoip_enabled\": false,\n  \"rules\": [\n    {\n      \"domains\"\
-          : [\n        \"example-64.com\"\n      ],\n      \"src_proto\": \"HTTP\"\
+          : [\n        \"example-42.com\"\n      ],\n      \"src_proto\": \"HTTP\"\
           ,\n      \"dst_proto\": \"HTTP\",\n      \"src_path\": \"/\",\n      \"\
           dst_path\": \"/\",\n      \"src_port\": 70,\n      \"dst_port\": 71,\n \
-          \     \"upstreams\": [\n        {\n          \"ip\": \"10.0.3.28\",\n  \
-          \        \"weight\": 42\n        },\n        {\n          \"ip\": \"10.0.3.20\"\
-          ,\n          \"weight\": 43\n        }\n      ]\n    }\n  ]\n}' -X PUT "
+          \     \"upstreams\": [\n        {\n          \"ip\": \"10.0.2.172\",\n \
+          \         \"weight\": 25\n        },\n        {\n          \"ip\": \"10.0.2.164\"\
+          ,\n          \"weight\": 26\n        }\n      ]\n    }\n  ]\n}' -X PUT "
   /v1/locations:
     get:
       operationId: Locations
@@ -4116,14 +4129,27 @@ paths:
           type: string
         style: form
       responses:
+        400:
+          content:
+            application/json:
+              examples:
+                default:
+                  value:
+                    message: Bad request
+                    code: BAD_REQUEST
+                    params:
+                    - page
+              schema:
+                $ref: '#/components/schemas/The Root Schema'
+          description: Returns bad request error
         200:
           content:
             application/json:
               examples:
                 default:
                   value:
-                  - id: 544
-                    name: location544
+                  - id: 371
+                    name: location371
                     supported_features:
                     - disaggregated_public_ports
                     - disaggregated_private_ports
@@ -4163,19 +4189,6 @@ paths:
               schema:
                 type: string
               style: simple
-        400:
-          content:
-            application/json:
-              examples:
-                default:
-                  value:
-                    message: Bad request
-                    code: BAD_REQUEST
-                    params:
-                    - page
-              schema:
-                $ref: '#/components/schemas/The Root Schema'
-          description: Returns bad request error
       summary: Locations
       tags:
       - Location
@@ -4187,7 +4200,7 @@ paths:
     get:
       operationId: RetrieveAnExisitingLocation
       parameters:
-      - example: 541
+      - example: 368
         explode: false
         in: path
         name: location_id
@@ -4202,8 +4215,8 @@ paths:
               examples:
                 default:
                   value:
-                    id: 541
-                    name: location541
+                    id: 368
+                    name: location368
                     supported_features:
                     - disaggregated_public_ports
                     - disaggregated_private_ports
@@ -4240,7 +4253,7 @@ paths:
       x-code-samples:
       - lang: curl
         label: cURL
-        source: 'curl -g "https://api.servers.com/v1/locations/541" -X GET '
+        source: 'curl -g "https://api.servers.com/v1/locations/368" -X GET '
   /v1/ssl_certificates:
     get:
       operationId: SSLCertificates
@@ -4319,16 +4332,16 @@ paths:
               examples:
                 default:
                   value:
-                  - id: 8mep2bMy
-                    name: name7
+                  - id: Vyb8mdvA
+                    name: name116
                     type: custom
                     issuer: null
-                    subject: example-7.com
+                    subject: example-58.com
                     domain_names: []
-                    sha1_fingerprint: c9dd6c70-2c55-4b03-a095-9c0a7fa2d502
+                    sha1_fingerprint: fe2e1149-08c2-40dd-9ef8-4ab0700af52d
                     expires_at: null
-                    created_at: 2019-10-09T15:18:54Z
-                    updated_at: 2019-10-09T15:18:54Z
+                    created_at: 2019-10-16T12:12:33Z
+                    updated_at: 2019-10-16T12:12:33Z
               schema:
                 items:
                   $ref: '#/components/schemas/The Items Schema_4'
@@ -4375,40 +4388,40 @@ paths:
         content:
           application/json:
             example:
-              name: name103
+              name: name151
               public_key: |
                 -----BEGIN CERTIFICATE-----
                 MIICuDCCAiGgAwIBAgIBADANBgkqhkiG9w0BAQUFADBEMQswCQYDVQQGEwJCRTEO
                 MAwGA1UECgwFVGVzdE8xDzANBgNVBAsMBlRlc3RPVTEUMBIGA1UEAwwLc2VydmVy
-                cy5jb20wHhcNMTkxMDA5MTUxOTMzWhcNMjAxMDA4MTUxOTMzWjBEMQswCQYDVQQG
+                cy5jb20wHhcNMTkxMDE2MTIxMjQyWhcNMjAxMDE1MTIxMjQyWjBEMQswCQYDVQQG
                 EwJCRTEOMAwGA1UECgwFVGVzdE8xDzANBgNVBAsMBlRlc3RPVTEUMBIGA1UEAwwL
-                c2VydmVycy5jb20wgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBANCqxS5pX52c
-                k7WNxhCepLPPjQ/b3OzyMdFFRajcW2MIre1lWm+JYPGpZw8oe8rBdVhmtZCD7Hqs
-                gy0utyuepytMMh5DzrJNoejGxJjWOLvrq/tjlZjySsqrLMU1DCzvvPhhx4W5mWi4
-                3CMYq6CHK7V50S/yypPT2sYLPXzU47sxAgMBAAGjgbkwgbYwDwYDVR0TAQH/BAUw
-                AwEB/zAdBgNVHQ4EFgQUmBfFTv4CF+QZLZqlwq46e9rYHZswFgYDVR0RBA8wDYIL
-                c2VydmVycy5jb20wbAYDVR0jBGUwY4AUmBfFTv4CF+QZLZqlwq46e9rYHZuhSKRG
+                c2VydmVycy5jb20wgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBALQSjje5b3HE
+                OnXV5wD11z4smIA/wLcedbcREeG3xspLUzlq0aYj1WOi5UkBiXYwMjJLoXk2gNhq
+                zGYK7O6U2RxtM2Jsd1Ifn4yM8Jjzyi7i6EiTrZuE210jYgRMEzdtEpMwhVkMRtUc
+                cUG7y7XpGqnXbdmy3LK+BPqOLwK3mhHLAgMBAAGjgbkwgbYwDwYDVR0TAQH/BAUw
+                AwEB/zAdBgNVHQ4EFgQUuMfV7UJh0537JxW9DR+hmdnn7AcwFgYDVR0RBA8wDYIL
+                c2VydmVycy5jb20wbAYDVR0jBGUwY4AUuMfV7UJh0537JxW9DR+hmdnn7AehSKRG
                 MEQxCzAJBgNVBAYTAkJFMQ4wDAYDVQQKDAVUZXN0TzEPMA0GA1UECwwGVGVzdE9V
-                MRQwEgYDVQQDDAtzZXJ2ZXJzLmNvbYIBADANBgkqhkiG9w0BAQUFAAOBgQASTW7T
-                BlFrxOzl9KM5eqjQ8ZVcytBVbT8O9DrbXg1E79/nOE19dAFZ1BxbIuka7mAb/Xrk
-                SS+ApkNy6cx4AKUYqqjLK8QTiF5iRy6wXodkWDMVxrMdWYtzSOJEUkgmiy42dMaM
-                /ERY3ZcZYYo9VY1bi7TsuQvxyUO1nWOnaXtEiw==
+                MRQwEgYDVQQDDAtzZXJ2ZXJzLmNvbYIBADANBgkqhkiG9w0BAQUFAAOBgQBxt8ro
+                c7k/LQ/66SBLz10mEQ/gQ80vht17Dy5HVBBdKhzLNiiuWgjmvNW8KlJsiKNIQ2id
+                c4LDOxwrHZVjgAUH6sFOWjiOKBLHaLDzwewhcJ6y7KVSY6WCQdw7giunKjiU10FT
+                cCvwpm+swJfQ8jQPXBrlJjc+DC43adk7wWQltQ==
                 -----END CERTIFICATE-----
               private_key: |
                 -----BEGIN RSA PRIVATE KEY-----
-                MIICWwIBAAKBgQDQqsUuaV+dnJO1jcYQnqSzz40P29zs8jHRRUWo3FtjCK3tZVpv
-                iWDxqWcPKHvKwXVYZrWQg+x6rIMtLrcrnqcrTDIeQ86yTaHoxsSY1ji766v7Y5WY
-                8krKqyzFNQws77z4YceFuZlouNwjGKughyu1edEv8sqT09rGCz181OO7MQIDAQAB
-                AoGAFzrruL8CZgmIaC3gXvlKXLo+egWAEuDjquiLWMEva1cMBeHCr6gbosu5LXbU
-                UT44Uh8dF3mYWg/aiq0otzJyaawYAg0wYGeuHxbzPo9k0ep7Lj1IfQ9klP2yw2ds
-                KmGNw/2LZg6DotNWZ+Hw7eW9hdmT+gxLQY300d3QoTgeIgECQQDsuULgIHyIn67B
-                OKnV/ayvgujOeYaM6LJcMHSqgRXvaZDJRf23sU4gnFqRfWVocFTV+fxgUkQk1IVW
-                rvTvL7OfAkEA4aikMIHxjpqw3Ht1pSor5B85Bbc3u8gd17IrsUuWhRezjLzp573z
-                nPpWRS/rumbCou827lqh4wLj+zS9fC6fLwJAJ7fd1KUev/2q4JiVRmZNtxUL4rjZ
-                LoNMidNHf+Qwvf7EYEDyFQQWy7nwKEEV5rQSR+Stx6uF63gM90JbrlYemQJAccVm
-                0pYRRca0ONV+IQG8E02yoDEZxnFEqoVIBiGICB5FBkYQ4Cgi9Rg5+rQIc3hv1Voq
-                Jc5IJH5Gl1al2kBfPQJASDsEWPC8KMPwf8imUNFR6Ed/IM1Hnehay/teZt5nNl0M
-                sSyCxk2FUjm7QCPSoCTZ6utamy2xs0kRTuTOMEMTJA==
+                MIICWwIBAAKBgQC0Eo43uW9xxDp11ecA9dc+LJiAP8C3HnW3ERHht8bKS1M5atGm
+                I9VjouVJAYl2MDIyS6F5NoDYasxmCuzulNkcbTNibHdSH5+MjPCY88ou4uhIk62b
+                hNtdI2IETBM3bRKTMIVZDEbVHHFBu8u16Rqp123ZstyyvgT6ji8Ct5oRywIDAQAB
+                AoGAdBO6BYXNpyJ9JNR8Eoxm8bdBnvp5uhEyhI3GXyBeTqz7uvl2p4hV1+J7tvH8
+                sGklEnLaZg6SQ++kTusgDDN7N9jPS6Io1VAe4KmwYDg5BalL9VnkFp7OqMZbFwl2
+                uMq06uiGf4I5eFU2outSeVkaaQDbUO1gZ1x6rXa+kpTRn7ECQQDfTKGHPnJcKNnl
+                FHMffiYJ1ouoJtwmWpYNteny42arrohlGMJBPBf59HGnY+uN+YOUduqQmW0oNOSG
+                5jPa8TgXAkEAznFfoK8BhcxtKLt5Y7lBkLGpr/NJXk0ms4eKxw0qDihLoAo9Ociv
+                KCQ38ambevgHAoX4Ozuk6WmwVloLylJQbQJAQNbpmHHjlystij1T6HMi7Hxl9R/D
+                kUeAht6p3iN17qgxZtm3nmWquKPoVKjI/2LSeEvHdNF4RtKFAT7bE9ozZQJAcvaP
+                2lua7Xe6EkTUhMRVzs4hQOqqoOk19CQ3FEIweVHXS3hoQBWR9Ti2Ls3U19XnkXAp
+                nFLKs3E30d6zUigkwQJAX5+2l/vm2FBghGWg5eP3hxS+HowjlSKQnhqvoR3jY7VW
+                TyCtX61uRM27eKJU1ku9siUM+C6KvszsuBgKEf2ogA==
                 -----END RSA PRIVATE KEY-----
             schema:
               properties:
@@ -4459,16 +4472,16 @@ paths:
                 default:
                   value:
                     id: olejRejN
-                    name: name103
+                    name: name151
                     type: custom
                     issuer: servers.com
                     subject: servers.com
                     domain_names:
                     - servers.com
-                    sha1_fingerprint: c2b8e731a6b8b50c7f6a42172c8dff7b97db81cf
-                    expires_at: 2020-10-08T15:19:33Z
-                    created_at: 2019-10-09T15:19:33Z
-                    updated_at: 2019-10-09T15:19:33Z
+                    sha1_fingerprint: f2c30a23c9dc875b142e4dc809a03a7bfceca0f4
+                    expires_at: 2020-10-15T12:12:42Z
+                    created_at: 2019-10-16T12:12:42Z
+                    updated_at: 2019-10-16T12:12:42Z
               schema:
                 $ref: '#/components/schemas/The Items Schema_4'
           description: Returns a new ssl certificate
@@ -4498,28 +4511,28 @@ paths:
       - lang: curl
         label: cURL
         source: "curl \"https://api.servers.com/v1/ssl_certificates/custom\" -d '{\n\
-          \  \"name\": \"name103\",\n  \"public_key\": \"-----BEGIN CERTIFICATE-----\\\
+          \  \"name\": \"name151\",\n  \"public_key\": \"-----BEGIN CERTIFICATE-----\\\
           nMIICuDCCAiGgAwIBAgIBADANBgkqhkiG9w0BAQUFADBEMQswCQYDVQQGEwJCRTEO\\nMAwGA1UECgwFVGVzdE8xDzANBgNVBAsMBlRlc3RPVTEUMBIGA1UEAwwLc2VydmVy\\\
-          ncy5jb20wHhcNMTkxMDA5MTUxOTMzWhcNMjAxMDA4MTUxOTMzWjBEMQswCQYDVQQG\\nEwJCRTEOMAwGA1UECgwFVGVzdE8xDzANBgNVBAsMBlRlc3RPVTEUMBIGA1UEAwwL\\\
-          nc2VydmVycy5jb20wgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBANCqxS5pX52c\\nk7WNxhCepLPPjQ/b3OzyMdFFRajcW2MIre1lWm+JYPGpZw8oe8rBdVhmtZCD7Hqs\\\
-          ngy0utyuepytMMh5DzrJNoejGxJjWOLvrq/tjlZjySsqrLMU1DCzvvPhhx4W5mWi4\\n3CMYq6CHK7V50S/yypPT2sYLPXzU47sxAgMBAAGjgbkwgbYwDwYDVR0TAQH/BAUw\\\
-          nAwEB/zAdBgNVHQ4EFgQUmBfFTv4CF+QZLZqlwq46e9rYHZswFgYDVR0RBA8wDYIL\\nc2VydmVycy5jb20wbAYDVR0jBGUwY4AUmBfFTv4CF+QZLZqlwq46e9rYHZuhSKRG\\\
-          nMEQxCzAJBgNVBAYTAkJFMQ4wDAYDVQQKDAVUZXN0TzEPMA0GA1UECwwGVGVzdE9V\\nMRQwEgYDVQQDDAtzZXJ2ZXJzLmNvbYIBADANBgkqhkiG9w0BAQUFAAOBgQASTW7T\\\
-          nBlFrxOzl9KM5eqjQ8ZVcytBVbT8O9DrbXg1E79/nOE19dAFZ1BxbIuka7mAb/Xrk\\nSS+ApkNy6cx4AKUYqqjLK8QTiF5iRy6wXodkWDMVxrMdWYtzSOJEUkgmiy42dMaM\\\
-          n/ERY3ZcZYYo9VY1bi7TsuQvxyUO1nWOnaXtEiw==\\n-----END CERTIFICATE-----\\\
-          n\",\n  \"private_key\": \"-----BEGIN RSA PRIVATE KEY-----\\nMIICWwIBAAKBgQDQqsUuaV+dnJO1jcYQnqSzz40P29zs8jHRRUWo3FtjCK3tZVpv\\\
-          niWDxqWcPKHvKwXVYZrWQg+x6rIMtLrcrnqcrTDIeQ86yTaHoxsSY1ji766v7Y5WY\\n8krKqyzFNQws77z4YceFuZlouNwjGKughyu1edEv8sqT09rGCz181OO7MQIDAQAB\\\
-          nAoGAFzrruL8CZgmIaC3gXvlKXLo+egWAEuDjquiLWMEva1cMBeHCr6gbosu5LXbU\\nUT44Uh8dF3mYWg/aiq0otzJyaawYAg0wYGeuHxbzPo9k0ep7Lj1IfQ9klP2yw2ds\\\
-          nKmGNw/2LZg6DotNWZ+Hw7eW9hdmT+gxLQY300d3QoTgeIgECQQDsuULgIHyIn67B\\nOKnV/ayvgujOeYaM6LJcMHSqgRXvaZDJRf23sU4gnFqRfWVocFTV+fxgUkQk1IVW\\\
-          nrvTvL7OfAkEA4aikMIHxjpqw3Ht1pSor5B85Bbc3u8gd17IrsUuWhRezjLzp573z\\nnPpWRS/rumbCou827lqh4wLj+zS9fC6fLwJAJ7fd1KUev/2q4JiVRmZNtxUL4rjZ\\\
-          nLoNMidNHf+Qwvf7EYEDyFQQWy7nwKEEV5rQSR+Stx6uF63gM90JbrlYemQJAccVm\\n0pYRRca0ONV+IQG8E02yoDEZxnFEqoVIBiGICB5FBkYQ4Cgi9Rg5+rQIc3hv1Voq\\\
-          nJc5IJH5Gl1al2kBfPQJASDsEWPC8KMPwf8imUNFR6Ed/IM1Hnehay/teZt5nNl0M\\nsSyCxk2FUjm7QCPSoCTZ6utamy2xs0kRTuTOMEMTJA==\\\
+          ncy5jb20wHhcNMTkxMDE2MTIxMjQyWhcNMjAxMDE1MTIxMjQyWjBEMQswCQYDVQQG\\nEwJCRTEOMAwGA1UECgwFVGVzdE8xDzANBgNVBAsMBlRlc3RPVTEUMBIGA1UEAwwL\\\
+          nc2VydmVycy5jb20wgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBALQSjje5b3HE\\nOnXV5wD11z4smIA/wLcedbcREeG3xspLUzlq0aYj1WOi5UkBiXYwMjJLoXk2gNhq\\\
+          nzGYK7O6U2RxtM2Jsd1Ifn4yM8Jjzyi7i6EiTrZuE210jYgRMEzdtEpMwhVkMRtUc\\ncUG7y7XpGqnXbdmy3LK+BPqOLwK3mhHLAgMBAAGjgbkwgbYwDwYDVR0TAQH/BAUw\\\
+          nAwEB/zAdBgNVHQ4EFgQUuMfV7UJh0537JxW9DR+hmdnn7AcwFgYDVR0RBA8wDYIL\\nc2VydmVycy5jb20wbAYDVR0jBGUwY4AUuMfV7UJh0537JxW9DR+hmdnn7AehSKRG\\\
+          nMEQxCzAJBgNVBAYTAkJFMQ4wDAYDVQQKDAVUZXN0TzEPMA0GA1UECwwGVGVzdE9V\\nMRQwEgYDVQQDDAtzZXJ2ZXJzLmNvbYIBADANBgkqhkiG9w0BAQUFAAOBgQBxt8ro\\\
+          nc7k/LQ/66SBLz10mEQ/gQ80vht17Dy5HVBBdKhzLNiiuWgjmvNW8KlJsiKNIQ2id\\nc4LDOxwrHZVjgAUH6sFOWjiOKBLHaLDzwewhcJ6y7KVSY6WCQdw7giunKjiU10FT\\\
+          ncCvwpm+swJfQ8jQPXBrlJjc+DC43adk7wWQltQ==\\n-----END CERTIFICATE-----\\\
+          n\",\n  \"private_key\": \"-----BEGIN RSA PRIVATE KEY-----\\nMIICWwIBAAKBgQC0Eo43uW9xxDp11ecA9dc+LJiAP8C3HnW3ERHht8bKS1M5atGm\\\
+          nI9VjouVJAYl2MDIyS6F5NoDYasxmCuzulNkcbTNibHdSH5+MjPCY88ou4uhIk62b\\nhNtdI2IETBM3bRKTMIVZDEbVHHFBu8u16Rqp123ZstyyvgT6ji8Ct5oRywIDAQAB\\\
+          nAoGAdBO6BYXNpyJ9JNR8Eoxm8bdBnvp5uhEyhI3GXyBeTqz7uvl2p4hV1+J7tvH8\\nsGklEnLaZg6SQ++kTusgDDN7N9jPS6Io1VAe4KmwYDg5BalL9VnkFp7OqMZbFwl2\\\
+          nuMq06uiGf4I5eFU2outSeVkaaQDbUO1gZ1x6rXa+kpTRn7ECQQDfTKGHPnJcKNnl\\nFHMffiYJ1ouoJtwmWpYNteny42arrohlGMJBPBf59HGnY+uN+YOUduqQmW0oNOSG\\\
+          n5jPa8TgXAkEAznFfoK8BhcxtKLt5Y7lBkLGpr/NJXk0ms4eKxw0qDihLoAo9Ociv\\nKCQ38ambevgHAoX4Ozuk6WmwVloLylJQbQJAQNbpmHHjlystij1T6HMi7Hxl9R/D\\\
+          nkUeAht6p3iN17qgxZtm3nmWquKPoVKjI/2LSeEvHdNF4RtKFAT7bE9ozZQJAcvaP\\n2lua7Xe6EkTUhMRVzs4hQOqqoOk19CQ3FEIweVHXS3hoQBWR9Ti2Ls3U19XnkXAp\\\
+          nnFLKs3E30d6zUigkwQJAX5+2l/vm2FBghGWg5eP3hxS+HowjlSKQnhqvoR3jY7VW\\nTyCtX61uRM27eKJU1ku9siUM+C6KvszsuBgKEf2ogA==\\\
           n-----END RSA PRIVATE KEY-----\\n\"\n}' -X POST "
   /v1/ssl_certificates/custom/{id}:
     get:
       operationId: RetrieveAnExistingCustomSslCertificate
       parameters:
-      - example: KQe1RaJY
+      - example: MYerkEaO
         explode: false
         in: path
         name: id
@@ -4534,16 +4547,16 @@ paths:
               examples:
                 default:
                   value:
-                    id: KQe1RaJY
-                    name: name100
+                    id: MYerkEaO
+                    name: name152
                     type: custom
                     issuer: null
-                    subject: example-31.com
+                    subject: example-63.com
                     domain_names: []
-                    sha1_fingerprint: aaee74201505a6a77a50a72701dd81593a3c4b66
+                    sha1_fingerprint: 9535f68f678239b56ed0894eb2c38b9b2ce78349
                     expires_at: null
-                    created_at: 2019-10-09T15:19:33Z
-                    updated_at: 2019-10-09T15:19:33Z
+                    created_at: 2019-10-16T12:12:42Z
+                    updated_at: 2019-10-16T12:12:42Z
               schema:
                 $ref: '#/components/schemas/The Items Schema_4'
           description: Returns custom ssl certificate
@@ -4572,7 +4585,7 @@ paths:
       x-code-samples:
       - lang: curl
         label: cURL
-        source: 'curl -g "https://api.servers.com/v1/ssl_certificates/custom/KQe1RaJY"
+        source: 'curl -g "https://api.servers.com/v1/ssl_certificates/custom/MYerkEaO"
           -X GET '
 components:
   requestBodies:
@@ -4627,185 +4640,7 @@ components:
           schema:
             $ref: '#/components/schemas/inline_object_2'
   schemas:
-    v1-hosts-kubernetes_baremetal_node-_entity:
-      properties:
-        id:
-          title: Id
-          type: string
-        kubernetes_cluster_id:
-          title: Kubernetes cluster node cluster id
-          type: string
-        kubernetes_cluster_node_id:
-          title: Kubernetes cluster node id
-          type: string
-        kubernetes_cluster_node_number:
-          title: Kubernetes cluster node number
-          type: integer
-        title:
-          nullable: true
-          title: Title
-          type: string
-        type:
-          enum:
-          - kubernetes_baremetal_node
-          title: Dedicated server type
-          type: string
-        status:
-          enum:
-          - init
-          - pending
-          - active
-          title: Status
-          type: string
-        configuration:
-          title: Configuration
-          type: string
-        location_id:
-          title: Location id
-          type: integer
-        private_ipv4_address:
-          format: ipv4
-          nullable: true
-          title: Private ipv4 address
-          type: string
-        public_ipv4_address:
-          format: ipv4
-          nullable: true
-          title: Public ipv4 address
-          type: string
-        lease_start_at:
-          format: date
-          nullable: true
-          title: Lease start at
-          type: string
-        scheduled_release_at:
-          format: date-time
-          nullable: true
-          title: Scheduled release at
-          type: string
-        updated_at:
-          format: date-time
-          title: Updated at
-          type: string
-      title: The Kubernetes Baremetal Node Entity Schema
-      type: object
-    v1-hosts-dedicated_servers-_short_entity:
-      properties:
-        id:
-          title: Id
-          type: string
-        title:
-          title: Title
-          type: string
-        type:
-          enum:
-          - dedicated_server
-          title: Dedicated server type
-          type: string
-        status:
-          enum:
-          - init
-          - pending
-          - active
-          title: Status
-          type: string
-        configuration:
-          title: Configuration
-          type: string
-        location_id:
-          title: Location id
-          type: integer
-        private_ipv4_address:
-          format: ipv4
-          nullable: true
-          title: Private ipv4 address
-          type: string
-        public_ipv4_address:
-          format: ipv4
-          nullable: true
-          title: Public ipv4 address
-          type: string
-        lease_start_at:
-          format: date
-          nullable: true
-          title: Lease start at
-          type: string
-        scheduled_release_at:
-          format: date-time
-          nullable: true
-          title: Scheduled release at
-          type: string
-        updated_at:
-          format: date-time
-          title: Updated at
-          type: string
-      title: The Dedicated Server Short Entity Schema
-      type: object
-    v1-hosts-dedicated_servers-_entity:
-      example:
-        scheduled_release_at: 2000-01-23T04:56:07.000+00:00
-        updated_at: 2000-01-23T04:56:07.000+00:00
-        configuration: configuration
-        private_ipv4_address: private_ipv4_address
-        id: id
-        title: title
-        type: dedicated_server
-        public_ipv4_address: public_ipv4_address
-        location_id: 0
-        status: init
-        lease_start_at: 2000-01-23
-      properties:
-        id:
-          title: Id
-          type: string
-        title:
-          title: Title
-          type: string
-        type:
-          enum:
-          - dedicated_server
-          title: Dedicated server type
-          type: string
-        status:
-          enum:
-          - init
-          - pending
-          - active
-          title: Status
-          type: string
-        configuration:
-          title: Configuration
-          type: string
-        location_id:
-          title: Location id
-          type: integer
-        private_ipv4_address:
-          format: ipv4
-          nullable: true
-          title: Private ipv4 address
-          type: string
-        public_ipv4_address:
-          format: ipv4
-          nullable: true
-          title: Public ipv4 address
-          type: string
-        lease_start_at:
-          format: date
-          nullable: true
-          title: Lease start at
-          type: string
-        scheduled_release_at:
-          format: date-time
-          nullable: true
-          title: Scheduled release at
-          type: string
-        updated_at:
-          format: date-time
-          title: Updated at
-          type: string
-      title: The Dedicated Server Entity Schema
-      type: object
-    v1-l2_segments-_l2_segment:
+    v1-l2_segments-_l2_segment_detailed:
       example:
         updated_at: 2000-01-23T04:56:07.000+00:00
         name: name
@@ -4813,14 +4648,13 @@ components:
         id: id
         type: public
         location_id: 0
-        location_url: https://openapi-generator.tech
         status: pending
       properties:
         id:
-          title: L2 Segment id
+          title: Id
           type: string
         name:
-          title: L2 Segment name
+          title: Name
           type: string
         type:
           enum:
@@ -4832,15 +4666,11 @@ components:
           enum:
           - pending
           - active
-          title: L2 Segment status
+          title: Status
           type: string
         location_id:
           title: Location id
           type: integer
-        location_url:
-          format: uri
-          title: URL
-          type: string
         created_at:
           format: date-time
           title: Created at
@@ -4850,7 +4680,7 @@ components:
           nullable: true
           title: Updated at
           type: string
-      title: The L2 Segment short description schema
+      title: The L2 Segment detailed description schema
       type: object
     v1-l2_segments-_l2_member:
       example:
@@ -4958,7 +4788,7 @@ components:
           type: string
       title: L2 segment network schema
       type: object
-    v1-l2_segments-_l2_segment_detailed:
+    v1-l2_segments-_l2_segment:
       example:
         updated_at: 2000-01-23T04:56:07.000+00:00
         name: name
@@ -4966,13 +4796,14 @@ components:
         id: id
         type: public
         location_id: 0
+        location_url: https://openapi-generator.tech
         status: pending
       properties:
         id:
-          title: Id
+          title: L2 Segment id
           type: string
         name:
-          title: Name
+          title: L2 Segment name
           type: string
         type:
           enum:
@@ -4984,11 +4815,15 @@ components:
           enum:
           - pending
           - active
-          title: Status
+          title: L2 Segment status
           type: string
         location_id:
           title: Location id
           type: integer
+        location_url:
+          format: uri
+          title: URL
+          type: string
         created_at:
           format: date-time
           title: Created at
@@ -4998,7 +4833,198 @@ components:
           nullable: true
           title: Updated at
           type: string
-      title: The L2 Segment detailed description schema
+      title: The L2 Segment short description schema
+      type: object
+    v1-hosts-kubernetes_baremetal_node-_entity:
+      properties:
+        id:
+          title: Id
+          type: string
+        kubernetes_cluster_id:
+          title: Kubernetes cluster node cluster id
+          type: string
+        kubernetes_cluster_node_id:
+          title: Kubernetes cluster node id
+          type: string
+        kubernetes_cluster_node_number:
+          title: Kubernetes cluster node number
+          type: integer
+        title:
+          nullable: true
+          title: Title
+          type: string
+        type:
+          enum:
+          - kubernetes_baremetal_node
+          title: Dedicated server type
+          type: string
+        status:
+          enum:
+          - init
+          - pending
+          - active
+          title: Status
+          type: string
+        configuration:
+          title: Configuration
+          type: string
+        location_id:
+          title: Location id
+          type: integer
+        private_ipv4_address:
+          format: ipv4
+          nullable: true
+          title: Private ipv4 address
+          type: string
+        public_ipv4_address:
+          format: ipv4
+          nullable: true
+          title: Public ipv4 address
+          type: string
+        lease_start_at:
+          format: date
+          nullable: true
+          title: Lease start at
+          type: string
+        scheduled_release_at:
+          format: date-time
+          nullable: true
+          title: Scheduled release at
+          type: string
+        created_at:
+          format: date-time
+          title: Created at
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated at
+          type: string
+      title: The Kubernetes Baremetal Node Entity Schema
+      type: object
+    v1-hosts-dedicated_servers-_entity:
+      example:
+        scheduled_release_at: 2000-01-23T04:56:07.000+00:00
+        updated_at: 2000-01-23T04:56:07.000+00:00
+        configuration: configuration
+        private_ipv4_address: private_ipv4_address
+        created_at: 2000-01-23T04:56:07.000+00:00
+        id: id
+        title: title
+        type: dedicated_server
+        public_ipv4_address: public_ipv4_address
+        location_id: 0
+        status: init
+        lease_start_at: 2000-01-23
+      properties:
+        id:
+          title: Id
+          type: string
+        title:
+          title: Title
+          type: string
+        type:
+          enum:
+          - dedicated_server
+          title: Dedicated server type
+          type: string
+        status:
+          enum:
+          - init
+          - pending
+          - active
+          title: Status
+          type: string
+        configuration:
+          title: Configuration
+          type: string
+        location_id:
+          title: Location id
+          type: integer
+        private_ipv4_address:
+          format: ipv4
+          nullable: true
+          title: Private ipv4 address
+          type: string
+        public_ipv4_address:
+          format: ipv4
+          nullable: true
+          title: Public ipv4 address
+          type: string
+        lease_start_at:
+          format: date
+          nullable: true
+          title: Lease start at
+          type: string
+        scheduled_release_at:
+          format: date-time
+          nullable: true
+          title: Scheduled release at
+          type: string
+        created_at:
+          format: date-time
+          title: Created at
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated at
+          type: string
+      title: The Dedicated Server Entity Schema
+      type: object
+    v1-hosts-dedicated_servers-_short_entity:
+      properties:
+        id:
+          title: Id
+          type: string
+        title:
+          title: Title
+          type: string
+        type:
+          enum:
+          - dedicated_server
+          title: Dedicated server type
+          type: string
+        status:
+          enum:
+          - init
+          - pending
+          - active
+          title: Status
+          type: string
+        configuration:
+          title: Configuration
+          type: string
+        location_id:
+          title: Location id
+          type: integer
+        private_ipv4_address:
+          format: ipv4
+          nullable: true
+          title: Private ipv4 address
+          type: string
+        public_ipv4_address:
+          format: ipv4
+          nullable: true
+          title: Public ipv4 address
+          type: string
+        lease_start_at:
+          format: date
+          nullable: true
+          title: Lease start at
+          type: string
+        scheduled_release_at:
+          format: date-time
+          nullable: true
+          title: Scheduled release at
+          type: string
+        created_at:
+          format: date-time
+          title: Created at
+          type: string
+        updated_at:
+          format: date-time
+          title: Updated at
+          type: string
+      title: The Dedicated Server Short Entity Schema
       type: object
     _v1_hosts_dedicated_servers_uplink_models_private:
       description: Uplink models private
@@ -5117,8 +5143,8 @@ components:
             $ref: '#/components/schemas/_v1_hosts_dedicated_servers_hosts'
           minItems: 1
           type: array
-        operation_system_id:
-          description: ' operation system'
+        operating_system_id:
+          description: ' operating system'
           type: integer
         ssh_key_fingerprints:
           description: ' ssh key fingerprints'
@@ -5137,7 +5163,7 @@ components:
       - slots
       - uplink_models
       type: object
-    inline_response_422:
+    inline_response_402:
       properties:
         message:
           title: Error message
@@ -5291,6 +5317,7 @@ components:
         updated_at: 2000-01-23T04:56:07.000+00:00
         configuration: configuration
         private_ipv4_address: private_ipv4_address
+        created_at: 2000-01-23T04:56:07.000+00:00
         id: id
         title: title
         type: dedicated_server
@@ -5345,6 +5372,10 @@ components:
           nullable: true
           title: Scheduled release at
           type: string
+        created_at:
+          format: date-time
+          title: Created at
+          type: string
         updated_at:
           format: date-time
           title: Updated at
@@ -5355,6 +5386,7 @@ components:
         configuration: configuration
         private_ipv4_address: private_ipv4_address
         kubernetes_cluster_id: kubernetes_cluster_id
+        created_at: 2000-01-23T04:56:07.000+00:00
         title: title
         type: kubernetes_baremetal_node
         public_ipv4_address: public_ipv4_address
@@ -5419,6 +5451,10 @@ components:
           format: date-time
           nullable: true
           title: Scheduled release at
+          type: string
+        created_at:
+          format: date-time
+          title: Created at
           type: string
         updated_at:
           format: date-time

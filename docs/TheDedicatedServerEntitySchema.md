@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **PublicIpv4Address** | Pointer to **string** |  | [optional] 
 **LeaseStartAt** | Pointer to **string** |  | [optional] 
 **ScheduledReleaseAt** | Pointer to [**time.Time**](time.Time.md) |  | [optional] 
+**CreatedAt** | [**time.Time**](time.Time.md) |  | [optional] 
 **UpdatedAt** | [**time.Time**](time.Time.md) |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

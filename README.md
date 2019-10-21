@@ -89,7 +89,7 @@ Class | Method | HTTP request | Description
  - [InlineResponse2001](docs/InlineResponse2001.md)
  - [InlineResponse201](docs/InlineResponse201.md)
  - [InlineResponse2011](docs/InlineResponse2011.md)
- - [InlineResponse422](docs/InlineResponse422.md)
+ - [InlineResponse402](docs/InlineResponse402.md)
  - [Network](docs/Network.md)
  - [PowerFeed](docs/PowerFeed.md)
  - [TheDedicatedServerEntitySchema](docs/TheDedicatedServerEntitySchema.md)

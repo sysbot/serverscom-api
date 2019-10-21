@@ -12,7 +12,7 @@ Name | Type | Description | Notes
 **Features** | **[]string** |  features | [optional] 
 **Ipv6** | **bool** |  ipv6 | [optional] 
 **Hosts** | [**[]V1HostsDedicatedServersHosts**](_v1_hosts_dedicated_servers_hosts.md) |  hosts | 
-**OperationSystemId** | **int32** |  operation system | [optional] 
+**OperatingSystemId** | **int32** |  operating system | [optional] 
 **SshKeyFingerprints** | **[]string** |  ssh key fingerprints | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
