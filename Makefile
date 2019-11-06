@@ -58,7 +58,7 @@ gen:
 		--package-name client \
 		--git-repo-id $(NAME) \
 		--git-user-id $(GIT_USER_ID) \
-		-i "https://developers.servers.com/index.json" \
+		-i "https://developers.servers.com/api-documentation/v1/index.json" \
 		-g go \
 		-o ./
 
