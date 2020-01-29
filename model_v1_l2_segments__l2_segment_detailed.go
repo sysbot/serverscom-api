@@ -15,11 +15,11 @@ import (
 
 // V1L2SegmentsL2SegmentDetailed struct for V1L2SegmentsL2SegmentDetailed
 type V1L2SegmentsL2SegmentDetailed struct {
-	Id         string     `json:"id,omitempty"`
-	Name       string     `json:"name,omitempty"`
-	Type       string     `json:"type,omitempty"`
-	Status     string     `json:"status,omitempty"`
-	LocationId int32      `json:"location_id,omitempty"`
-	CreatedAt  time.Time  `json:"created_at,omitempty"`
-	UpdatedAt  *time.Time `json:"updated_at,omitempty"`
+	Id              string     `json:"id,omitempty"`
+	Name            string     `json:"name,omitempty"`
+	Type            string     `json:"type,omitempty"`
+	Status          string     `json:"status,omitempty"`
+	LocationGroupId int32      `json:"location_group_id,omitempty"`
+	CreatedAt       time.Time  `json:"created_at,omitempty"`
+	UpdatedAt       *time.Time `json:"updated_at,omitempty"`
 }

@@ -11,7 +11,6 @@ package client
 
 import (
 	_context "context"
-	"fmt"
 	"github.com/antihax/optional"
 	_ioutil "io/ioutil"
 	_nethttp "net/http"
@@ -60,7 +59,7 @@ func (a *KubernetesClusterApiService) KubernetesClusterNodes(ctx _context.Contex
 
 	// create path and map variables
 	localVarPath := a.client.cfg.BasePath + "/v1/kubernetes_clusters/{kubernetes_cluster_id}/nodes"
-	localVarPath = strings.Replace(localVarPath, "{"+"kubernetes_cluster_id"+"}", _neturl.QueryEscape(fmt.Sprintf("%v", kubernetesClusterId)), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"kubernetes_cluster_id"+"}", _neturl.QueryEscape(parameterToString(kubernetesClusterId, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
@@ -127,7 +126,6 @@ func (a *KubernetesClusterApiService) KubernetesClusterNodes(ctx _context.Contex
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -178,7 +176,6 @@ func (a *KubernetesClusterApiService) KubernetesClusters(ctx _context.Context, l
 
 	// create path and map variables
 	localVarPath := a.client.cfg.BasePath + "/v1/kubernetes_clusters"
-
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
@@ -257,7 +254,6 @@ func (a *KubernetesClusterApiService) KubernetesClusters(ctx _context.Context, l
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -292,7 +288,7 @@ func (a *KubernetesClusterApiService) RetrieveAnExistingKubernetesCluster(ctx _c
 
 	// create path and map variables
 	localVarPath := a.client.cfg.BasePath + "/v1/kubernetes_clusters/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.QueryEscape(fmt.Sprintf("%v", id)), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.QueryEscape(parameterToString(id, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
@@ -347,14 +343,13 @@ func (a *KubernetesClusterApiService) RetrieveAnExistingKubernetesCluster(ctx _c
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v InlineResponse402
+			var v InlineResponse404
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -390,8 +385,9 @@ func (a *KubernetesClusterApiService) RetrieveAnExistingKubernetesClusterNode(ct
 
 	// create path and map variables
 	localVarPath := a.client.cfg.BasePath + "/v1/kubernetes_clusters/{kubernetes_cluster_id}/nodes/{node_id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"kubernetes_cluster_id"+"}", _neturl.QueryEscape(fmt.Sprintf("%v", kubernetesClusterId)), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"node_id"+"}", _neturl.QueryEscape(fmt.Sprintf("%v", nodeId)), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"kubernetes_cluster_id"+"}", _neturl.QueryEscape(parameterToString(kubernetesClusterId, "")), -1)
+
+	localVarPath = strings.Replace(localVarPath, "{"+"node_id"+"}", _neturl.QueryEscape(parameterToString(nodeId, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
@@ -435,16 +431,6 @@ func (a *KubernetesClusterApiService) RetrieveAnExistingKubernetesClusterNode(ct
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		if localVarHTTPResponse.StatusCode == 404 {
-			var v InlineResponse402
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
 		if localVarHTTPResponse.StatusCode == 200 {
 			var v TheItemsSchema1
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -454,6 +440,15 @@ func (a *KubernetesClusterApiService) RetrieveAnExistingKubernetesClusterNode(ct
 			}
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v InlineResponse404
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}

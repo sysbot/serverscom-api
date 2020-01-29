@@ -11,6 +11,7 @@ Method | HTTP request | Description
 ## ListAllHosts
 
 > []TheDedicatedServerEntitySchema ListAllHosts(ctx, optional)
+
 List all hosts
 
 ### Required Parameters
@@ -38,7 +39,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**[]TheDedicatedServerEntitySchema**](The Dedicated Server Entity Schema.md)
+[**[]TheDedicatedServerEntitySchema**](The_Dedicated_Server_Entity_Schema.md)
 
 ### Authorization
 

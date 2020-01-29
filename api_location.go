@@ -11,7 +11,6 @@ package client
 
 import (
 	_context "context"
-	"fmt"
 	"github.com/antihax/optional"
 	_ioutil "io/ioutil"
 	_nethttp "net/http"
@@ -59,7 +58,6 @@ func (a *LocationApiService) Locations(ctx _context.Context, localVarOptionals *
 
 	// create path and map variables
 	localVarPath := a.client.cfg.BasePath + "/v1/locations"
-
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
@@ -117,16 +115,6 @@ func (a *LocationApiService) Locations(ctx _context.Context, localVarOptionals *
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		if localVarHTTPResponse.StatusCode == 400 {
-			var v TheRootSchema
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
 		if localVarHTTPResponse.StatusCode == 200 {
 			var v []TheItemsSchema3
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -136,6 +124,15 @@ func (a *LocationApiService) Locations(ctx _context.Context, localVarOptionals *
 			}
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v TheRootSchema
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -170,7 +167,7 @@ func (a *LocationApiService) RetrieveAnExisitingLocation(ctx _context.Context, l
 
 	// create path and map variables
 	localVarPath := a.client.cfg.BasePath + "/v1/locations/{location_id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"location_id"+"}", _neturl.QueryEscape(fmt.Sprintf("%v", locationId)), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"location_id"+"}", _neturl.QueryEscape(parameterToString(locationId, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
@@ -222,7 +219,6 @@ func (a *LocationApiService) RetrieveAnExisitingLocation(ctx _context.Context, l
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}

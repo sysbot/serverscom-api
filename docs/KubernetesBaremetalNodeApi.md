@@ -6,13 +6,14 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**ListAllNetworksForAnExistingKubernetesBaremetalNode**](KubernetesBaremetalNodeApi.md#ListAllNetworksForAnExistingKubernetesBaremetalNode) | **Get** /v1/hosts/kubernetes_baremetal_nodes/{server_id}/networks | List all networks for an existing kubernetes baremetal node
 [**ListAllPowerFeedsForAnExistingKubernetesBaremetalNode**](KubernetesBaremetalNodeApi.md#ListAllPowerFeedsForAnExistingKubernetesBaremetalNode) | **Get** /v1/hosts/kubernetes_baremetal_nodes/{server_id}/power_feeds | List all power feeds for an existing kubernetes baremetal node
-[**RetrieveAnExistingKubernetesBaremetalNode**](KubernetesBaremetalNodeApi.md#RetrieveAnExistingKubernetesBaremetalNode) | **Get** /v1/hosts/kubernetes_baremetal_nodes/{node_id} | Retrieve an existing kubernetes baremetal node
+[**RetrieveAnExistingKubernetesBaremetalNode**](KubernetesBaremetalNodeApi.md#RetrieveAnExistingKubernetesBaremetalNode) | **Get** /v1/hosts/kubernetes_baremetal_nodes/{server_id} | Retrieve an existing kubernetes baremetal node
 
 
 
 ## ListAllNetworksForAnExistingKubernetesBaremetalNode
 
 > []Network ListAllNetworksForAnExistingKubernetesBaremetalNode(ctx, serverId, optional)
+
 List all networks for an existing kubernetes baremetal node
 
 To list all of the networks for specific kubernetes baremetal node please send `GET /v1/hosts/kubernetes_baremetal_nodes/{server_id}/networks`  The response contains list of networks which classified by `interface_type`, `distribution_method`  - `interface_type` points on which interface this network configured. - `distribution_method` describes how network will be distributed.   In case of the `gateway`, will be reserved first 4 IP addresses for *enterprise location*,   and 1 IP address for *standard location* from the network.   In the case of the `route`, the network will be available fully for customer use. 
@@ -65,6 +66,7 @@ Name | Type | Description  | Notes
 ## ListAllPowerFeedsForAnExistingKubernetesBaremetalNode
 
 > []PowerFeed ListAllPowerFeedsForAnExistingKubernetesBaremetalNode(ctx, serverId)
+
 List all power feeds for an existing kubernetes baremetal node
 
 ### Required Parameters
@@ -77,7 +79,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**[]PowerFeed**](Power feed.md)
+[**[]PowerFeed**](Power_feed.md)
 
 ### Authorization
 
@@ -95,7 +97,8 @@ Name | Type | Description  | Notes
 
 ## RetrieveAnExistingKubernetesBaremetalNode
 
-> TheKubernetesBaremetalNodeEntitySchema RetrieveAnExistingKubernetesBaremetalNode(ctx, nodeId)
+> TheKubernetesBaremetalNodeEntitySchema RetrieveAnExistingKubernetesBaremetalNode(ctx, serverId)
+
 Retrieve an existing kubernetes baremetal node
 
 ### Required Parameters
@@ -104,11 +107,11 @@ Retrieve an existing kubernetes baremetal node
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**nodeId** | **string**|  | 
+**serverId** | **string**|  | 
 
 ### Return type
 
-[**TheKubernetesBaremetalNodeEntitySchema**](The Kubernetes Baremetal Node Entity Schema.md)
+[**TheKubernetesBaremetalNodeEntitySchema**](The_Kubernetes_Baremetal_Node_Entity_Schema.md)
 
 ### Authorization
 

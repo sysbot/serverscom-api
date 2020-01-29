@@ -11,7 +11,6 @@ package client
 
 import (
 	_context "context"
-	"fmt"
 	"github.com/antihax/optional"
 	_ioutil "io/ioutil"
 	_nethttp "net/http"
@@ -69,7 +68,7 @@ func (a *KubernetesBaremetalNodeApiService) ListAllNetworksForAnExistingKubernet
 
 	// create path and map variables
 	localVarPath := a.client.cfg.BasePath + "/v1/hosts/kubernetes_baremetal_nodes/{server_id}/networks"
-	localVarPath = strings.Replace(localVarPath, "{"+"server_id"+"}", _neturl.QueryEscape(fmt.Sprintf("%v", serverId)), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"server_id"+"}", _neturl.QueryEscape(parameterToString(serverId, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
@@ -151,17 +150,7 @@ func (a *KubernetesBaremetalNodeApiService) ListAllNetworksForAnExistingKubernet
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v InlineResponse402
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode == 412 {
-			var v InlineResponse402
+			var v InlineResponse404
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -179,6 +168,15 @@ func (a *KubernetesBaremetalNodeApiService) ListAllNetworksForAnExistingKubernet
 			}
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 412 {
+			var v InlineResponse404
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -213,7 +211,7 @@ func (a *KubernetesBaremetalNodeApiService) ListAllPowerFeedsForAnExistingKubern
 
 	// create path and map variables
 	localVarPath := a.client.cfg.BasePath + "/v1/hosts/kubernetes_baremetal_nodes/{server_id}/power_feeds"
-	localVarPath = strings.Replace(localVarPath, "{"+"server_id"+"}", _neturl.QueryEscape(fmt.Sprintf("%v", serverId)), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"server_id"+"}", _neturl.QueryEscape(parameterToString(serverId, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
@@ -268,7 +266,7 @@ func (a *KubernetesBaremetalNodeApiService) ListAllPowerFeedsForAnExistingKubern
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v InlineResponse402
+			var v InlineResponse404
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -278,14 +276,13 @@ func (a *KubernetesBaremetalNodeApiService) ListAllPowerFeedsForAnExistingKubern
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 412 {
-			var v InlineResponse402
+			var v InlineResponse404
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -305,10 +302,10 @@ func (a *KubernetesBaremetalNodeApiService) ListAllPowerFeedsForAnExistingKubern
 /*
 RetrieveAnExistingKubernetesBaremetalNode Retrieve an existing kubernetes baremetal node
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param nodeId
+ * @param serverId
 @return TheKubernetesBaremetalNodeEntitySchema
 */
-func (a *KubernetesBaremetalNodeApiService) RetrieveAnExistingKubernetesBaremetalNode(ctx _context.Context, nodeId string) (TheKubernetesBaremetalNodeEntitySchema, *_nethttp.Response, error) {
+func (a *KubernetesBaremetalNodeApiService) RetrieveAnExistingKubernetesBaremetalNode(ctx _context.Context, serverId string) (TheKubernetesBaremetalNodeEntitySchema, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
 		localVarPostBody     interface{}
@@ -319,8 +316,8 @@ func (a *KubernetesBaremetalNodeApiService) RetrieveAnExistingKubernetesBaremeta
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/v1/hosts/kubernetes_baremetal_nodes/{node_id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"node_id"+"}", _neturl.QueryEscape(fmt.Sprintf("%v", nodeId)), -1)
+	localVarPath := a.client.cfg.BasePath + "/v1/hosts/kubernetes_baremetal_nodes/{server_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"server_id"+"}", _neturl.QueryEscape(parameterToString(serverId, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
@@ -375,14 +372,13 @@ func (a *KubernetesBaremetalNodeApiService) RetrieveAnExistingKubernetesBaremeta
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v InlineResponse402
+			var v InlineResponse404
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}

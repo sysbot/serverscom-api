@@ -19,6 +19,7 @@ Method | HTTP request | Description
 ## CreateANewL4LoadBalancers
 
 > InlineResponse201 CreateANewL4LoadBalancers(ctx, optional)
+
 Create a new L4 load balancers
 
 ### Required Parameters
@@ -59,6 +60,7 @@ Name | Type | Description  | Notes
 ## CreateANewL7LoadBalancers
 
 > InlineResponse2011 CreateANewL7LoadBalancers(ctx, optional)
+
 Create a new L7 load balancers
 
 ### Required Parameters
@@ -99,6 +101,7 @@ Name | Type | Description  | Notes
 ## DeleteAnExisitingL4LoadBalancer
 
 > DeleteAnExisitingL4LoadBalancer(ctx, id)
+
 Delete an exisiting L4 load balancer
 
 ### Required Parameters
@@ -130,6 +133,7 @@ Name | Type | Description  | Notes
 ## DeleteAnExistingL7LoadBalancer
 
 > DeleteAnExistingL7LoadBalancer(ctx, id)
+
 Delete an existing L7 load balancer
 
 ### Required Parameters
@@ -161,6 +165,7 @@ Name | Type | Description  | Notes
 ## LoadBalancers
 
 > []TheItemsSchema2 LoadBalancers(ctx, optional)
+
 Load balancers
 
 ### Required Parameters
@@ -188,7 +193,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**[]TheItemsSchema2**](The Items Schema_2.md)
+[**[]TheItemsSchema2**](The_Items_Schema_2.md)
 
 ### Authorization
 
@@ -207,6 +212,7 @@ Name | Type | Description  | Notes
 ## RetrieveAnExistingL4LoadBalancer
 
 > InlineResponse201 RetrieveAnExistingL4LoadBalancer(ctx, id)
+
 Retrieve an existing L4 load balancer
 
 ### Required Parameters
@@ -238,6 +244,7 @@ Name | Type | Description  | Notes
 ## RetrieveAnExistingL7LoadBalancer
 
 > InlineResponse2011 RetrieveAnExistingL7LoadBalancer(ctx, id)
+
 Retrieve an existing L7 load balancer
 
 ### Required Parameters
@@ -269,6 +276,7 @@ Name | Type | Description  | Notes
 ## UpdateAnExistingL4LoadBalancer
 
 > InlineResponse201 UpdateAnExistingL4LoadBalancer(ctx, id, optional)
+
 Update an existing L4 load balancer
 
 ### Required Parameters
@@ -311,6 +319,7 @@ Name | Type | Description  | Notes
 ## UpdateAnExistingL7LoadBalancer
 
 > InlineResponse2011 UpdateAnExistingL7LoadBalancer(ctx, id, optional)
+
 Update an existing L7 load balancer
 
 ### Required Parameters

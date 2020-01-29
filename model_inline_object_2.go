@@ -15,8 +15,8 @@ type InlineObject2 struct {
 	Name string `json:"name,omitempty"`
 	//  type
 	Type string `json:"type"`
-	//  location
-	LocationId int32 `json:"location_id"`
+	//  location group
+	LocationGroupId int32 `json:"location_group_id"`
 	//  members
 	Members []V1L2SegmentsMembers `json:"members"`
 }

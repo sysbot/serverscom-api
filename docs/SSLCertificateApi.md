@@ -12,7 +12,8 @@ Method | HTTP request | Description
 
 ## CreateANewCustomSslCertificate
 
-> TheItemsSchema4 CreateANewCustomSslCertificate(ctx, optional)
+> TheItemsSchema5 CreateANewCustomSslCertificate(ctx, optional)
+
 Create a new custom SSL certificate
 
 ### Required Parameters
@@ -34,7 +35,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**TheItemsSchema4**](The Items Schema_4.md)
+[**TheItemsSchema5**](The_Items_Schema_5.md)
 
 ### Authorization
 
@@ -52,7 +53,8 @@ Name | Type | Description  | Notes
 
 ## RetrieveAnExistingCustomSslCertificate
 
-> TheItemsSchema4 RetrieveAnExistingCustomSslCertificate(ctx, id)
+> TheItemsSchema5 RetrieveAnExistingCustomSslCertificate(ctx, id)
+
 Retrieve an existing custom ssl certificate
 
 ### Required Parameters
@@ -65,7 +67,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**TheItemsSchema4**](The Items Schema_4.md)
+[**TheItemsSchema5**](The_Items_Schema_5.md)
 
 ### Authorization
 
@@ -83,7 +85,8 @@ Name | Type | Description  | Notes
 
 ## SSLCertificates
 
-> []TheItemsSchema4 SSLCertificates(ctx, optional)
+> []TheItemsSchema5 SSLCertificates(ctx, optional)
+
 SSL Certificates
 
 ### Required Parameters
@@ -109,7 +112,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**[]TheItemsSchema4**](The Items Schema_4.md)
+[**[]TheItemsSchema5**](The_Items_Schema_5.md)
 
 ### Authorization
 

@@ -12,6 +12,7 @@ Method | HTTP request | Description
 ## Locations
 
 > []TheItemsSchema3 Locations(ctx, optional)
+
 Locations
 
 ### Required Parameters
@@ -37,7 +38,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**[]TheItemsSchema3**](The Items Schema_3.md)
+[**[]TheItemsSchema3**](The_Items_Schema_3.md)
 
 ### Authorization
 
@@ -56,6 +57,7 @@ Name | Type | Description  | Notes
 ## RetrieveAnExisitingLocation
 
 > TheItemsSchema3 RetrieveAnExisitingLocation(ctx, locationId)
+
 Retrieve an exisiting location
 
 ### Required Parameters
@@ -68,7 +70,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**TheItemsSchema3**](The Items Schema_3.md)
+[**TheItemsSchema3**](The_Items_Schema_3.md)
 
 ### Authorization
 

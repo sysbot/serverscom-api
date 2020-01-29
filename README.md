@@ -32,19 +32,24 @@ All URIs are relative to *http://localhost*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*BandwidthOptionApi* | [**ListAllBandwidthForUplink**](docs/BandwidthOptionApi.md#listallbandwidthforuplink) | **Get** /v1/locations/{location_id}/order_options/server_models/{server_model_id}/uplink_models/{uplink_model_id}/bandwidth | List all bandwidth for uplink
+*BandwidthOptionApi* | [**RetrieveAnExistingBandwidth**](docs/BandwidthOptionApi.md#retrieveanexistingbandwidth) | **Get** /v1/locations/{location_id}/order_options/server_models/{server_model_id}/uplink_models/{uplink_model_id}/bandwidth/{bandwidth_id} | Retrieve an existing bandwidth
 *DedicatedServerApi* | [**AbortReleaseForAnExistingDedicatedServer**](docs/DedicatedServerApi.md#abortreleaseforanexistingdedicatedserver) | **Post** /v1/hosts/dedicated_servers/{server_id}/abort_release | Abort release for an existing dedicated server
 *DedicatedServerApi* | [**CreateANewDedicatedServer**](docs/DedicatedServerApi.md#createanewdedicatedserver) | **Post** /v1/hosts/dedicated_servers | Create a new dedicated server
 *DedicatedServerApi* | [**CreatePtrRecordForServerNetworks**](docs/DedicatedServerApi.md#createptrrecordforservernetworks) | **Post** /v1/hosts/dedicated_servers/{server_id}/ptr_records | Create PTR record for server networks
 *DedicatedServerApi* | [**DeleteAnExistingPtrRecord**](docs/DedicatedServerApi.md#deleteanexistingptrrecord) | **Delete** /v1/hosts/dedicated_servers/{server_id}/ptr_records/{record_id} | Delete an existing PTR record
+*DedicatedServerApi* | [**ListAllConnectionsForAnExistingDedicatedServer**](docs/DedicatedServerApi.md#listallconnectionsforanexistingdedicatedserver) | **Get** /v1/hosts/dedicated_servers/{lease_id}/connections | List all connections for an existing dedicated server
 *DedicatedServerApi* | [**ListAllNetworksForAnExistingDedicatedServer**](docs/DedicatedServerApi.md#listallnetworksforanexistingdedicatedserver) | **Get** /v1/hosts/dedicated_servers/{server_id}/networks | List all networks for an existing dedicated server
 *DedicatedServerApi* | [**ListAllPowerFeedsForAnExistingDedicatedServer**](docs/DedicatedServerApi.md#listallpowerfeedsforanexistingdedicatedserver) | **Get** /v1/hosts/dedicated_servers/{server_id}/power_feeds | List all power feeds for an existing dedicated server
 *DedicatedServerApi* | [**ListAllPtrRecordsForServerNetworks**](docs/DedicatedServerApi.md#listallptrrecordsforservernetworks) | **Get** /v1/hosts/dedicated_servers/{server_id}/ptr_records | List all PTR records for server networks
 *DedicatedServerApi* | [**RetrieveAnExistingDedicatedServer**](docs/DedicatedServerApi.md#retrieveanexistingdedicatedserver) | **Get** /v1/hosts/dedicated_servers/{server_id} | Retrieve an existing dedicated server
 *DedicatedServerApi* | [**ScheduleReleaseForAnExistingDedicatedServer**](docs/DedicatedServerApi.md#schedulereleaseforanexistingdedicatedserver) | **Post** /v1/hosts/dedicated_servers/{server_id}/schedule_release | Schedule release for an existing dedicated server
+*DriveModelOptionApi* | [**ListAllDriveModelsOptionsForServerModel**](docs/DriveModelOptionApi.md#listalldrivemodelsoptionsforservermodel) | **Get** /v1/locations/{location_id}/order_options/server_models/{server_model_id}/drive_models | List all drive models options for server model
+*DriveModelOptionApi* | [**RetrieveAnExistingDriveModelOption**](docs/DriveModelOptionApi.md#retrieveanexistingdrivemodeloption) | **Get** /v1/locations/{location_id}/order_options/server_models/{server_model_id}/drive_models/{drive_model_id} | Retrieve an existing drive model option
 *HostsApi* | [**ListAllHosts**](docs/HostsApi.md#listallhosts) | **Get** /v1/hosts | List all hosts
 *KubernetesBaremetalNodeApi* | [**ListAllNetworksForAnExistingKubernetesBaremetalNode**](docs/KubernetesBaremetalNodeApi.md#listallnetworksforanexistingkubernetesbaremetalnode) | **Get** /v1/hosts/kubernetes_baremetal_nodes/{server_id}/networks | List all networks for an existing kubernetes baremetal node
 *KubernetesBaremetalNodeApi* | [**ListAllPowerFeedsForAnExistingKubernetesBaremetalNode**](docs/KubernetesBaremetalNodeApi.md#listallpowerfeedsforanexistingkubernetesbaremetalnode) | **Get** /v1/hosts/kubernetes_baremetal_nodes/{server_id}/power_feeds | List all power feeds for an existing kubernetes baremetal node
-*KubernetesBaremetalNodeApi* | [**RetrieveAnExistingKubernetesBaremetalNode**](docs/KubernetesBaremetalNodeApi.md#retrieveanexistingkubernetesbaremetalnode) | **Get** /v1/hosts/kubernetes_baremetal_nodes/{node_id} | Retrieve an existing kubernetes baremetal node
+*KubernetesBaremetalNodeApi* | [**RetrieveAnExistingKubernetesBaremetalNode**](docs/KubernetesBaremetalNodeApi.md#retrieveanexistingkubernetesbaremetalnode) | **Get** /v1/hosts/kubernetes_baremetal_nodes/{server_id} | Retrieve an existing kubernetes baremetal node
 *KubernetesClusterApi* | [**KubernetesClusterNodes**](docs/KubernetesClusterApi.md#kubernetesclusternodes) | **Get** /v1/kubernetes_clusters/{kubernetes_cluster_id}/nodes | Kubernetes cluster nodes
 *KubernetesClusterApi* | [**KubernetesClusters**](docs/KubernetesClusterApi.md#kubernetesclusters) | **Get** /v1/kubernetes_clusters | Kubernetes clusters
 *KubernetesClusterApi* | [**RetrieveAnExistingKubernetesCluster**](docs/KubernetesClusterApi.md#retrieveanexistingkubernetescluster) | **Get** /v1/kubernetes_clusters/{id} | Retrieve an existing kubernetes cluster
@@ -54,6 +59,7 @@ Class | Method | HTTP request | Description
 *L2SegmentApi* | [**ListAllL2SegmentMembers**](docs/L2SegmentApi.md#listalll2segmentmembers) | **Get** /v1/l2_segments/{l2_segment_id}/members | List all L2 segment members
 *L2SegmentApi* | [**ListAllL2SegmentNetworks**](docs/L2SegmentApi.md#listalll2segmentnetworks) | **Get** /v1/l2_segments/{l2_segment_id}/networks | List all l2 segment networks
 *L2SegmentApi* | [**ListAllL2Segments**](docs/L2SegmentApi.md#listalll2segments) | **Get** /v1/l2_segments | List all L2 segments
+*L2SegmentApi* | [**ListAllLocationGroups**](docs/L2SegmentApi.md#listalllocationgroups) | **Get** /v1/l2_segments/location_groups | List all Location groups
 *L2SegmentApi* | [**RetrieveAnExistingL2Segment**](docs/L2SegmentApi.md#retrieveanexistingl2segment) | **Get** /v1/l2_segments/{l2_segment_id} | Retrieve an existing L2 segment
 *L2SegmentApi* | [**UpdateAnExistingL2Segment**](docs/L2SegmentApi.md#updateanexistingl2segment) | **Put** /v1/l2_segments/{l2_segment_id} | Update an existing L2 segment
 *L2SegmentApi* | [**UpdateAnExistingL2SegmentNetworks**](docs/L2SegmentApi.md#updateanexistingl2segmentnetworks) | **Put** /v1/l2_segments/{l2_segment_id}/networks | Update an existing L2 segment networks
@@ -68,13 +74,22 @@ Class | Method | HTTP request | Description
 *LoadBalancerApi* | [**UpdateAnExistingL7LoadBalancer**](docs/LoadBalancerApi.md#updateanexistingl7loadbalancer) | **Put** /v1/load_balancers/l7/{id} | Update an existing L7 load balancer
 *LocationApi* | [**Locations**](docs/LocationApi.md#locations) | **Get** /v1/locations | Locations
 *LocationApi* | [**RetrieveAnExisitingLocation**](docs/LocationApi.md#retrieveanexisitinglocation) | **Get** /v1/locations/{location_id} | Retrieve an exisiting location
+*OperatingSystemOptionApi* | [**ListAllOperatingSystemsForServerModel**](docs/OperatingSystemOptionApi.md#listalloperatingsystemsforservermodel) | **Get** /v1/locations/{location_id}/order_options/server_models/{server_model_id}/operating_systems | List all operating systems for server model
+*OperatingSystemOptionApi* | [**RetrieveAnExstingOperatingSystem**](docs/OperatingSystemOptionApi.md#retrieveanexstingoperatingsystem) | **Get** /v1/locations/{location_id}/order_options/server_models/{server_model_id}/operating_systems/{operating_system_id} | Retrieve an exsting operating system
+*RamOptionApi* | [**ListAllAvailableRamOptionsForServerModel**](docs/RamOptionApi.md#listallavailableramoptionsforservermodel) | **Get** /v1/locations/{location_id}/order_options/server_models/{server_model_id}/ram | List all available ram options for server model
 *SSLCertificateApi* | [**CreateANewCustomSslCertificate**](docs/SSLCertificateApi.md#createanewcustomsslcertificate) | **Post** /v1/ssl_certificates/custom | Create a new custom SSL certificate
 *SSLCertificateApi* | [**RetrieveAnExistingCustomSslCertificate**](docs/SSLCertificateApi.md#retrieveanexistingcustomsslcertificate) | **Get** /v1/ssl_certificates/custom/{id} | Retrieve an existing custom ssl certificate
 *SSLCertificateApi* | [**SSLCertificates**](docs/SSLCertificateApi.md#sslcertificates) | **Get** /v1/ssl_certificates | SSL Certificates
+*ServerModelOptionApi* | [**ListAllServerModelsForLocation**](docs/ServerModelOptionApi.md#listallservermodelsforlocation) | **Get** /v1/locations/{location_id}/order_options/server_models | List all server models for location
+*ServerModelOptionApi* | [**RetrieveAnExistingServerModel**](docs/ServerModelOptionApi.md#retrieveanexistingservermodel) | **Get** /v1/locations/{location_id}/order_options/server_models/{server_model_id} | Retrieve an existing server model
+*UplinkModelOptionApi* | [**ListAllUplinksForServerModel**](docs/UplinkModelOptionApi.md#listalluplinksforservermodel) | **Get** /v1/locations/{location_id}/order_options/server_models/{server_model_id}/uplink_models | List all uplinks for server model
+*UplinkModelOptionApi* | [**RetrieveAnExistingUplink**](docs/UplinkModelOptionApi.md#retrieveanexistinguplink) | **Get** /v1/locations/{location_id}/order_options/server_models/{server_model_id}/uplink_models/{uplink_model_id} | Retrieve an existing uplink
 
 
 ## Documentation For Models
 
+ - [Connection](docs/Connection.md)
+ - [DriveSlot](docs/DriveSlot.md)
  - [InlineObject](docs/InlineObject.md)
  - [InlineObject1](docs/InlineObject1.md)
  - [InlineObject2](docs/InlineObject2.md)
@@ -89,7 +104,7 @@ Class | Method | HTTP request | Description
  - [InlineResponse2001](docs/InlineResponse2001.md)
  - [InlineResponse201](docs/InlineResponse201.md)
  - [InlineResponse2011](docs/InlineResponse2011.md)
- - [InlineResponse402](docs/InlineResponse402.md)
+ - [InlineResponse404](docs/InlineResponse404.md)
  - [Network](docs/Network.md)
  - [PowerFeed](docs/PowerFeed.md)
  - [TheDedicatedServerEntitySchema](docs/TheDedicatedServerEntitySchema.md)
@@ -98,6 +113,9 @@ Class | Method | HTTP request | Description
  - [TheItemsSchema2](docs/TheItemsSchema2.md)
  - [TheItemsSchema3](docs/TheItemsSchema3.md)
  - [TheItemsSchema4](docs/TheItemsSchema4.md)
+ - [TheItemsSchema5](docs/TheItemsSchema5.md)
+ - [TheItemsSchema6](docs/TheItemsSchema6.md)
+ - [TheItemsSchema7](docs/TheItemsSchema7.md)
  - [TheKubernetesBaremetalNodeEntitySchema](docs/TheKubernetesBaremetalNodeEntitySchema.md)
  - [TheRootSchema](docs/TheRootSchema.md)
  - [TheRootSchema1](docs/TheRootSchema1.md)
@@ -112,16 +130,17 @@ Class | Method | HTTP request | Description
  - [V1HostsDedicatedServersUplinkModelsPrivate](docs/V1HostsDedicatedServersUplinkModelsPrivate.md)
  - [V1HostsDedicatedServersUplinkModelsPublic](docs/V1HostsDedicatedServersUplinkModelsPublic.md)
  - [V1HostsKubernetesBaremetalNodeEntity](docs/V1HostsKubernetesBaremetalNodeEntity.md)
+ - [V1L2SegmentsL2LocationGroup](docs/V1L2SegmentsL2LocationGroup.md)
  - [V1L2SegmentsL2Member](docs/V1L2SegmentsL2Member.md)
  - [V1L2SegmentsL2Network](docs/V1L2SegmentsL2Network.md)
  - [V1L2SegmentsL2Segment](docs/V1L2SegmentsL2Segment.md)
  - [V1L2SegmentsL2SegmentDetailed](docs/V1L2SegmentsL2SegmentDetailed.md)
  - [V1L2SegmentsL2SegmentIdNetworksCreate](docs/V1L2SegmentsL2SegmentIdNetworksCreate.md)
  - [V1L2SegmentsMembers](docs/V1L2SegmentsMembers.md)
- - [V1LoadBalancersL4Rules](docs/V1LoadBalancersL4Rules.md)
- - [V1LoadBalancersL4Upstreams](docs/V1LoadBalancersL4Upstreams.md)
- - [V1LoadBalancersL7IdRules](docs/V1LoadBalancersL7IdRules.md)
- - [V1LoadBalancersL7Rules](docs/V1LoadBalancersL7Rules.md)
+ - [V1OrderOptionsBandwidthBase](docs/V1OrderOptionsBandwidthBase.md)
+ - [V1OrderOptionsDriveModelsBase](docs/V1OrderOptionsDriveModelsBase.md)
+ - [V1OrderOptionsOperatingSystemsBase](docs/V1OrderOptionsOperatingSystemsBase.md)
+ - [V1OrderOptionsUplinkModelsBase](docs/V1OrderOptionsUplinkModelsBase.md)
 
 
 ## Documentation For Authorization
@@ -141,6 +160,7 @@ auth := context.WithValue(context.Background(), sw.ContextBasicAuth, sw.BasicAut
 })
 r, err := client.Service.Operation(auth, args)
 ```
+
 
 
 ## Author

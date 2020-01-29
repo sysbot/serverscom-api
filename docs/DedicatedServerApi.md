@@ -8,6 +8,7 @@ Method | HTTP request | Description
 [**CreateANewDedicatedServer**](DedicatedServerApi.md#CreateANewDedicatedServer) | **Post** /v1/hosts/dedicated_servers | Create a new dedicated server
 [**CreatePtrRecordForServerNetworks**](DedicatedServerApi.md#CreatePtrRecordForServerNetworks) | **Post** /v1/hosts/dedicated_servers/{server_id}/ptr_records | Create PTR record for server networks
 [**DeleteAnExistingPtrRecord**](DedicatedServerApi.md#DeleteAnExistingPtrRecord) | **Delete** /v1/hosts/dedicated_servers/{server_id}/ptr_records/{record_id} | Delete an existing PTR record
+[**ListAllConnectionsForAnExistingDedicatedServer**](DedicatedServerApi.md#ListAllConnectionsForAnExistingDedicatedServer) | **Get** /v1/hosts/dedicated_servers/{lease_id}/connections | List all connections for an existing dedicated server
 [**ListAllNetworksForAnExistingDedicatedServer**](DedicatedServerApi.md#ListAllNetworksForAnExistingDedicatedServer) | **Get** /v1/hosts/dedicated_servers/{server_id}/networks | List all networks for an existing dedicated server
 [**ListAllPowerFeedsForAnExistingDedicatedServer**](DedicatedServerApi.md#ListAllPowerFeedsForAnExistingDedicatedServer) | **Get** /v1/hosts/dedicated_servers/{server_id}/power_feeds | List all power feeds for an existing dedicated server
 [**ListAllPtrRecordsForServerNetworks**](DedicatedServerApi.md#ListAllPtrRecordsForServerNetworks) | **Get** /v1/hosts/dedicated_servers/{server_id}/ptr_records | List all PTR records for server networks
@@ -19,6 +20,7 @@ Method | HTTP request | Description
 ## AbortReleaseForAnExistingDedicatedServer
 
 > V1HostsDedicatedServersEntity AbortReleaseForAnExistingDedicatedServer(ctx, serverId)
+
 Abort release for an existing dedicated server
 
 ### Required Parameters
@@ -50,6 +52,7 @@ Name | Type | Description  | Notes
 ## CreateANewDedicatedServer
 
 > []V1HostsDedicatedServersEntity CreateANewDedicatedServer(ctx, optional)
+
 Create a new dedicated server
 
 ### Required Parameters
@@ -90,6 +93,7 @@ Name | Type | Description  | Notes
 ## CreatePtrRecordForServerNetworks
 
 > InlineResponse200 CreatePtrRecordForServerNetworks(ctx, serverId, optional)
+
 Create PTR record for server networks
 
 ### Required Parameters
@@ -132,6 +136,7 @@ Name | Type | Description  | Notes
 ## DeleteAnExistingPtrRecord
 
 > DeleteAnExistingPtrRecord(ctx, serverId, recordId)
+
 Delete an existing PTR record
 
 ### Required Parameters
@@ -161,9 +166,56 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## ListAllConnectionsForAnExistingDedicatedServer
+
+> []Connection ListAllConnectionsForAnExistingDedicatedServer(ctx, leaseId, optional)
+
+List all connections for an existing dedicated server
+
+### Required Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**leaseId** | **string**|  | 
+ **optional** | ***ListAllConnectionsForAnExistingDedicatedServerOpts** | optional parameters | nil if no parameters
+
+### Optional Parameters
+
+Optional parameters are passed through a pointer to a ListAllConnectionsForAnExistingDedicatedServerOpts struct
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **perPage** | **optional.Int32**|  per page | [default to 20]
+ **page** | **optional.Int32**|  page | [default to 1]
+ **sorting** | **optional.String**|  sorting | [default to port]
+ **direction** | **optional.String**|  direction | [default to ASC]
+
+### Return type
+
+[**[]Connection**](connection.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## ListAllNetworksForAnExistingDedicatedServer
 
 > []Network ListAllNetworksForAnExistingDedicatedServer(ctx, serverId, optional)
+
 List all networks for an existing dedicated server
 
 To list all of the networks for specific dedicated server please send `GET /v1/hosts/dedicated_servers/{server_id}/networks`  The response contains list of networks which classified by `interface_type`, `distribution_method`  - `interface_type` points on which interface this network configured. - `distribution_method` describes how network will be distributed.   In case of the `gateway`, will be reserved first 4 IP addresses for *enterprise location*,   and 1 IP address for *standard location* from the network.   In the case of the `route`, the network will be available fully for customer use. 
@@ -216,6 +268,7 @@ Name | Type | Description  | Notes
 ## ListAllPowerFeedsForAnExistingDedicatedServer
 
 > []PowerFeed ListAllPowerFeedsForAnExistingDedicatedServer(ctx, serverId)
+
 List all power feeds for an existing dedicated server
 
 ### Required Parameters
@@ -228,7 +281,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**[]PowerFeed**](Power feed.md)
+[**[]PowerFeed**](Power_feed.md)
 
 ### Authorization
 
@@ -247,6 +300,7 @@ Name | Type | Description  | Notes
 ## ListAllPtrRecordsForServerNetworks
 
 > []InlineResponse200 ListAllPtrRecordsForServerNetworks(ctx, serverId, optional)
+
 List all PTR records for server networks
 
 ### Required Parameters
@@ -292,6 +346,7 @@ Name | Type | Description  | Notes
 ## RetrieveAnExistingDedicatedServer
 
 > V1HostsDedicatedServersEntity RetrieveAnExistingDedicatedServer(ctx, serverId)
+
 Retrieve an existing dedicated server
 
 ### Required Parameters
@@ -323,6 +378,7 @@ Name | Type | Description  | Notes
 ## ScheduleReleaseForAnExistingDedicatedServer
 
 > V1HostsDedicatedServersEntity ScheduleReleaseForAnExistingDedicatedServer(ctx, serverId)
+
 Schedule release for an existing dedicated server
 
 ### Required Parameters
