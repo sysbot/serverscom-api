@@ -1,0 +1,53 @@
+{
+  "server_model_id": 2161,
+  "location_id": 25,
+  "ram_size": 32,
+  "uplink_models": {
+    "public": {
+      "id": 1600,
+      "bandwidth_model_id": 1246
+    },
+    "private": {
+      "id": 1601
+    }
+  },
+  "drives": {
+    "slots": [
+      {
+        "position": 0,
+        "drive_model_id": 3
+      }
+    ],
+    "layout": [
+      {
+        "slot_positions": [
+          0
+        ],
+        "partitions": [
+          {
+            "target": "/",
+            "size": 10240,
+            "fill": false,
+            "fs": "ext4"
+          },
+          {
+            "target": "/home",
+            "size": 350000,
+            "fill": true,
+            "fs": "ext4"
+          }
+        ]
+      }
+    ]
+  },
+  "ipv6": true,
+  "hosts": [
+    {
+      "hostname": "fremont-15-0"
+    }
+  ],
+  "ssh_key_fingerprints": [
+    "bb:0b:69:21:8d:2b:11:93:27:24:c4:0d:e8:55:78:b7"
+  ],
+  "operating_system_id": 24
+}

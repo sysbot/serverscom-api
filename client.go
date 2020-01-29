@@ -17,8 +17,10 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log"
 	"mime/multipart"
 	"net/http"
+	"net/http/httputil"
 	"net/url"
 	"os"
 	"path/filepath"
@@ -45,7 +47,11 @@ type APIClient struct {
 
 	// API Services
 
+	BandwidthOptionApi *BandwidthOptionApiService
+
 	DedicatedServerApi *DedicatedServerApiService
+
+	DriveModelOptionApi *DriveModelOptionApiService
 
 	HostsApi *HostsApiService
 
@@ -59,7 +65,15 @@ type APIClient struct {
 
 	LocationApi *LocationApiService
 
+	OperatingSystemOptionApi *OperatingSystemOptionApiService
+
+	RamOptionApi *RamOptionApiService
+
 	SSLCertificateApi *SSLCertificateApiService
+
+	ServerModelOptionApi *ServerModelOptionApiService
+
+	UplinkModelOptionApi *UplinkModelOptionApiService
 }
 
 type service struct {
@@ -78,14 +92,20 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.common.client = c
 
 	// API Services
+	c.BandwidthOptionApi = (*BandwidthOptionApiService)(&c.common)
 	c.DedicatedServerApi = (*DedicatedServerApiService)(&c.common)
+	c.DriveModelOptionApi = (*DriveModelOptionApiService)(&c.common)
 	c.HostsApi = (*HostsApiService)(&c.common)
 	c.KubernetesBaremetalNodeApi = (*KubernetesBaremetalNodeApiService)(&c.common)
 	c.KubernetesClusterApi = (*KubernetesClusterApiService)(&c.common)
 	c.L2SegmentApi = (*L2SegmentApiService)(&c.common)
 	c.LoadBalancerApi = (*LoadBalancerApiService)(&c.common)
 	c.LocationApi = (*LocationApiService)(&c.common)
+	c.OperatingSystemOptionApi = (*OperatingSystemOptionApiService)(&c.common)
+	c.RamOptionApi = (*RamOptionApiService)(&c.common)
 	c.SSLCertificateApi = (*SSLCertificateApiService)(&c.common)
+	c.ServerModelOptionApi = (*ServerModelOptionApiService)(&c.common)
+	c.UplinkModelOptionApi = (*UplinkModelOptionApiService)(&c.common)
 
 	return c
 }
@@ -177,12 +197,39 @@ func parameterToJson(obj interface{}) (string, error) {
 
 // callAPI do the request.
 func (c *APIClient) callAPI(request *http.Request) (*http.Response, error) {
-	return c.cfg.HTTPClient.Do(request)
+	if c.cfg.Debug {
+		dump, err := httputil.DumpRequestOut(request, true)
+		if err != nil {
+			return nil, err
+		}
+		log.Printf("\n%s\n", string(dump))
+	}
+
+	resp, err := c.cfg.HTTPClient.Do(request)
+	if err != nil {
+		return resp, err
+	}
+
+	if c.cfg.Debug {
+		dump, err := httputil.DumpResponse(resp, true)
+		if err != nil {
+			return resp, err
+		}
+		log.Printf("\n%s\n", string(dump))
+	}
+
+	return resp, err
 }
 
 // ChangeBasePath changes base path to allow switching to mocks
 func (c *APIClient) ChangeBasePath(path string) {
 	c.cfg.BasePath = path
+}
+
+// Allow modification of underlying config for alternate implementations and testing
+// Caution: modifying the configuration while live can cause data races and potentially unwanted behavior
+func (c *APIClient) GetConfig() *Configuration {
+	return c.cfg
 }
 
 // prepareRequest build the request
@@ -339,6 +386,7 @@ func (c *APIClient) prepareRequest(
 		if auth, ok := ctx.Value(ContextAccessToken).(string); ok {
 			localVarRequest.Header.Add("Authorization", "Bearer "+auth)
 		}
+
 	}
 
 	for header, value := range c.cfg.DefaultHeader {
@@ -349,6 +397,9 @@ func (c *APIClient) prepareRequest(
 }
 
 func (c *APIClient) decode(v interface{}, b []byte, contentType string) (err error) {
+	if len(b) == 0 {
+		return nil
+	}
 	if s, ok := v.(*string); ok {
 		*s = string(b)
 		return nil

@@ -11,7 +11,6 @@ package client
 
 import (
 	_context "context"
-	"fmt"
 	"github.com/antihax/optional"
 	_ioutil "io/ioutil"
 	_nethttp "net/http"
@@ -51,7 +50,6 @@ func (a *LoadBalancerApiService) CreateANewL4LoadBalancers(ctx _context.Context,
 
 	// create path and map variables
 	localVarPath := a.client.cfg.BasePath + "/v1/load_balancers/l4"
-
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
@@ -121,7 +119,6 @@ func (a *LoadBalancerApiService) CreateANewL4LoadBalancers(ctx _context.Context,
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -162,7 +159,6 @@ func (a *LoadBalancerApiService) CreateANewL7LoadBalancers(ctx _context.Context,
 
 	// create path and map variables
 	localVarPath := a.client.cfg.BasePath + "/v1/load_balancers/l7"
-
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
@@ -214,16 +210,6 @@ func (a *LoadBalancerApiService) CreateANewL7LoadBalancers(ctx _context.Context,
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		if localVarHTTPResponse.StatusCode == 201 {
-			var v InlineResponse2011
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
 		if localVarHTTPResponse.StatusCode == 422 {
 			var v TheRootSchema1
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -233,6 +219,15 @@ func (a *LoadBalancerApiService) CreateANewL7LoadBalancers(ctx _context.Context,
 			}
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 201 {
+			var v InlineResponse2011
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -265,7 +260,7 @@ func (a *LoadBalancerApiService) DeleteAnExisitingL4LoadBalancer(ctx _context.Co
 
 	// create path and map variables
 	localVarPath := a.client.cfg.BasePath + "/v1/load_balancers/l4/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.QueryEscape(fmt.Sprintf("%v", id)), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.QueryEscape(parameterToString(id, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
@@ -309,16 +304,6 @@ func (a *LoadBalancerApiService) DeleteAnExisitingL4LoadBalancer(ctx _context.Co
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		if localVarHTTPResponse.StatusCode == 404 {
-			var v InlineResponse402
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarHTTPResponse, newErr
-			}
-			newErr.model = v
-			return localVarHTTPResponse, newErr
-		}
 		if localVarHTTPResponse.StatusCode == 400 {
 			var v TheRootSchema
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -329,8 +314,8 @@ func (a *LoadBalancerApiService) DeleteAnExisitingL4LoadBalancer(ctx _context.Co
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
-		if localVarHTTPResponse.StatusCode == 409 {
-			var v InlineResponse402
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v InlineResponse404
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -338,6 +323,15 @@ func (a *LoadBalancerApiService) DeleteAnExisitingL4LoadBalancer(ctx _context.Co
 			}
 			newErr.model = v
 			return localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 409 {
+			var v InlineResponse404
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHTTPResponse, newErr
+			}
+			newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
 	}
@@ -361,7 +355,7 @@ func (a *LoadBalancerApiService) DeleteAnExistingL7LoadBalancer(ctx _context.Con
 
 	// create path and map variables
 	localVarPath := a.client.cfg.BasePath + "/v1/load_balancers/l7/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.QueryEscape(fmt.Sprintf("%v", id)), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.QueryEscape(parameterToString(id, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
@@ -405,16 +399,6 @@ func (a *LoadBalancerApiService) DeleteAnExistingL7LoadBalancer(ctx _context.Con
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		if localVarHTTPResponse.StatusCode == 409 {
-			var v InlineResponse402
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarHTTPResponse, newErr
-			}
-			newErr.model = v
-			return localVarHTTPResponse, newErr
-		}
 		if localVarHTTPResponse.StatusCode == 400 {
 			var v TheRootSchema
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -425,8 +409,8 @@ func (a *LoadBalancerApiService) DeleteAnExistingL7LoadBalancer(ctx _context.Con
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
-		if localVarHTTPResponse.StatusCode == 404 {
-			var v InlineResponse402
+		if localVarHTTPResponse.StatusCode == 409 {
+			var v InlineResponse404
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -434,6 +418,15 @@ func (a *LoadBalancerApiService) DeleteAnExistingL7LoadBalancer(ctx _context.Con
 			}
 			newErr.model = v
 			return localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v InlineResponse404
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHTTPResponse, newErr
+			}
+			newErr.model = v
 		}
 		return localVarHTTPResponse, newErr
 	}
@@ -477,7 +470,6 @@ func (a *LoadBalancerApiService) LoadBalancers(ctx _context.Context, localVarOpt
 
 	// create path and map variables
 	localVarPath := a.client.cfg.BasePath + "/v1/load_balancers"
-
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
@@ -559,7 +551,6 @@ func (a *LoadBalancerApiService) LoadBalancers(ctx _context.Context, localVarOpt
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -594,7 +585,7 @@ func (a *LoadBalancerApiService) RetrieveAnExistingL4LoadBalancer(ctx _context.C
 
 	// create path and map variables
 	localVarPath := a.client.cfg.BasePath + "/v1/load_balancers/l4/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.QueryEscape(fmt.Sprintf("%v", id)), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.QueryEscape(parameterToString(id, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
@@ -638,16 +629,6 @@ func (a *LoadBalancerApiService) RetrieveAnExistingL4LoadBalancer(ctx _context.C
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		if localVarHTTPResponse.StatusCode == 400 {
-			var v TheRootSchema
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
 		if localVarHTTPResponse.StatusCode == 200 {
 			var v InlineResponse201
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -659,7 +640,7 @@ func (a *LoadBalancerApiService) RetrieveAnExistingL4LoadBalancer(ctx _context.C
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v InlineResponse402
+			var v InlineResponse404
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -667,6 +648,15 @@ func (a *LoadBalancerApiService) RetrieveAnExistingL4LoadBalancer(ctx _context.C
 			}
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v TheRootSchema
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -701,7 +691,7 @@ func (a *LoadBalancerApiService) RetrieveAnExistingL7LoadBalancer(ctx _context.C
 
 	// create path and map variables
 	localVarPath := a.client.cfg.BasePath + "/v1/load_balancers/l7/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.QueryEscape(fmt.Sprintf("%v", id)), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.QueryEscape(parameterToString(id, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
@@ -766,14 +756,13 @@ func (a *LoadBalancerApiService) RetrieveAnExistingL7LoadBalancer(ctx _context.C
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v InlineResponse402
+			var v InlineResponse404
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -815,7 +804,7 @@ func (a *LoadBalancerApiService) UpdateAnExistingL4LoadBalancer(ctx _context.Con
 
 	// create path and map variables
 	localVarPath := a.client.cfg.BasePath + "/v1/load_balancers/l4/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.QueryEscape(fmt.Sprintf("%v", id)), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.QueryEscape(parameterToString(id, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
@@ -868,18 +857,8 @@ func (a *LoadBalancerApiService) UpdateAnExistingL4LoadBalancer(ctx _context.Con
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		if localVarHTTPResponse.StatusCode == 200 {
-			var v InlineResponse201
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
 		if localVarHTTPResponse.StatusCode == 409 {
-			var v InlineResponse402
+			var v InlineResponse404
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -909,7 +888,7 @@ func (a *LoadBalancerApiService) UpdateAnExistingL4LoadBalancer(ctx _context.Con
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v InlineResponse402
+			var v InlineResponse404
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -917,6 +896,15 @@ func (a *LoadBalancerApiService) UpdateAnExistingL4LoadBalancer(ctx _context.Con
 			}
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 200 {
+			var v InlineResponse201
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -958,7 +946,7 @@ func (a *LoadBalancerApiService) UpdateAnExistingL7LoadBalancer(ctx _context.Con
 
 	// create path and map variables
 	localVarPath := a.client.cfg.BasePath + "/v1/load_balancers/l7/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.QueryEscape(fmt.Sprintf("%v", id)), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.QueryEscape(parameterToString(id, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
@@ -1021,8 +1009,8 @@ func (a *LoadBalancerApiService) UpdateAnExistingL7LoadBalancer(ctx _context.Con
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		if localVarHTTPResponse.StatusCode == 409 {
-			var v InlineResponse402
+		if localVarHTTPResponse.StatusCode == 422 {
+			var v TheRootSchema1
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1042,7 +1030,7 @@ func (a *LoadBalancerApiService) UpdateAnExistingL7LoadBalancer(ctx _context.Con
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v InlineResponse402
+			var v InlineResponse404
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1051,15 +1039,14 @@ func (a *LoadBalancerApiService) UpdateAnExistingL7LoadBalancer(ctx _context.Con
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		if localVarHTTPResponse.StatusCode == 422 {
-			var v TheRootSchema1
+		if localVarHTTPResponse.StatusCode == 409 {
+			var v InlineResponse404
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}

@@ -16,5 +16,5 @@ type InlineObject7 struct {
 	//  proxy protocol enabled
 	ProxyProtocolEnabled bool `json:"proxy_protocol_enabled,omitempty"`
 	//  rules
-	Rules []V1LoadBalancersL4Rules `json:"rules,omitempty"`
+	Rules []string `json:"rules,omitempty"`
 }

@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **Name** | **string** |  | [optional] 
 **Type** | **string** |  | [optional] 
 **Status** | **string** |  | [optional] 
-**LocationId** | **int32** |  | [optional] 
+**LocationGroupId** | **int32** |  | [optional] 
 **CreatedAt** | [**time.Time**](time.Time.md) |  | [optional] 
 **UpdatedAt** | Pointer to [**time.Time**](time.Time.md) |  | [optional] 
 

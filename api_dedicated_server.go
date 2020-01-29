@@ -11,7 +11,6 @@ package client
 
 import (
 	_context "context"
-	"fmt"
 	"github.com/antihax/optional"
 	_ioutil "io/ioutil"
 	_nethttp "net/http"
@@ -45,7 +44,7 @@ func (a *DedicatedServerApiService) AbortReleaseForAnExistingDedicatedServer(ctx
 
 	// create path and map variables
 	localVarPath := a.client.cfg.BasePath + "/v1/hosts/dedicated_servers/{server_id}/abort_release"
-	localVarPath = strings.Replace(localVarPath, "{"+"server_id"+"}", _neturl.QueryEscape(fmt.Sprintf("%v", serverId)), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"server_id"+"}", _neturl.QueryEscape(parameterToString(serverId, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
@@ -100,7 +99,7 @@ func (a *DedicatedServerApiService) AbortReleaseForAnExistingDedicatedServer(ctx
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 409 {
-			var v InlineResponse402
+			var v InlineResponse404
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -110,7 +109,7 @@ func (a *DedicatedServerApiService) AbortReleaseForAnExistingDedicatedServer(ctx
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v InlineResponse402
+			var v InlineResponse404
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -120,14 +119,13 @@ func (a *DedicatedServerApiService) AbortReleaseForAnExistingDedicatedServer(ctx
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 412 {
-			var v InlineResponse402
+			var v InlineResponse404
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -168,7 +166,6 @@ func (a *DedicatedServerApiService) CreateANewDedicatedServer(ctx _context.Conte
 
 	// create path and map variables
 	localVarPath := a.client.cfg.BasePath + "/v1/hosts/dedicated_servers"
-
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
@@ -220,6 +217,16 @@ func (a *DedicatedServerApiService) CreateANewDedicatedServer(ctx _context.Conte
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		if localVarHTTPResponse.StatusCode == 402 {
+			var v InlineResponse404
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 422 {
 			var v map[string]interface{}
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -238,17 +245,6 @@ func (a *DedicatedServerApiService) CreateANewDedicatedServer(ctx _context.Conte
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode == 402 {
-			var v InlineResponse402
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -290,7 +286,7 @@ func (a *DedicatedServerApiService) CreatePtrRecordForServerNetworks(ctx _contex
 
 	// create path and map variables
 	localVarPath := a.client.cfg.BasePath + "/v1/hosts/dedicated_servers/{server_id}/ptr_records"
-	localVarPath = strings.Replace(localVarPath, "{"+"server_id"+"}", _neturl.QueryEscape(fmt.Sprintf("%v", serverId)), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"server_id"+"}", _neturl.QueryEscape(parameterToString(serverId, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
@@ -343,8 +339,18 @@ func (a *DedicatedServerApiService) CreatePtrRecordForServerNetworks(ctx _contex
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
+		if localVarHTTPResponse.StatusCode == 422 {
+			var v TheRootSchema1
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 412 {
-			var v InlineResponse402
+			var v InlineResponse404
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -361,17 +367,6 @@ func (a *DedicatedServerApiService) CreatePtrRecordForServerNetworks(ctx _contex
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode == 422 {
-			var v TheRootSchema1
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -405,8 +400,9 @@ func (a *DedicatedServerApiService) DeleteAnExistingPtrRecord(ctx _context.Conte
 
 	// create path and map variables
 	localVarPath := a.client.cfg.BasePath + "/v1/hosts/dedicated_servers/{server_id}/ptr_records/{record_id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"server_id"+"}", _neturl.QueryEscape(fmt.Sprintf("%v", serverId)), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"record_id"+"}", _neturl.QueryEscape(fmt.Sprintf("%v", recordId)), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"server_id"+"}", _neturl.QueryEscape(parameterToString(serverId, "")), -1)
+
+	localVarPath = strings.Replace(localVarPath, "{"+"record_id"+"}", _neturl.QueryEscape(parameterToString(recordId, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
@@ -451,7 +447,7 @@ func (a *DedicatedServerApiService) DeleteAnExistingPtrRecord(ctx _context.Conte
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v InlineResponse402
+			var v InlineResponse404
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -464,6 +460,147 @@ func (a *DedicatedServerApiService) DeleteAnExistingPtrRecord(ctx _context.Conte
 	}
 
 	return localVarHTTPResponse, nil
+}
+
+// ListAllConnectionsForAnExistingDedicatedServerOpts Optional parameters for the method 'ListAllConnectionsForAnExistingDedicatedServer'
+type ListAllConnectionsForAnExistingDedicatedServerOpts struct {
+	PerPage   optional.Int32
+	Page      optional.Int32
+	Sorting   optional.String
+	Direction optional.String
+}
+
+/*
+ListAllConnectionsForAnExistingDedicatedServer List all connections for an existing dedicated server
+ * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param leaseId
+ * @param optional nil or *ListAllConnectionsForAnExistingDedicatedServerOpts - Optional Parameters:
+ * @param "PerPage" (optional.Int32) -   per page
+ * @param "Page" (optional.Int32) -   page
+ * @param "Sorting" (optional.String) -   sorting
+ * @param "Direction" (optional.String) -   direction
+@return []Connection
+*/
+func (a *DedicatedServerApiService) ListAllConnectionsForAnExistingDedicatedServer(ctx _context.Context, leaseId string, localVarOptionals *ListAllConnectionsForAnExistingDedicatedServerOpts) ([]Connection, *_nethttp.Response, error) {
+	var (
+		localVarHTTPMethod   = _nethttp.MethodGet
+		localVarPostBody     interface{}
+		localVarFormFileName string
+		localVarFileName     string
+		localVarFileBytes    []byte
+		localVarReturnValue  []Connection
+	)
+
+	// create path and map variables
+	localVarPath := a.client.cfg.BasePath + "/v1/hosts/dedicated_servers/{lease_id}/connections"
+	localVarPath = strings.Replace(localVarPath, "{"+"lease_id"+"}", _neturl.QueryEscape(parameterToString(leaseId, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := _neturl.Values{}
+	localVarFormParams := _neturl.Values{}
+
+	if localVarOptionals != nil && localVarOptionals.PerPage.IsSet() {
+		localVarQueryParams.Add("per_page", parameterToString(localVarOptionals.PerPage.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.Page.IsSet() {
+		localVarQueryParams.Add("page", parameterToString(localVarOptionals.Page.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.Sorting.IsSet() {
+		localVarQueryParams.Add("sorting", parameterToString(localVarOptionals.Sorting.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.Direction.IsSet() {
+		localVarQueryParams.Add("direction", parameterToString(localVarOptionals.Direction.Value(), ""))
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(r)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 200 {
+			var v []Connection
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 412 {
+			var v InlineResponse404
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v InlineResponse404
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v TheRootSchema
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 // ListAllNetworksForAnExistingDedicatedServerOpts Optional parameters for the method 'ListAllNetworksForAnExistingDedicatedServer'
@@ -508,7 +645,7 @@ func (a *DedicatedServerApiService) ListAllNetworksForAnExistingDedicatedServer(
 
 	// create path and map variables
 	localVarPath := a.client.cfg.BasePath + "/v1/hosts/dedicated_servers/{server_id}/networks"
-	localVarPath = strings.Replace(localVarPath, "{"+"server_id"+"}", _neturl.QueryEscape(fmt.Sprintf("%v", serverId)), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"server_id"+"}", _neturl.QueryEscape(parameterToString(serverId, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
@@ -590,17 +727,7 @@ func (a *DedicatedServerApiService) ListAllNetworksForAnExistingDedicatedServer(
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v InlineResponse402
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode == 412 {
-			var v InlineResponse402
+			var v InlineResponse404
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -618,6 +745,15 @@ func (a *DedicatedServerApiService) ListAllNetworksForAnExistingDedicatedServer(
 			}
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 412 {
+			var v InlineResponse404
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -652,7 +788,7 @@ func (a *DedicatedServerApiService) ListAllPowerFeedsForAnExistingDedicatedServe
 
 	// create path and map variables
 	localVarPath := a.client.cfg.BasePath + "/v1/hosts/dedicated_servers/{server_id}/power_feeds"
-	localVarPath = strings.Replace(localVarPath, "{"+"server_id"+"}", _neturl.QueryEscape(fmt.Sprintf("%v", serverId)), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"server_id"+"}", _neturl.QueryEscape(parameterToString(serverId, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
@@ -707,7 +843,7 @@ func (a *DedicatedServerApiService) ListAllPowerFeedsForAnExistingDedicatedServe
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v InlineResponse402
+			var v InlineResponse404
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -717,14 +853,13 @@ func (a *DedicatedServerApiService) ListAllPowerFeedsForAnExistingDedicatedServe
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 412 {
-			var v InlineResponse402
+			var v InlineResponse404
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -772,7 +907,7 @@ func (a *DedicatedServerApiService) ListAllPtrRecordsForServerNetworks(ctx _cont
 
 	// create path and map variables
 	localVarPath := a.client.cfg.BasePath + "/v1/hosts/dedicated_servers/{server_id}/ptr_records"
-	localVarPath = strings.Replace(localVarPath, "{"+"server_id"+"}", _neturl.QueryEscape(fmt.Sprintf("%v", serverId)), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"server_id"+"}", _neturl.QueryEscape(parameterToString(serverId, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
@@ -828,18 +963,8 @@ func (a *DedicatedServerApiService) ListAllPtrRecordsForServerNetworks(ctx _cont
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		if localVarHTTPResponse.StatusCode == 404 {
-			var v InlineResponse402
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
 		if localVarHTTPResponse.StatusCode == 412 {
-			var v InlineResponse402
+			var v InlineResponse404
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -857,6 +982,15 @@ func (a *DedicatedServerApiService) ListAllPtrRecordsForServerNetworks(ctx _cont
 			}
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v InlineResponse404
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -891,7 +1025,7 @@ func (a *DedicatedServerApiService) RetrieveAnExistingDedicatedServer(ctx _conte
 
 	// create path and map variables
 	localVarPath := a.client.cfg.BasePath + "/v1/hosts/dedicated_servers/{server_id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"server_id"+"}", _neturl.QueryEscape(fmt.Sprintf("%v", serverId)), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"server_id"+"}", _neturl.QueryEscape(parameterToString(serverId, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
@@ -946,14 +1080,13 @@ func (a *DedicatedServerApiService) RetrieveAnExistingDedicatedServer(ctx _conte
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
-			var v InlineResponse402
+			var v InlineResponse404
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -988,7 +1121,7 @@ func (a *DedicatedServerApiService) ScheduleReleaseForAnExistingDedicatedServer(
 
 	// create path and map variables
 	localVarPath := a.client.cfg.BasePath + "/v1/hosts/dedicated_servers/{server_id}/schedule_release"
-	localVarPath = strings.Replace(localVarPath, "{"+"server_id"+"}", _neturl.QueryEscape(fmt.Sprintf("%v", serverId)), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"server_id"+"}", _neturl.QueryEscape(parameterToString(serverId, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
@@ -1043,17 +1176,7 @@ func (a *DedicatedServerApiService) ScheduleReleaseForAnExistingDedicatedServer(
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 409 {
-			var v InlineResponse402
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode == 404 {
-			var v InlineResponse402
+			var v InlineResponse404
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1063,7 +1186,7 @@ func (a *DedicatedServerApiService) ScheduleReleaseForAnExistingDedicatedServer(
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 412 {
-			var v InlineResponse402
+			var v InlineResponse404
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1071,6 +1194,15 @@ func (a *DedicatedServerApiService) ScheduleReleaseForAnExistingDedicatedServer(
 			}
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v InlineResponse404
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}

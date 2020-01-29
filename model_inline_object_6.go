@@ -22,5 +22,5 @@ type InlineObject6 struct {
 	//  geoip enabled
 	GeoipEnabled bool `json:"geoip_enabled,omitempty"`
 	//  rules
-	Rules []V1LoadBalancersL7Rules `json:"rules"`
+	Rules []string `json:"rules"`
 }

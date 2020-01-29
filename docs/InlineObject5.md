@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 **Name** | **string** |  name | 
 **LocationId** | **int32** |  location | 
 **ProxyProtocolEnabled** | **bool** |  proxy protocol enabled | [optional] 
-**Rules** | [**[]V1LoadBalancersL4Rules**](_v1_load_balancers_l4_rules.md) |  rules | 
+**Rules** | **[]string** |  rules | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -11,7 +11,6 @@ package client
 
 import (
 	_context "context"
-	"fmt"
 	"github.com/antihax/optional"
 	_ioutil "io/ioutil"
 	_nethttp "net/http"
@@ -37,21 +36,20 @@ CreateANewCustomSslCertificate Create a new custom SSL certificate
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param optional nil or *CreateANewCustomSslCertificateOpts - Optional Parameters:
  * @param "InlineObject9" (optional.Interface of InlineObject9) -
-@return TheItemsSchema4
+@return TheItemsSchema5
 */
-func (a *SSLCertificateApiService) CreateANewCustomSslCertificate(ctx _context.Context, localVarOptionals *CreateANewCustomSslCertificateOpts) (TheItemsSchema4, *_nethttp.Response, error) {
+func (a *SSLCertificateApiService) CreateANewCustomSslCertificate(ctx _context.Context, localVarOptionals *CreateANewCustomSslCertificateOpts) (TheItemsSchema5, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPost
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  TheItemsSchema4
+		localVarReturnValue  TheItemsSchema5
 	)
 
 	// create path and map variables
 	localVarPath := a.client.cfg.BasePath + "/v1/ssl_certificates/custom"
-
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
@@ -114,14 +112,13 @@ func (a *SSLCertificateApiService) CreateANewCustomSslCertificate(ctx _context.C
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 201 {
-			var v TheItemsSchema4
+			var v TheItemsSchema5
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -142,21 +139,21 @@ func (a *SSLCertificateApiService) CreateANewCustomSslCertificate(ctx _context.C
 RetrieveAnExistingCustomSslCertificate Retrieve an existing custom ssl certificate
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param id
-@return TheItemsSchema4
+@return TheItemsSchema5
 */
-func (a *SSLCertificateApiService) RetrieveAnExistingCustomSslCertificate(ctx _context.Context, id string) (TheItemsSchema4, *_nethttp.Response, error) {
+func (a *SSLCertificateApiService) RetrieveAnExistingCustomSslCertificate(ctx _context.Context, id string) (TheItemsSchema5, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  TheItemsSchema4
+		localVarReturnValue  TheItemsSchema5
 	)
 
 	// create path and map variables
 	localVarPath := a.client.cfg.BasePath + "/v1/ssl_certificates/custom/{id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.QueryEscape(fmt.Sprintf("%v", id)), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"id"+"}", _neturl.QueryEscape(parameterToString(id, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
@@ -201,14 +198,13 @@ func (a *SSLCertificateApiService) RetrieveAnExistingCustomSslCertificate(ctx _c
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 200 {
-			var v TheItemsSchema4
+			var v TheItemsSchema5
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -243,21 +239,20 @@ SSLCertificates SSL Certificates
  * @param "Page" (optional.Int32) -   page
  * @param "Sorting" (optional.String) -   sorting
  * @param "Direction" (optional.String) -   direction
-@return []TheItemsSchema4
+@return []TheItemsSchema5
 */
-func (a *SSLCertificateApiService) SSLCertificates(ctx _context.Context, localVarOptionals *SSLCertificatesOpts) ([]TheItemsSchema4, *_nethttp.Response, error) {
+func (a *SSLCertificateApiService) SSLCertificates(ctx _context.Context, localVarOptionals *SSLCertificatesOpts) ([]TheItemsSchema5, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  []TheItemsSchema4
+		localVarReturnValue  []TheItemsSchema5
 	)
 
 	// create path and map variables
 	localVarPath := a.client.cfg.BasePath + "/v1/ssl_certificates"
-
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
@@ -326,14 +321,13 @@ func (a *SSLCertificateApiService) SSLCertificates(ctx _context.Context, localVa
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 200 {
-			var v []TheItemsSchema4
+			var v []TheItemsSchema5
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}

@@ -61,7 +61,6 @@ func (a *HostsApiService) ListAllHosts(ctx _context.Context, localVarOptionals *
 
 	// create path and map variables
 	localVarPath := a.client.cfg.BasePath + "/v1/hosts"
-
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
@@ -143,7 +142,6 @@ func (a *HostsApiService) ListAllHosts(ctx _context.Context, localVarOptionals *
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}

@@ -14,6 +14,7 @@ Method | HTTP request | Description
 ## KubernetesClusterNodes
 
 > []TheItemsSchema1 KubernetesClusterNodes(ctx, kubernetesClusterId, optional)
+
 Kubernetes cluster nodes
 
 ### Required Parameters
@@ -41,7 +42,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**[]TheItemsSchema1**](The Items Schema_1.md)
+[**[]TheItemsSchema1**](The_Items_Schema_1.md)
 
 ### Authorization
 
@@ -60,6 +61,7 @@ Name | Type | Description  | Notes
 ## KubernetesClusters
 
 > []TheItemsSchema KubernetesClusters(ctx, optional)
+
 Kubernetes clusters
 
 ### Required Parameters
@@ -86,7 +88,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**[]TheItemsSchema**](The Items Schema.md)
+[**[]TheItemsSchema**](The_Items_Schema.md)
 
 ### Authorization
 
@@ -105,6 +107,7 @@ Name | Type | Description  | Notes
 ## RetrieveAnExistingKubernetesCluster
 
 > InlineResponse2001 RetrieveAnExistingKubernetesCluster(ctx, id)
+
 Retrieve an existing kubernetes cluster
 
 ### Required Parameters
@@ -136,6 +139,7 @@ Name | Type | Description  | Notes
 ## RetrieveAnExistingKubernetesClusterNode
 
 > TheItemsSchema1 RetrieveAnExistingKubernetesClusterNode(ctx, kubernetesClusterId, nodeId)
+
 Retrieve an existing kubernetes cluster node
 
 ### Required Parameters
@@ -149,7 +153,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**TheItemsSchema1**](The Items Schema_1.md)
+[**TheItemsSchema1**](The_Items_Schema_1.md)
 
 ### Authorization
 
