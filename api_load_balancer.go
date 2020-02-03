@@ -101,8 +101,8 @@ func (a *LoadBalancerApiService) CreateANewL4LoadBalancers(ctx _context.Context,
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		if localVarHTTPResponse.StatusCode == 422 {
-			var v TheRootSchema1
+		if localVarHTTPResponse.StatusCode == 201 {
+			var v InlineResponse201
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -111,8 +111,8 @@ func (a *LoadBalancerApiService) CreateANewL4LoadBalancers(ctx _context.Context,
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		if localVarHTTPResponse.StatusCode == 201 {
-			var v InlineResponse201
+		if localVarHTTPResponse.StatusCode == 422 {
+			var v TheRootSchema1
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -210,8 +210,8 @@ func (a *LoadBalancerApiService) CreateANewL7LoadBalancers(ctx _context.Context,
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		if localVarHTTPResponse.StatusCode == 422 {
-			var v TheRootSchema1
+		if localVarHTTPResponse.StatusCode == 201 {
+			var v InlineResponse2011
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -220,8 +220,8 @@ func (a *LoadBalancerApiService) CreateANewL7LoadBalancers(ctx _context.Context,
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		if localVarHTTPResponse.StatusCode == 201 {
-			var v InlineResponse2011
+		if localVarHTTPResponse.StatusCode == 422 {
+			var v TheRootSchema1
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -304,16 +304,6 @@ func (a *LoadBalancerApiService) DeleteAnExisitingL4LoadBalancer(ctx _context.Co
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		if localVarHTTPResponse.StatusCode == 400 {
-			var v TheRootSchema
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarHTTPResponse, newErr
-			}
-			newErr.model = v
-			return localVarHTTPResponse, newErr
-		}
 		if localVarHTTPResponse.StatusCode == 404 {
 			var v InlineResponse404
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -326,6 +316,16 @@ func (a *LoadBalancerApiService) DeleteAnExisitingL4LoadBalancer(ctx _context.Co
 		}
 		if localVarHTTPResponse.StatusCode == 409 {
 			var v InlineResponse404
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v TheRootSchema
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -399,8 +399,8 @@ func (a *LoadBalancerApiService) DeleteAnExistingL7LoadBalancer(ctx _context.Con
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		if localVarHTTPResponse.StatusCode == 400 {
-			var v TheRootSchema
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v InlineResponse404
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -419,8 +419,8 @@ func (a *LoadBalancerApiService) DeleteAnExistingL7LoadBalancer(ctx _context.Con
 			newErr.model = v
 			return localVarHTTPResponse, newErr
 		}
-		if localVarHTTPResponse.StatusCode == 404 {
-			var v InlineResponse404
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v TheRootSchema
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -629,8 +629,8 @@ func (a *LoadBalancerApiService) RetrieveAnExistingL4LoadBalancer(ctx _context.C
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		if localVarHTTPResponse.StatusCode == 200 {
-			var v InlineResponse201
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v InlineResponse404
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -639,8 +639,8 @@ func (a *LoadBalancerApiService) RetrieveAnExistingL4LoadBalancer(ctx _context.C
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		if localVarHTTPResponse.StatusCode == 404 {
-			var v InlineResponse404
+		if localVarHTTPResponse.StatusCode == 200 {
+			var v InlineResponse201
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -735,8 +735,8 @@ func (a *LoadBalancerApiService) RetrieveAnExistingL7LoadBalancer(ctx _context.C
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		if localVarHTTPResponse.StatusCode == 200 {
-			var v InlineResponse2011
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v TheRootSchema
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -745,8 +745,8 @@ func (a *LoadBalancerApiService) RetrieveAnExistingL7LoadBalancer(ctx _context.C
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		if localVarHTTPResponse.StatusCode == 400 {
-			var v TheRootSchema
+		if localVarHTTPResponse.StatusCode == 200 {
+			var v InlineResponse2011
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -857,28 +857,8 @@ func (a *LoadBalancerApiService) UpdateAnExistingL4LoadBalancer(ctx _context.Con
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		if localVarHTTPResponse.StatusCode == 409 {
-			var v InlineResponse404
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode == 422 {
-			var v TheRootSchema1
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode == 400 {
-			var v TheRootSchema
+		if localVarHTTPResponse.StatusCode == 200 {
+			var v InlineResponse201
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -897,8 +877,28 @@ func (a *LoadBalancerApiService) UpdateAnExistingL4LoadBalancer(ctx _context.Con
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		if localVarHTTPResponse.StatusCode == 200 {
-			var v InlineResponse201
+		if localVarHTTPResponse.StatusCode == 409 {
+			var v InlineResponse404
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v TheRootSchema
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 422 {
+			var v TheRootSchema1
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -999,16 +999,6 @@ func (a *LoadBalancerApiService) UpdateAnExistingL7LoadBalancer(ctx _context.Con
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		if localVarHTTPResponse.StatusCode == 400 {
-			var v TheRootSchema
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
 		if localVarHTTPResponse.StatusCode == 422 {
 			var v TheRootSchema1
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -1029,6 +1019,16 @@ func (a *LoadBalancerApiService) UpdateAnExistingL7LoadBalancer(ctx _context.Con
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 409 {
+			var v InlineResponse404
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 404 {
 			var v InlineResponse404
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -1039,8 +1039,8 @@ func (a *LoadBalancerApiService) UpdateAnExistingL7LoadBalancer(ctx _context.Con
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		if localVarHTTPResponse.StatusCode == 409 {
-			var v InlineResponse404
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v TheRootSchema
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

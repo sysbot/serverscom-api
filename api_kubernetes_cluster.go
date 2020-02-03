@@ -236,8 +236,8 @@ func (a *KubernetesClusterApiService) KubernetesClusters(ctx _context.Context, l
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		if localVarHTTPResponse.StatusCode == 400 {
-			var v TheRootSchema
+		if localVarHTTPResponse.StatusCode == 200 {
+			var v []TheItemsSchema
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -246,8 +246,8 @@ func (a *KubernetesClusterApiService) KubernetesClusters(ctx _context.Context, l
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		if localVarHTTPResponse.StatusCode == 200 {
-			var v []TheItemsSchema
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v TheRootSchema
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

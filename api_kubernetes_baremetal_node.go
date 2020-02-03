@@ -265,7 +265,7 @@ func (a *KubernetesBaremetalNodeApiService) ListAllPowerFeedsForAnExistingKubern
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		if localVarHTTPResponse.StatusCode == 404 {
+		if localVarHTTPResponse.StatusCode == 412 {
 			var v InlineResponse404
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -275,7 +275,7 @@ func (a *KubernetesBaremetalNodeApiService) ListAllPowerFeedsForAnExistingKubern
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		if localVarHTTPResponse.StatusCode == 412 {
+		if localVarHTTPResponse.StatusCode == 404 {
 			var v InlineResponse404
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {

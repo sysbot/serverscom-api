@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Id** | **string** |  | [optional] 
+**Id** | **int32** |  | [optional] 
 **Name** | **string** |  | [optional] 
 **GroupType** | **string** |  | [optional] 
 **LocationIds** | **[]int32** |  | [optional] 
