@@ -310,8 +310,8 @@ func (a *SSLCertificateApiService) SSLCertificates(ctx _context.Context, localVa
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		if localVarHTTPResponse.StatusCode == 400 {
-			var v TheRootSchema
+		if localVarHTTPResponse.StatusCode == 200 {
+			var v []TheItemsSchema5
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -320,8 +320,8 @@ func (a *SSLCertificateApiService) SSLCertificates(ctx _context.Context, localVa
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		if localVarHTTPResponse.StatusCode == 200 {
-			var v []TheItemsSchema5
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v TheRootSchema
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

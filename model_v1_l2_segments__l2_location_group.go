@@ -11,7 +11,7 @@ package client
 
 // V1L2SegmentsL2LocationGroup struct for V1L2SegmentsL2LocationGroup
 type V1L2SegmentsL2LocationGroup struct {
-	Id          string  `json:"id,omitempty"`
+	Id          int32   `json:"id,omitempty"`
 	Name        string  `json:"name,omitempty"`
 	GroupType   string  `json:"group_type,omitempty"`
 	LocationIds []int32 `json:"location_ids,omitempty"`
