@@ -11,7 +11,7 @@ Method | HTTP request | Description
 
 ## ListAllServerModelsForLocation
 
-> []TheItemsSchema6 ListAllServerModelsForLocation(ctx, locationId, optional)
+> []TheItemsSchema9 ListAllServerModelsForLocation(ctx, locationId, optional)
 
 List all server models for location
 
@@ -41,7 +41,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**[]TheItemsSchema6**](The_Items_Schema_6.md)
+[**[]TheItemsSchema9**](The_Items_Schema_9.md)
 
 ### Authorization
 
@@ -59,7 +59,7 @@ Name | Type | Description  | Notes
 
 ## RetrieveAnExistingServerModel
 
-> TheItemsSchema7 RetrieveAnExistingServerModel(ctx, locationId, serverModelId)
+> TheItemsSchema10 RetrieveAnExistingServerModel(ctx, locationId, serverModelId)
 
 Retrieve an existing server model
 
@@ -74,7 +74,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**TheItemsSchema7**](The_Items_Schema_7.md)
+[**TheItemsSchema10**](The_Items_Schema_10.md)
 
 ### Authorization
 

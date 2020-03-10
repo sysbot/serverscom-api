@@ -11,16 +11,10 @@ package client
 
 // TheItemsSchema6 struct for TheItemsSchema6
 type TheItemsSchema6 struct {
-	Id                 int32   `json:"id,omitempty"`
-	Name               string  `json:"name,omitempty"`
-	CpuName            string  `json:"cpu_name,omitempty"`
-	CpuCount           int32   `json:"cpu_count,omitempty"`
-	CpuCoresCount      int32   `json:"cpu_cores_count,omitempty"`
-	CpuFrequency       int32   `json:"cpu_frequency,omitempty"`
-	Ram                int32   `json:"ram,omitempty"`
-	MaxRam             int32   `json:"max_ram,omitempty"`
-	RamType            string  `json:"ram_type,omitempty"`
-	HasRaidController  bool    `json:"has_raid_controller,omitempty"`
-	RaidControllerName *string `json:"raid_controller_name,omitempty"`
-	DriveSlotsCount    int32   `json:"drive_slots_count,omitempty"`
+	Id                   int32    `json:"id,omitempty"`
+	Name                 string   `json:"name,omitempty"`
+	SupportedFeatures    []string `json:"supported_features,omitempty"`
+	L2SegmentsEnabled    bool     `json:"l2_segments_enabled,omitempty"`
+	PrivateRacksEnabled  bool     `json:"private_racks_enabled,omitempty"`
+	LoadBalancersEnabled bool     `json:"load_balancers_enabled,omitempty"`
 }

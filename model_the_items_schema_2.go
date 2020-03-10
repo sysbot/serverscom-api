@@ -9,18 +9,11 @@
 
 package client
 
-import (
-	"time"
-)
-
 // TheItemsSchema2 struct for TheItemsSchema2
 type TheItemsSchema2 struct {
-	Id                string    `json:"id,omitempty"`
-	Name              string    `json:"name,omitempty"`
-	Type              string    `json:"type,omitempty"`
-	Status            string    `json:"status,omitempty"`
-	ExternalAddresses []string  `json:"external_addresses,omitempty"`
-	LocationId        int32     `json:"location_id,omitempty"`
-	CreatedAt         time.Time `json:"created_at,omitempty"`
-	UpdatedAt         time.Time `json:"updated_at,omitempty"`
+	Id             string   `json:"id,omitempty"`
+	Name           string   `json:"name,omitempty"`
+	ImageSize      int32    `json:"image_size,omitempty"`
+	MinDisk        int32    `json:"min_disk,omitempty"`
+	AllowedFlavors []string `json:"allowed_flavors,omitempty"`
 }

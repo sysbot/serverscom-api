@@ -9,8 +9,17 @@
 
 package client
 
-// TheItemsSchema4 struct for TheItemsSchema4
-type TheItemsSchema4 struct {
-	Id   int32  `json:"id,omitempty"`
-	Name string `json:"name,omitempty"`
+import (
+	"time"
+)
+
+// TheItemsSchema8 struct for TheItemsSchema8
+type TheItemsSchema8 struct {
+	Id              string    `json:"id,omitempty"`
+	Name            string    `json:"name,omitempty"`
+	Type            string    `json:"type,omitempty"`
+	DomainNames     []string  `json:"domain_names,omitempty"`
+	Sha1Fingerprint string    `json:"sha1_fingerprint,omitempty"`
+	CreatedAt       time.Time `json:"created_at,omitempty"`
+	UpdatedAt       time.Time `json:"updated_at,omitempty"`
 }

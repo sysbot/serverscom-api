@@ -1,61 +1,20 @@
-# \SSLCertificateApi
+# \CloudSnapshotsApi
 
 All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**CreateANewCustomSslCertificate**](SSLCertificateApi.md#CreateANewCustomSslCertificate) | **Post** /v1/ssl_certificates/custom | Create a new custom SSL certificate
-[**RetrieveAnExistingCustomSslCertificate**](SSLCertificateApi.md#RetrieveAnExistingCustomSslCertificate) | **Get** /v1/ssl_certificates/custom/{id} | Retrieve an existing custom ssl certificate
-[**SSLCertificates**](SSLCertificateApi.md#SSLCertificates) | **Get** /v1/ssl_certificates | SSL Certificates
+[**CreateInstanceSnapshots**](CloudSnapshotsApi.md#CreateInstanceSnapshots) | **Post** /v1/cloud_computing/regions/{region_id}/snapshots | Create instance snapshots
+[**DeleteSnapshot**](CloudSnapshotsApi.md#DeleteSnapshot) | **Delete** /v1/cloud_computing/regions/{region_id}/snapshots/{snapshot_id} | Delete snapshot
+[**ListCloudSnapshots**](CloudSnapshotsApi.md#ListCloudSnapshots) | **Get** /v1/cloud_computing/regions/{region_id}/snapshots | List cloud snapshots
 
 
 
-## CreateANewCustomSslCertificate
+## CreateInstanceSnapshots
 
-> TheItemsSchema8 CreateANewCustomSslCertificate(ctx, optional)
+> TheItemsSchema5 CreateInstanceSnapshots(ctx, name, instanceId, regionId)
 
-Create a new custom SSL certificate
-
-### Required Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
- **optional** | ***CreateANewCustomSslCertificateOpts** | optional parameters | nil if no parameters
-
-### Optional Parameters
-
-Optional parameters are passed through a pointer to a CreateANewCustomSslCertificateOpts struct
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **inlineObject5** | [**optional.Interface of InlineObject5**](InlineObject5.md)|  | 
-
-### Return type
-
-[**TheItemsSchema8**](The_Items_Schema_8.md)
-
-### Authorization
-
-[bearerAuth](../README.md#bearerAuth)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## RetrieveAnExistingCustomSslCertificate
-
-> TheItemsSchema8 RetrieveAnExistingCustomSslCertificate(ctx, id)
-
-Retrieve an existing custom ssl certificate
+Create instance snapshots
 
 ### Required Parameters
 
@@ -63,11 +22,13 @@ Retrieve an existing custom ssl certificate
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**id** | **string**|  | 
+**name** | **string**|  name | 
+**instanceId** | **string**|  instance | 
+**regionId** | **string**|  | 
 
 ### Return type
 
-[**TheItemsSchema8**](The_Items_Schema_8.md)
+[**TheItemsSchema5**](The_Items_Schema_5.md)
 
 ### Authorization
 
@@ -83,11 +44,11 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## SSLCertificates
+## DeleteSnapshot
 
-> []TheItemsSchema8 SSLCertificates(ctx, optional)
+> DeleteSnapshot(ctx, regionId, snapshotId, optional)
 
-SSL Certificates
+Delete snapshot
 
 ### Required Parameters
 
@@ -95,24 +56,71 @@ SSL Certificates
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
- **optional** | ***SSLCertificatesOpts** | optional parameters | nil if no parameters
+**regionId** | **string**|  | 
+**snapshotId** | **string**|  | 
+ **optional** | ***DeleteSnapshotOpts** | optional parameters | nil if no parameters
 
 ### Optional Parameters
 
-Optional parameters are passed through a pointer to a SSLCertificatesOpts struct
+Optional parameters are passed through a pointer to a DeleteSnapshotOpts struct
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **searchPattern** | **optional.String**|  search pattern | 
- **perPage** | **optional.Int32**|  per page | [default to 20]
- **page** | **optional.Int32**|  page | [default to 1]
- **sorting** | **optional.String**|  sorting | [default to id]
- **direction** | **optional.String**|  direction | [default to ASC]
+
+
+ **instanceId** | **optional.String**|  instance | 
+ **isBackup** | **optional.Bool**|  is backup | 
 
 ### Return type
 
-[**[]TheItemsSchema8**](The_Items_Schema_8.md)
+ (empty response body)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListCloudSnapshots
+
+> []TheItemsSchema5 ListCloudSnapshots(ctx, regionId, optional)
+
+List cloud snapshots
+
+### Required Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**regionId** | **string**|  | 
+ **optional** | ***ListCloudSnapshotsOpts** | optional parameters | nil if no parameters
+
+### Optional Parameters
+
+Optional parameters are passed through a pointer to a ListCloudSnapshotsOpts struct
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **instanceId** | **optional.String**|  instance | 
+ **isBackup** | **optional.Bool**|  is backup | 
+ **perPage** | **optional.Int32**|  per page | [default to 20]
+ **page** | **optional.Int32**|  page | [default to 1]
+
+### Return type
+
+[**[]TheItemsSchema5**](The_Items_Schema_5.md)
 
 ### Authorization
 

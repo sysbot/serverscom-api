@@ -9,16 +9,10 @@
 
 package client
 
-import (
-	"time"
-)
-
 // TheItemsSchema struct for TheItemsSchema
 type TheItemsSchema struct {
-	Id         string    `json:"id,omitempty"`
-	Name       string    `json:"name,omitempty"`
-	Status     string    `json:"status,omitempty"`
-	LocationId int32     `json:"location_id,omitempty"`
-	CreatedAt  time.Time `json:"created_at,omitempty"`
-	UpdatedAt  time.Time `json:"updated_at,omitempty"`
+	Password   string `json:"password,omitempty"`
+	TenantName int32  `json:"tenant_name,omitempty"`
+	Url        string `json:"url,omitempty"`
+	Username   int32  `json:"username,omitempty"`
 }

@@ -49,6 +49,18 @@ type APIClient struct {
 
 	BandwidthOptionApi *BandwidthOptionApiService
 
+	CloudCredentialsApi *CloudCredentialsApiService
+
+	CloudFlavorApi *CloudFlavorApiService
+
+	CloudImageApi *CloudImageApiService
+
+	CloudInstanceApi *CloudInstanceApiService
+
+	CloudRegionApi *CloudRegionApiService
+
+	CloudSnapshotsApi *CloudSnapshotsApiService
+
 	DedicatedServerApi *DedicatedServerApiService
 
 	DriveModelOptionApi *DriveModelOptionApiService
@@ -57,17 +69,15 @@ type APIClient struct {
 
 	KubernetesBaremetalNodeApi *KubernetesBaremetalNodeApiService
 
-	KubernetesClusterApi *KubernetesClusterApiService
-
 	L2SegmentApi *L2SegmentApiService
-
-	LoadBalancerApi *LoadBalancerApiService
 
 	LocationApi *LocationApiService
 
 	OperatingSystemOptionApi *OperatingSystemOptionApiService
 
 	RamOptionApi *RamOptionApiService
+
+	SSHKeyApi *SSHKeyApiService
 
 	SSLCertificateApi *SSLCertificateApiService
 
@@ -93,16 +103,21 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 
 	// API Services
 	c.BandwidthOptionApi = (*BandwidthOptionApiService)(&c.common)
+	c.CloudCredentialsApi = (*CloudCredentialsApiService)(&c.common)
+	c.CloudFlavorApi = (*CloudFlavorApiService)(&c.common)
+	c.CloudImageApi = (*CloudImageApiService)(&c.common)
+	c.CloudInstanceApi = (*CloudInstanceApiService)(&c.common)
+	c.CloudRegionApi = (*CloudRegionApiService)(&c.common)
+	c.CloudSnapshotsApi = (*CloudSnapshotsApiService)(&c.common)
 	c.DedicatedServerApi = (*DedicatedServerApiService)(&c.common)
 	c.DriveModelOptionApi = (*DriveModelOptionApiService)(&c.common)
 	c.HostsApi = (*HostsApiService)(&c.common)
 	c.KubernetesBaremetalNodeApi = (*KubernetesBaremetalNodeApiService)(&c.common)
-	c.KubernetesClusterApi = (*KubernetesClusterApiService)(&c.common)
 	c.L2SegmentApi = (*L2SegmentApiService)(&c.common)
-	c.LoadBalancerApi = (*LoadBalancerApiService)(&c.common)
 	c.LocationApi = (*LocationApiService)(&c.common)
 	c.OperatingSystemOptionApi = (*OperatingSystemOptionApiService)(&c.common)
 	c.RamOptionApi = (*RamOptionApiService)(&c.common)
+	c.SSHKeyApi = (*SSHKeyApiService)(&c.common)
 	c.SSLCertificateApi = (*SSLCertificateApiService)(&c.common)
 	c.ServerModelOptionApi = (*ServerModelOptionApiService)(&c.common)
 	c.UplinkModelOptionApi = (*UplinkModelOptionApiService)(&c.common)

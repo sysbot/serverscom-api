@@ -9,12 +9,21 @@
 
 package client
 
+import (
+	"time"
+)
+
 // TheItemsSchema3 struct for TheItemsSchema3
 type TheItemsSchema3 struct {
-	Id                   int32    `json:"id,omitempty"`
-	Name                 string   `json:"name,omitempty"`
-	SupportedFeatures    []string `json:"supported_features,omitempty"`
-	L2SegmentsEnabled    bool     `json:"l2_segments_enabled,omitempty"`
-	PrivateRacksEnabled  bool     `json:"private_racks_enabled,omitempty"`
-	LoadBalancersEnabled bool     `json:"load_balancers_enabled,omitempty"`
+	Id                 string    `json:"id,omitempty"`
+	FlavorId           string    `json:"flavor_id,omitempty"`
+	ImageId            string    `json:"image_id,omitempty"`
+	Name               string    `json:"name,omitempty"`
+	OpenstackUuid      *string   `json:"openstack_uuid,omitempty"`
+	Status             string    `json:"status,omitempty"`
+	PublicIpv4Address  *string   `json:"public_ipv4_address,omitempty"`
+	PublicIpv6Address  *string   `json:"public_ipv6_address,omitempty"`
+	PrivateIpv4Address *string   `json:"private_ipv4_address,omitempty"`
+	CreatedAt          time.Time `json:"created_at,omitempty"`
+	UpdatedAt          time.Time `json:"updated_at,omitempty"`
 }
