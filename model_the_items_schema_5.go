@@ -9,17 +9,13 @@
 
 package client
 
-import (
-	"time"
-)
-
 // TheItemsSchema5 struct for TheItemsSchema5
 type TheItemsSchema5 struct {
-	Id              string    `json:"id,omitempty"`
-	Name            string    `json:"name,omitempty"`
-	Type            string    `json:"type,omitempty"`
-	DomainNames     []string  `json:"domain_names,omitempty"`
-	Sha1Fingerprint string    `json:"sha1_fingerprint,omitempty"`
-	CreatedAt       time.Time `json:"created_at,omitempty"`
-	UpdatedAt       time.Time `json:"updated_at,omitempty"`
+	Id        string `json:"id,omitempty"`
+	Name      string `json:"name,omitempty"`
+	ImageSize int32  `json:"image_size,omitempty"`
+	MinDisk   int32  `json:"min_disk,omitempty"`
+	Status    string `json:"status,omitempty"`
+	IsBackup  bool   `json:"is_backup,omitempty"`
+	FileUrl   string `json:"file_url,omitempty"`
 }

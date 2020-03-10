@@ -9,8 +9,14 @@
 
 package client
 
-// TheItemsSchema4 struct for TheItemsSchema4
-type TheItemsSchema4 struct {
-	Id   int32  `json:"id,omitempty"`
-	Name string `json:"name,omitempty"`
+import (
+	"time"
+)
+
+// TheSshKeySchema struct for TheSshKeySchema
+type TheSshKeySchema struct {
+	Name        string    `json:"name,omitempty"`
+	Fingerprint string    `json:"fingerprint,omitempty"`
+	CreatedAt   time.Time `json:"created_at,omitempty"`
+	UpdatedAt   time.Time `json:"updated_at,omitempty"`
 }

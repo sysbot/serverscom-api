@@ -11,17 +11,6 @@ package client
 
 // TheItemsSchema7 struct for TheItemsSchema7
 type TheItemsSchema7 struct {
-	Id                 int32       `json:"id,omitempty"`
-	Name               string      `json:"name,omitempty"`
-	CpuName            string      `json:"cpu_name,omitempty"`
-	CpuCount           int32       `json:"cpu_count,omitempty"`
-	CpuCoresCount      int32       `json:"cpu_cores_count,omitempty"`
-	CpuFrequency       int32       `json:"cpu_frequency,omitempty"`
-	RamType            string      `json:"ram_type,omitempty"`
-	Ram                int32       `json:"ram,omitempty"`
-	MaxRam             int32       `json:"max_ram,omitempty"`
-	HasRaidController  bool        `json:"has_raid_controller,omitempty"`
-	RaidControllerName *string     `json:"raid_controller_name,omitempty"`
-	DriveSlotsCount    int32       `json:"drive_slots_count,omitempty"`
-	DriveSlots         []DriveSlot `json:"drive_slots,omitempty"`
+	Ram  int32  `json:"ram,omitempty"`
+	Type string `json:"type,omitempty"`
 }

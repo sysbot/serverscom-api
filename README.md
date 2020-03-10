@@ -34,6 +34,29 @@ Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *BandwidthOptionApi* | [**ListAllBandwidthForUplink**](docs/BandwidthOptionApi.md#listallbandwidthforuplink) | **Get** /v1/locations/{location_id}/order_options/server_models/{server_model_id}/uplink_models/{uplink_model_id}/bandwidth | List all bandwidth for uplink
 *BandwidthOptionApi* | [**RetrieveAnExistingBandwidth**](docs/BandwidthOptionApi.md#retrieveanexistingbandwidth) | **Get** /v1/locations/{location_id}/order_options/server_models/{server_model_id}/uplink_models/{uplink_model_id}/bandwidth/{bandwidth_id} | Retrieve an existing bandwidth
+*CloudCredentialsApi* | [**ShowCloudCredentialsToOpenstack**](docs/CloudCredentialsApi.md#showcloudcredentialstoopenstack) | **Get** /v1/cloud_computing/regions/{region_id}/credentials | Show cloud credentials to OpenStack
+*CloudFlavorApi* | [**ListCloudFlavors**](docs/CloudFlavorApi.md#listcloudflavors) | **Get** /v1/cloud_computing/regions/{region_id}/flavors | List cloud flavors
+*CloudImageApi* | [**ListCloudImages**](docs/CloudImageApi.md#listcloudimages) | **Get** /v1/cloud_computing/regions/{region_id}/images | List cloud images
+*CloudInstanceApi* | [**ApproveInstanceUpgrade**](docs/CloudInstanceApi.md#approveinstanceupgrade) | **Post** /v1/cloud_computing/instances/{instance_id}/approve_upgrade | Approve instance upgrade
+*CloudInstanceApi* | [**CreateANewCloudInstance**](docs/CloudInstanceApi.md#createanewcloudinstance) | **Post** /v1/cloud_computing/instances | Create a new cloud instance
+*CloudInstanceApi* | [**CreatePtrForInstance**](docs/CloudInstanceApi.md#createptrforinstance) | **Post** /v1/cloud_computing/instances/{instance_id}/ptr_records | Create PTR for instance
+*CloudInstanceApi* | [**DeleteInstance**](docs/CloudInstanceApi.md#deleteinstance) | **Delete** /v1/cloud_computing/instances/{instance_id} | Delete instance
+*CloudInstanceApi* | [**DetetePtrForInstance**](docs/CloudInstanceApi.md#deteteptrforinstance) | **Delete** /v1/cloud_computing/instances/{instance_id}/ptr_records/{record_id} | Detete PTR for instance
+*CloudInstanceApi* | [**ExitFromRescueState**](docs/CloudInstanceApi.md#exitfromrescuestate) | **Post** /v1/cloud_computing/instances/{instance_id}/unrescue | Exit from rescue state
+*CloudInstanceApi* | [**ListCloudInstances**](docs/CloudInstanceApi.md#listcloudinstances) | **Get** /v1/cloud_computing/instances | List cloud instances
+*CloudInstanceApi* | [**MoveInstanceToRescueState**](docs/CloudInstanceApi.md#moveinstancetorescuestate) | **Post** /v1/cloud_computing/instances/{instance_id}/rescue | Move instance to rescue state
+*CloudInstanceApi* | [**ReinstallInstanceWithImage**](docs/CloudInstanceApi.md#reinstallinstancewithimage) | **Post** /v1/cloud_computing/instances/{instance_id}/reinstall | Reinstall instance with image
+*CloudInstanceApi* | [**ReturnsInstancePtrRecords**](docs/CloudInstanceApi.md#returnsinstanceptrrecords) | **Get** /v1/cloud_computing/instances/{instance_id}/ptr_records | Returns instance PTR records
+*CloudInstanceApi* | [**RevertInstanceUpgrade**](docs/CloudInstanceApi.md#revertinstanceupgrade) | **Post** /v1/cloud_computing/instances/{instance_id}/revert_upgrade | Revert instance upgrade
+*CloudInstanceApi* | [**ShowCloudInstance**](docs/CloudInstanceApi.md#showcloudinstance) | **Get** /v1/cloud_computing/instances/{instance_id} | Show cloud instance
+*CloudInstanceApi* | [**SwitchPowerOff**](docs/CloudInstanceApi.md#switchpoweroff) | **Post** /v1/cloud_computing/instances/{instance_id}/switch_off | Switch power off
+*CloudInstanceApi* | [**SwitchPowerOn**](docs/CloudInstanceApi.md#switchpoweron) | **Post** /v1/cloud_computing/instances/{instance_id}/switch_on | Switch power on
+*CloudInstanceApi* | [**UpdateCloudInstance**](docs/CloudInstanceApi.md#updatecloudinstance) | **Put** /v1/cloud_computing/instances/{instance_id} | Update cloud instance
+*CloudInstanceApi* | [**UpgradeInstance**](docs/CloudInstanceApi.md#upgradeinstance) | **Post** /v1/cloud_computing/instances/{instance_id}/upgrade | Upgrade instance
+*CloudRegionApi* | [**ListCloudRegions**](docs/CloudRegionApi.md#listcloudregions) | **Get** /v1/cloud_computing/regions | List cloud regions
+*CloudSnapshotsApi* | [**CreateInstanceSnapshots**](docs/CloudSnapshotsApi.md#createinstancesnapshots) | **Post** /v1/cloud_computing/regions/{region_id}/snapshots | Create instance snapshots
+*CloudSnapshotsApi* | [**DeleteSnapshot**](docs/CloudSnapshotsApi.md#deletesnapshot) | **Delete** /v1/cloud_computing/regions/{region_id}/snapshots/{snapshot_id} | Delete snapshot
+*CloudSnapshotsApi* | [**ListCloudSnapshots**](docs/CloudSnapshotsApi.md#listcloudsnapshots) | **Get** /v1/cloud_computing/regions/{region_id}/snapshots | List cloud snapshots
 *DedicatedServerApi* | [**AbortReleaseForAnExistingDedicatedServer**](docs/DedicatedServerApi.md#abortreleaseforanexistingdedicatedserver) | **Post** /v1/hosts/dedicated_servers/{server_id}/abort_release | Abort release for an existing dedicated server
 *DedicatedServerApi* | [**CreateANewDedicatedServer**](docs/DedicatedServerApi.md#createanewdedicatedserver) | **Post** /v1/hosts/dedicated_servers | Create a new dedicated server
 *DedicatedServerApi* | [**CreatePtrRecordForServerNetworks**](docs/DedicatedServerApi.md#createptrrecordforservernetworks) | **Post** /v1/hosts/dedicated_servers/{server_id}/ptr_records | Create PTR record for server networks
@@ -50,10 +73,6 @@ Class | Method | HTTP request | Description
 *KubernetesBaremetalNodeApi* | [**ListAllNetworksForAnExistingKubernetesBaremetalNode**](docs/KubernetesBaremetalNodeApi.md#listallnetworksforanexistingkubernetesbaremetalnode) | **Get** /v1/hosts/kubernetes_baremetal_nodes/{server_id}/networks | List all networks for an existing kubernetes baremetal node
 *KubernetesBaremetalNodeApi* | [**ListAllPowerFeedsForAnExistingKubernetesBaremetalNode**](docs/KubernetesBaremetalNodeApi.md#listallpowerfeedsforanexistingkubernetesbaremetalnode) | **Get** /v1/hosts/kubernetes_baremetal_nodes/{server_id}/power_feeds | List all power feeds for an existing kubernetes baremetal node
 *KubernetesBaremetalNodeApi* | [**RetrieveAnExistingKubernetesBaremetalNode**](docs/KubernetesBaremetalNodeApi.md#retrieveanexistingkubernetesbaremetalnode) | **Get** /v1/hosts/kubernetes_baremetal_nodes/{server_id} | Retrieve an existing kubernetes baremetal node
-*KubernetesClusterApi* | [**KubernetesClusterNodes**](docs/KubernetesClusterApi.md#kubernetesclusternodes) | **Get** /v1/kubernetes_clusters/{kubernetes_cluster_id}/nodes | Kubernetes cluster nodes
-*KubernetesClusterApi* | [**KubernetesClusters**](docs/KubernetesClusterApi.md#kubernetesclusters) | **Get** /v1/kubernetes_clusters | Kubernetes clusters
-*KubernetesClusterApi* | [**RetrieveAnExistingKubernetesCluster**](docs/KubernetesClusterApi.md#retrieveanexistingkubernetescluster) | **Get** /v1/kubernetes_clusters/{id} | Retrieve an existing kubernetes cluster
-*KubernetesClusterApi* | [**RetrieveAnExistingKubernetesClusterNode**](docs/KubernetesClusterApi.md#retrieveanexistingkubernetesclusternode) | **Get** /v1/kubernetes_clusters/{kubernetes_cluster_id}/nodes/{node_id} | Retrieve an existing kubernetes cluster node
 *L2SegmentApi* | [**CreateANewL2Segment**](docs/L2SegmentApi.md#createanewl2segment) | **Post** /v1/l2_segments | Create a new L2 segment
 *L2SegmentApi* | [**DeleteAnExistingL2Segment**](docs/L2SegmentApi.md#deleteanexistingl2segment) | **Delete** /v1/l2_segments/{l2_segment_id} | Delete an existing L2 segment
 *L2SegmentApi* | [**ListAllL2SegmentMembers**](docs/L2SegmentApi.md#listalll2segmentmembers) | **Get** /v1/l2_segments/{l2_segment_id}/members | List all L2 segment members
@@ -63,20 +82,16 @@ Class | Method | HTTP request | Description
 *L2SegmentApi* | [**RetrieveAnExistingL2Segment**](docs/L2SegmentApi.md#retrieveanexistingl2segment) | **Get** /v1/l2_segments/{l2_segment_id} | Retrieve an existing L2 segment
 *L2SegmentApi* | [**UpdateAnExistingL2Segment**](docs/L2SegmentApi.md#updateanexistingl2segment) | **Put** /v1/l2_segments/{l2_segment_id} | Update an existing L2 segment
 *L2SegmentApi* | [**UpdateAnExistingL2SegmentNetworks**](docs/L2SegmentApi.md#updateanexistingl2segmentnetworks) | **Put** /v1/l2_segments/{l2_segment_id}/networks | Update an existing L2 segment networks
-*LoadBalancerApi* | [**CreateANewL4LoadBalancers**](docs/LoadBalancerApi.md#createanewl4loadbalancers) | **Post** /v1/load_balancers/l4 | Create a new L4 load balancers
-*LoadBalancerApi* | [**CreateANewL7LoadBalancers**](docs/LoadBalancerApi.md#createanewl7loadbalancers) | **Post** /v1/load_balancers/l7 | Create a new L7 load balancers
-*LoadBalancerApi* | [**DeleteAnExisitingL4LoadBalancer**](docs/LoadBalancerApi.md#deleteanexisitingl4loadbalancer) | **Delete** /v1/load_balancers/l4/{id} | Delete an exisiting L4 load balancer
-*LoadBalancerApi* | [**DeleteAnExistingL7LoadBalancer**](docs/LoadBalancerApi.md#deleteanexistingl7loadbalancer) | **Delete** /v1/load_balancers/l7/{id} | Delete an existing L7 load balancer
-*LoadBalancerApi* | [**LoadBalancers**](docs/LoadBalancerApi.md#loadbalancers) | **Get** /v1/load_balancers | Load balancers
-*LoadBalancerApi* | [**RetrieveAnExistingL4LoadBalancer**](docs/LoadBalancerApi.md#retrieveanexistingl4loadbalancer) | **Get** /v1/load_balancers/l4/{id} | Retrieve an existing L4 load balancer
-*LoadBalancerApi* | [**RetrieveAnExistingL7LoadBalancer**](docs/LoadBalancerApi.md#retrieveanexistingl7loadbalancer) | **Get** /v1/load_balancers/l7/{id} | Retrieve an existing L7 load balancer
-*LoadBalancerApi* | [**UpdateAnExistingL4LoadBalancer**](docs/LoadBalancerApi.md#updateanexistingl4loadbalancer) | **Put** /v1/load_balancers/l4/{id} | Update an existing L4 load balancer
-*LoadBalancerApi* | [**UpdateAnExistingL7LoadBalancer**](docs/LoadBalancerApi.md#updateanexistingl7loadbalancer) | **Put** /v1/load_balancers/l7/{id} | Update an existing L7 load balancer
 *LocationApi* | [**Locations**](docs/LocationApi.md#locations) | **Get** /v1/locations | Locations
 *LocationApi* | [**RetrieveAnExisitingLocation**](docs/LocationApi.md#retrieveanexisitinglocation) | **Get** /v1/locations/{location_id} | Retrieve an exisiting location
 *OperatingSystemOptionApi* | [**ListAllOperatingSystemsForServerModel**](docs/OperatingSystemOptionApi.md#listalloperatingsystemsforservermodel) | **Get** /v1/locations/{location_id}/order_options/server_models/{server_model_id}/operating_systems | List all operating systems for server model
 *OperatingSystemOptionApi* | [**RetrieveAnExstingOperatingSystem**](docs/OperatingSystemOptionApi.md#retrieveanexstingoperatingsystem) | **Get** /v1/locations/{location_id}/order_options/server_models/{server_model_id}/operating_systems/{operating_system_id} | Retrieve an exsting operating system
 *RamOptionApi* | [**ListAllAvailableRamOptionsForServerModel**](docs/RamOptionApi.md#listallavailableramoptionsforservermodel) | **Get** /v1/locations/{location_id}/order_options/server_models/{server_model_id}/ram | List all available ram options for server model
+*SSHKeyApi* | [**AddNewSshKey**](docs/SSHKeyApi.md#addnewsshkey) | **Post** /v1/ssh_keys | Add new ssh key
+*SSHKeyApi* | [**DeleteSshKey**](docs/SSHKeyApi.md#deletesshkey) | **Delete** /v1/ssh_keys/{fingerprint} | Delete ssh key
+*SSHKeyApi* | [**ListAllSshKeys**](docs/SSHKeyApi.md#listallsshkeys) | **Get** /v1/ssh_keys | List all ssh keys
+*SSHKeyApi* | [**ShowSshKey**](docs/SSHKeyApi.md#showsshkey) | **Get** /v1/ssh_keys/{fingerprint} | Show ssh key
+*SSHKeyApi* | [**UpdateTheNameOfSshKey**](docs/SSHKeyApi.md#updatethenameofsshkey) | **Put** /v1/ssh_keys/{fingerprint} | Update the name of ssh key
 *SSLCertificateApi* | [**CreateANewCustomSslCertificate**](docs/SSLCertificateApi.md#createanewcustomsslcertificate) | **Post** /v1/ssl_certificates/custom | Create a new custom SSL certificate
 *SSLCertificateApi* | [**RetrieveAnExistingCustomSslCertificate**](docs/SSLCertificateApi.md#retrieveanexistingcustomsslcertificate) | **Get** /v1/ssl_certificates/custom/{id} | Retrieve an existing custom ssl certificate
 *SSLCertificateApi* | [**SSLCertificates**](docs/SSLCertificateApi.md#sslcertificates) | **Get** /v1/ssl_certificates | SSL Certificates
@@ -96,29 +111,26 @@ Class | Method | HTTP request | Description
  - [InlineObject3](docs/InlineObject3.md)
  - [InlineObject4](docs/InlineObject4.md)
  - [InlineObject5](docs/InlineObject5.md)
- - [InlineObject6](docs/InlineObject6.md)
- - [InlineObject7](docs/InlineObject7.md)
- - [InlineObject8](docs/InlineObject8.md)
- - [InlineObject9](docs/InlineObject9.md)
  - [InlineResponse200](docs/InlineResponse200.md)
- - [InlineResponse2001](docs/InlineResponse2001.md)
- - [InlineResponse201](docs/InlineResponse201.md)
- - [InlineResponse2011](docs/InlineResponse2011.md)
  - [InlineResponse404](docs/InlineResponse404.md)
  - [Network](docs/Network.md)
  - [PowerFeed](docs/PowerFeed.md)
  - [TheDedicatedServerEntitySchema](docs/TheDedicatedServerEntitySchema.md)
  - [TheItemsSchema](docs/TheItemsSchema.md)
  - [TheItemsSchema1](docs/TheItemsSchema1.md)
+ - [TheItemsSchema10](docs/TheItemsSchema10.md)
  - [TheItemsSchema2](docs/TheItemsSchema2.md)
  - [TheItemsSchema3](docs/TheItemsSchema3.md)
  - [TheItemsSchema4](docs/TheItemsSchema4.md)
  - [TheItemsSchema5](docs/TheItemsSchema5.md)
  - [TheItemsSchema6](docs/TheItemsSchema6.md)
  - [TheItemsSchema7](docs/TheItemsSchema7.md)
+ - [TheItemsSchema8](docs/TheItemsSchema8.md)
+ - [TheItemsSchema9](docs/TheItemsSchema9.md)
  - [TheKubernetesBaremetalNodeEntitySchema](docs/TheKubernetesBaremetalNodeEntitySchema.md)
  - [TheRootSchema](docs/TheRootSchema.md)
  - [TheRootSchema1](docs/TheRootSchema1.md)
+ - [TheSshKeySchema](docs/TheSshKeySchema.md)
  - [V1HostsDedicatedServersDrives](docs/V1HostsDedicatedServersDrives.md)
  - [V1HostsDedicatedServersDrivesLayout](docs/V1HostsDedicatedServersDrivesLayout.md)
  - [V1HostsDedicatedServersDrivesPartitions](docs/V1HostsDedicatedServersDrivesPartitions.md)

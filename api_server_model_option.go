@@ -47,16 +47,16 @@ ListAllServerModelsForLocation List all server models for location
  * @param "Page" (optional.Int32) -   page
  * @param "Sorting" (optional.String) -   sorting
  * @param "Direction" (optional.String) -   direction
-@return []TheItemsSchema6
+@return []TheItemsSchema9
 */
-func (a *ServerModelOptionApiService) ListAllServerModelsForLocation(ctx _context.Context, locationId string, localVarOptionals *ListAllServerModelsForLocationOpts) ([]TheItemsSchema6, *_nethttp.Response, error) {
+func (a *ServerModelOptionApiService) ListAllServerModelsForLocation(ctx _context.Context, locationId string, localVarOptionals *ListAllServerModelsForLocationOpts) ([]TheItemsSchema9, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  []TheItemsSchema6
+		localVarReturnValue  []TheItemsSchema9
 	)
 
 	// create path and map variables
@@ -124,7 +124,7 @@ func (a *ServerModelOptionApiService) ListAllServerModelsForLocation(ctx _contex
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 200 {
-			var v []TheItemsSchema6
+			var v []TheItemsSchema9
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -162,16 +162,16 @@ RetrieveAnExistingServerModel Retrieve an existing server model
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @param locationId
  * @param serverModelId
-@return TheItemsSchema7
+@return TheItemsSchema10
 */
-func (a *ServerModelOptionApiService) RetrieveAnExistingServerModel(ctx _context.Context, locationId string, serverModelId string) (TheItemsSchema7, *_nethttp.Response, error) {
+func (a *ServerModelOptionApiService) RetrieveAnExistingServerModel(ctx _context.Context, locationId string, serverModelId string) (TheItemsSchema10, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  TheItemsSchema7
+		localVarReturnValue  TheItemsSchema10
 	)
 
 	// create path and map variables
@@ -223,7 +223,7 @@ func (a *ServerModelOptionApiService) RetrieveAnExistingServerModel(ctx _context
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 200 {
-			var v TheItemsSchema7
+			var v TheItemsSchema10
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

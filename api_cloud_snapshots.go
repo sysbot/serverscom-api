@@ -23,60 +23,37 @@ var (
 	_ _context.Context
 )
 
-// LocationApiService LocationApi service
-type LocationApiService service
-
-// LocationsOpts Optional parameters for the method 'Locations'
-type LocationsOpts struct {
-	SearchPattern optional.String
-	PerPage       optional.Int32
-	Page          optional.Int32
-	Sorting       optional.String
-	Direction     optional.String
-}
+// CloudSnapshotsApiService CloudSnapshotsApi service
+type CloudSnapshotsApiService service
 
 /*
-Locations Locations
+CreateInstanceSnapshots Create instance snapshots
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param optional nil or *LocationsOpts - Optional Parameters:
- * @param "SearchPattern" (optional.String) -   search pattern
- * @param "PerPage" (optional.Int32) -   per page
- * @param "Page" (optional.Int32) -   page
- * @param "Sorting" (optional.String) -   sorting
- * @param "Direction" (optional.String) -   direction
-@return []TheItemsSchema6
+ * @param name  name
+ * @param instanceId  instance
+ * @param regionId
+@return TheItemsSchema5
 */
-func (a *LocationApiService) Locations(ctx _context.Context, localVarOptionals *LocationsOpts) ([]TheItemsSchema6, *_nethttp.Response, error) {
+func (a *CloudSnapshotsApiService) CreateInstanceSnapshots(ctx _context.Context, name string, instanceId string, regionId string) (TheItemsSchema5, *_nethttp.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodGet
+		localVarHTTPMethod   = _nethttp.MethodPost
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  []TheItemsSchema6
+		localVarReturnValue  TheItemsSchema5
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/v1/locations"
+	localVarPath := a.client.cfg.BasePath + "/v1/cloud_computing/regions/{region_id}/snapshots"
+	localVarPath = strings.Replace(localVarPath, "{"+"region_id"+"}", _neturl.QueryEscape(parameterToString(regionId, "")), -1)
+
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
 
-	if localVarOptionals != nil && localVarOptionals.SearchPattern.IsSet() {
-		localVarQueryParams.Add("search_pattern", parameterToString(localVarOptionals.SearchPattern.Value(), ""))
-	}
-	if localVarOptionals != nil && localVarOptionals.PerPage.IsSet() {
-		localVarQueryParams.Add("per_page", parameterToString(localVarOptionals.PerPage.Value(), ""))
-	}
-	if localVarOptionals != nil && localVarOptionals.Page.IsSet() {
-		localVarQueryParams.Add("page", parameterToString(localVarOptionals.Page.Value(), ""))
-	}
-	if localVarOptionals != nil && localVarOptionals.Sorting.IsSet() {
-		localVarQueryParams.Add("sorting", parameterToString(localVarOptionals.Sorting.Value(), ""))
-	}
-	if localVarOptionals != nil && localVarOptionals.Direction.IsSet() {
-		localVarQueryParams.Add("direction", parameterToString(localVarOptionals.Direction.Value(), ""))
-	}
+	localVarQueryParams.Add("name", parameterToString(name, ""))
+	localVarQueryParams.Add("instance_id", parameterToString(instanceId, ""))
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -115,18 +92,8 @@ func (a *LocationApiService) Locations(ctx _context.Context, localVarOptionals *
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		if localVarHTTPResponse.StatusCode == 400 {
-			var v TheRootSchema
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode == 200 {
-			var v []TheItemsSchema6
+		if localVarHTTPResponse.StatusCode == 201 {
+			var v TheItemsSchema5
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -149,30 +116,139 @@ func (a *LocationApiService) Locations(ctx _context.Context, localVarOptionals *
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+// DeleteSnapshotOpts Optional parameters for the method 'DeleteSnapshot'
+type DeleteSnapshotOpts struct {
+	InstanceId optional.String
+	IsBackup   optional.Bool
+}
+
 /*
-RetrieveAnExisitingLocation Retrieve an exisiting location
+DeleteSnapshot Delete snapshot
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param locationId
-@return TheItemsSchema6
+ * @param regionId
+ * @param snapshotId
+ * @param optional nil or *DeleteSnapshotOpts - Optional Parameters:
+ * @param "InstanceId" (optional.String) -   instance
+ * @param "IsBackup" (optional.Bool) -   is backup
 */
-func (a *LocationApiService) RetrieveAnExisitingLocation(ctx _context.Context, locationId string) (TheItemsSchema6, *_nethttp.Response, error) {
+func (a *CloudSnapshotsApiService) DeleteSnapshot(ctx _context.Context, regionId string, snapshotId string, localVarOptionals *DeleteSnapshotOpts) (*_nethttp.Response, error) {
+	var (
+		localVarHTTPMethod   = _nethttp.MethodDelete
+		localVarPostBody     interface{}
+		localVarFormFileName string
+		localVarFileName     string
+		localVarFileBytes    []byte
+	)
+
+	// create path and map variables
+	localVarPath := a.client.cfg.BasePath + "/v1/cloud_computing/regions/{region_id}/snapshots/{snapshot_id}"
+	localVarPath = strings.Replace(localVarPath, "{"+"region_id"+"}", _neturl.QueryEscape(parameterToString(regionId, "")), -1)
+
+	localVarPath = strings.Replace(localVarPath, "{"+"snapshot_id"+"}", _neturl.QueryEscape(parameterToString(snapshotId, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := _neturl.Values{}
+	localVarFormParams := _neturl.Values{}
+
+	if localVarOptionals != nil && localVarOptionals.InstanceId.IsSet() {
+		localVarQueryParams.Add("instance_id", parameterToString(localVarOptionals.InstanceId.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.IsBackup.IsSet() {
+		localVarQueryParams.Add("is_backup", parameterToString(localVarOptionals.IsBackup.Value(), ""))
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	r, err := a.client.prepareRequest(ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFormFileName, localVarFileName, localVarFileBytes)
+	if err != nil {
+		return nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(r)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarHTTPResponse, err
+	}
+
+	localVarBody, err := _ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	if err != nil {
+		return localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarHTTPResponse, newErr
+	}
+
+	return localVarHTTPResponse, nil
+}
+
+// ListCloudSnapshotsOpts Optional parameters for the method 'ListCloudSnapshots'
+type ListCloudSnapshotsOpts struct {
+	InstanceId optional.String
+	IsBackup   optional.Bool
+	PerPage    optional.Int32
+	Page       optional.Int32
+}
+
+/*
+ListCloudSnapshots List cloud snapshots
+ * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ * @param regionId
+ * @param optional nil or *ListCloudSnapshotsOpts - Optional Parameters:
+ * @param "InstanceId" (optional.String) -   instance
+ * @param "IsBackup" (optional.Bool) -   is backup
+ * @param "PerPage" (optional.Int32) -   per page
+ * @param "Page" (optional.Int32) -   page
+@return []TheItemsSchema5
+*/
+func (a *CloudSnapshotsApiService) ListCloudSnapshots(ctx _context.Context, regionId string, localVarOptionals *ListCloudSnapshotsOpts) ([]TheItemsSchema5, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  TheItemsSchema6
+		localVarReturnValue  []TheItemsSchema5
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/v1/locations/{location_id}"
-	localVarPath = strings.Replace(localVarPath, "{"+"location_id"+"}", _neturl.QueryEscape(parameterToString(locationId, "")), -1)
+	localVarPath := a.client.cfg.BasePath + "/v1/cloud_computing/regions/{region_id}/snapshots"
+	localVarPath = strings.Replace(localVarPath, "{"+"region_id"+"}", _neturl.QueryEscape(parameterToString(regionId, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
 
+	if localVarOptionals != nil && localVarOptionals.InstanceId.IsSet() {
+		localVarQueryParams.Add("instance_id", parameterToString(localVarOptionals.InstanceId.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.IsBackup.IsSet() {
+		localVarQueryParams.Add("is_backup", parameterToString(localVarOptionals.IsBackup.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.PerPage.IsSet() {
+		localVarQueryParams.Add("per_page", parameterToString(localVarOptionals.PerPage.Value(), ""))
+	}
+	if localVarOptionals != nil && localVarOptionals.Page.IsSet() {
+		localVarQueryParams.Add("page", parameterToString(localVarOptionals.Page.Value(), ""))
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -212,7 +288,7 @@ func (a *LocationApiService) RetrieveAnExisitingLocation(ctx _context.Context, l
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 200 {
-			var v TheItemsSchema6
+			var v []TheItemsSchema5
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

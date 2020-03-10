@@ -5,9 +5,9 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Name** | **string** |  name | 
-**LocationId** | **int32** |  location | 
-**ProxyProtocolEnabled** | **bool** |  proxy protocol enabled | [optional] 
-**Rules** | **[]string** |  rules | 
+**PublicKey** | **string** |  public key | 
+**PrivateKey** | **string** |  private key | 
+**ChainKey** | **string** |  chain key | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

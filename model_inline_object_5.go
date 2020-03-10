@@ -13,10 +13,10 @@ package client
 type InlineObject5 struct {
 	//  name
 	Name string `json:"name"`
-	//  location
-	LocationId int32 `json:"location_id"`
-	//  proxy protocol enabled
-	ProxyProtocolEnabled bool `json:"proxy_protocol_enabled,omitempty"`
-	//  rules
-	Rules []string `json:"rules"`
+	//  public key
+	PublicKey string `json:"public_key"`
+	//  private key
+	PrivateKey string `json:"private_key"`
+	//  chain key
+	ChainKey string `json:"chain_key,omitempty"`
 }

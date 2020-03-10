@@ -1,18 +1,18 @@
-# \RamOptionApi
+# \CloudFlavorApi
 
 All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**ListAllAvailableRamOptionsForServerModel**](RamOptionApi.md#ListAllAvailableRamOptionsForServerModel) | **Get** /v1/locations/{location_id}/order_options/server_models/{server_model_id}/ram | List all available ram options for server model
+[**ListCloudFlavors**](CloudFlavorApi.md#ListCloudFlavors) | **Get** /v1/cloud_computing/regions/{region_id}/flavors | List cloud flavors
 
 
 
-## ListAllAvailableRamOptionsForServerModel
+## ListCloudFlavors
 
-> []TheItemsSchema7 ListAllAvailableRamOptionsForServerModel(ctx, locationId, serverModelId, optional)
+> []TheItemsSchema1 ListCloudFlavors(ctx, regionId, optional)
 
-List all available ram options for server model
+List cloud flavors
 
 ### Required Parameters
 
@@ -20,27 +20,23 @@ List all available ram options for server model
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**locationId** | **string**|  | 
-**serverModelId** | **string**|  | 
- **optional** | ***ListAllAvailableRamOptionsForServerModelOpts** | optional parameters | nil if no parameters
+**regionId** | **string**|  | 
+ **optional** | ***ListCloudFlavorsOpts** | optional parameters | nil if no parameters
 
 ### Optional Parameters
 
-Optional parameters are passed through a pointer to a ListAllAvailableRamOptionsForServerModelOpts struct
+Optional parameters are passed through a pointer to a ListCloudFlavorsOpts struct
 
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
-
  **perPage** | **optional.Int32**|  per page | [default to 20]
  **page** | **optional.Int32**|  page | [default to 1]
- **sorting** | **optional.String**|  sorting | [default to ram]
- **direction** | **optional.String**|  direction | [default to ASC]
 
 ### Return type
 
-[**[]TheItemsSchema7**](The_Items_Schema_7.md)
+[**[]TheItemsSchema1**](The_Items_Schema_1.md)
 
 ### Authorization
 

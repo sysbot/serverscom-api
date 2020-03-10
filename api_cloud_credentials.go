@@ -11,7 +11,6 @@ package client
 
 import (
 	_context "context"
-	"github.com/antihax/optional"
 	_ioutil "io/ioutil"
 	_nethttp "net/http"
 	_neturl "net/url"
@@ -23,61 +22,33 @@ var (
 	_ _context.Context
 )
 
-// RamOptionApiService RamOptionApi service
-type RamOptionApiService service
-
-// ListAllAvailableRamOptionsForServerModelOpts Optional parameters for the method 'ListAllAvailableRamOptionsForServerModel'
-type ListAllAvailableRamOptionsForServerModelOpts struct {
-	PerPage   optional.Int32
-	Page      optional.Int32
-	Sorting   optional.String
-	Direction optional.String
-}
+// CloudCredentialsApiService CloudCredentialsApi service
+type CloudCredentialsApiService service
 
 /*
-ListAllAvailableRamOptionsForServerModel List all available ram options for server model
+ShowCloudCredentialsToOpenstack Show cloud credentials to OpenStack
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param locationId
- * @param serverModelId
- * @param optional nil or *ListAllAvailableRamOptionsForServerModelOpts - Optional Parameters:
- * @param "PerPage" (optional.Int32) -   per page
- * @param "Page" (optional.Int32) -   page
- * @param "Sorting" (optional.String) -   sorting
- * @param "Direction" (optional.String) -   direction
-@return []TheItemsSchema7
+ * @param regionId
+@return TheItemsSchema
 */
-func (a *RamOptionApiService) ListAllAvailableRamOptionsForServerModel(ctx _context.Context, locationId string, serverModelId string, localVarOptionals *ListAllAvailableRamOptionsForServerModelOpts) ([]TheItemsSchema7, *_nethttp.Response, error) {
+func (a *CloudCredentialsApiService) ShowCloudCredentialsToOpenstack(ctx _context.Context, regionId string) (TheItemsSchema, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodGet
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  []TheItemsSchema7
+		localVarReturnValue  TheItemsSchema
 	)
 
 	// create path and map variables
-	localVarPath := a.client.cfg.BasePath + "/v1/locations/{location_id}/order_options/server_models/{server_model_id}/ram"
-	localVarPath = strings.Replace(localVarPath, "{"+"location_id"+"}", _neturl.QueryEscape(parameterToString(locationId, "")), -1)
-
-	localVarPath = strings.Replace(localVarPath, "{"+"server_model_id"+"}", _neturl.QueryEscape(parameterToString(serverModelId, "")), -1)
+	localVarPath := a.client.cfg.BasePath + "/v1/cloud_computing/regions/{region_id}/credentials"
+	localVarPath = strings.Replace(localVarPath, "{"+"region_id"+"}", _neturl.QueryEscape(parameterToString(regionId, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
 
-	if localVarOptionals != nil && localVarOptionals.PerPage.IsSet() {
-		localVarQueryParams.Add("per_page", parameterToString(localVarOptionals.PerPage.Value(), ""))
-	}
-	if localVarOptionals != nil && localVarOptionals.Page.IsSet() {
-		localVarQueryParams.Add("page", parameterToString(localVarOptionals.Page.Value(), ""))
-	}
-	if localVarOptionals != nil && localVarOptionals.Sorting.IsSet() {
-		localVarQueryParams.Add("sorting", parameterToString(localVarOptionals.Sorting.Value(), ""))
-	}
-	if localVarOptionals != nil && localVarOptionals.Direction.IsSet() {
-		localVarQueryParams.Add("direction", parameterToString(localVarOptionals.Direction.Value(), ""))
-	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -117,17 +88,7 @@ func (a *RamOptionApiService) ListAllAvailableRamOptionsForServerModel(ctx _cont
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 200 {
-			var v []TheItemsSchema7
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode == 404 {
-			var v InlineResponse404
+			var v TheItemsSchema
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

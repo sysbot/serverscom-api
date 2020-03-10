@@ -159,8 +159,8 @@ func (a *KubernetesBaremetalNodeApiService) ListAllNetworksForAnExistingKubernet
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		if localVarHTTPResponse.StatusCode == 400 {
-			var v TheRootSchema
+		if localVarHTTPResponse.StatusCode == 412 {
+			var v InlineResponse404
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -169,8 +169,8 @@ func (a *KubernetesBaremetalNodeApiService) ListAllNetworksForAnExistingKubernet
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		if localVarHTTPResponse.StatusCode == 412 {
-			var v InlineResponse404
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v TheRootSchema
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

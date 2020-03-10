@@ -9,23 +9,11 @@
 
 package client
 
-import (
-	"time"
-)
-
 // TheItemsSchema1 struct for TheItemsSchema1
 type TheItemsSchema1 struct {
-	Id                 string    `json:"id,omitempty"`
-	Number             int32     `json:"number,omitempty"`
-	Hostname           string    `json:"hostname,omitempty"`
-	Configuration      string    `json:"configuration,omitempty"`
-	Type               string    `json:"type,omitempty"`
-	Role               string    `json:"role,omitempty"`
-	Status             string    `json:"status,omitempty"`
-	PrivateIpv4Address string    `json:"private_ipv4_address,omitempty"`
-	PublicIpv4Address  string    `json:"public_ipv4_address,omitempty"`
-	RefId              string    `json:"ref_id,omitempty"`
-	ClusterId          string    `json:"cluster_id,omitempty"`
-	CreatedAt          time.Time `json:"created_at,omitempty"`
-	UpdatedAt          time.Time `json:"updated_at,omitempty"`
+	Id    string `json:"id,omitempty"`
+	Name  string `json:"name,omitempty"`
+	Disk  int32  `json:"disk,omitempty"`
+	Ram   int32  `json:"ram,omitempty"`
+	Vcpus int32  `json:"vcpus,omitempty"`
 }
