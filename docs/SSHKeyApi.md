@@ -24,8 +24,8 @@ Add new ssh key
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**name** | [**String**](.md)|  name | 
-**publicKey** | [**String**](.md)|  public key | 
+**name** | **string**|  name | 
+**publicKey** | **string**|  public key | 
 
 ### Return type
 
@@ -165,7 +165,7 @@ Update the name of ssh key
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**name** | [**String**](.md)|  name | 
+**name** | **string**|  name | 
 **fingerprint** | **string**|  | 
 
 ### Return type

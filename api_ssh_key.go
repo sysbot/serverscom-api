@@ -33,7 +33,7 @@ AddNewSshKey Add new ssh key
  * @param publicKey  public key
 @return TheSshKeySchema
 */
-func (a *SSHKeyApiService) AddNewSshKey(ctx _context.Context, name String, publicKey String) (TheSshKeySchema, *_nethttp.Response, error) {
+func (a *SSHKeyApiService) AddNewSshKey(ctx _context.Context, name string, publicKey string) (TheSshKeySchema, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPost
 		localVarPostBody     interface{}
@@ -409,7 +409,7 @@ UpdateTheNameOfSshKey Update the name of ssh key
  * @param fingerprint
 @return TheSshKeySchema
 */
-func (a *SSHKeyApiService) UpdateTheNameOfSshKey(ctx _context.Context, name String, fingerprint string) (TheSshKeySchema, *_nethttp.Response, error) {
+func (a *SSHKeyApiService) UpdateTheNameOfSshKey(ctx _context.Context, name string, fingerprint string) (TheSshKeySchema, *_nethttp.Response, error) {
 	var (
 		localVarHTTPMethod   = _nethttp.MethodPut
 		localVarPostBody     interface{}
