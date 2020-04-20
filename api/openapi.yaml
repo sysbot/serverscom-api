@@ -5981,7 +5981,7 @@ paths:
         name: name
         required: true
         schema:
-          type: String
+          type: string
         style: form
       - description: ' public key'
         example: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDxRD2uaK8Dn4/AiUP8EkRj9M1LLpPGjDg8VMPwDlRH4RyoMA29kRG+IVg6LdiWqhxG0FjeHhQqS+Xnz1eFH5lbaf6+UWL2EkrFMp43SRZuowheIwn8xeZDbhSxxUYDTRABNWPSx4F5+MU3WuerAI44Gy3nz0xjkJCIo3cqsHeVGyqtsHmO05THeQwQq9TaOTTwnB92RiNgruHS7DbAPfAqDxZznLDncIwSSt7QPDzeQc42bA4Leysy0Y6ymgGfwJMhqiddQvRHtQrAQ6MH4Db/f6bkFU3/FCTp9LtTZaD84c7DaiezdzQTh9BF59vw/76HCS8+UVFLIYYkD8U6SsnP
@@ -5991,7 +5991,7 @@ paths:
         name: public_key
         required: true
         schema:
-          type: String
+          type: string
         style: form
       responses:
         "201":
@@ -6174,7 +6174,7 @@ paths:
         name: name
         required: true
         schema:
-          type: String
+          type: string
         style: form
       - example: 97:c1:12:7e:1c:88:f6:77:6c:9b:cf:8d:ba:bb:8e:f8
         explode: false
